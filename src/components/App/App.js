@@ -13,7 +13,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={[]}>
       <div className="root">
-        <div className="page"></div>
+        <div className="page" />
       </div>
     </CurrentUserContext.Provider>
   );
