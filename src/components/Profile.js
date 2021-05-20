@@ -5,10 +5,15 @@ function Profile() {
   const [isGoodRated, setGoodRated] = React.useState(false);
   const [isNeutralRated, setNeutralRated] = React.useState(false);
   const [isBadRated, setBadRated] = React.useState(false);
+  const [phrase, setPhrase] = React.useState('Оцените проведенное время');
 
   function changeGoodRate() {
     if (!isBadRated && !isGoodRated && !isNeutralRated) {
       setGoodRated(true);
+      setPhrase('Было классно!');
+    } else if (!isBadRated && !isNeutralRated) {
+      setGoodRated(false);
+      setPhrase('Оцените проведенное время');
     } else {
       setGoodRated(false);
     }
@@ -17,6 +22,10 @@ function Profile() {
   function changeBadRate() {
     if (!isBadRated && !isGoodRated && !isNeutralRated) {
       setBadRated(true);
+      setPhrase('Что-пошло не так');
+    } else if (!isGoodRated && !isNeutralRated) {
+      setBadRated(false);
+      setPhrase('Оцените проведенное время');
     } else {
       setBadRated(false);
     }
@@ -25,6 +34,10 @@ function Profile() {
   function changeNeutralRate() {
     if (!isBadRated && !isGoodRated && !isNeutralRated) {
       setNeutralRated(true);
+      setPhrase('Нормально');
+    } else if (!isBadRated && !isGoodRated) {
+      setNeutralRated(false);
+      setPhrase('Оцените проведенное время');
     } else {
       setNeutralRated(false);
     }
@@ -121,7 +134,7 @@ function Profile() {
                   aria-label="bad rate"
                 />
 
-                <p className="caption personal-area__rating-label">Оцените проведенное время</p>
+                <p className="caption personal-area__rating-label">{phrase}</p>
               </div>
               <div className="personal-area__buttons">
                 <button className="button personal-area__delete" type="submit">
