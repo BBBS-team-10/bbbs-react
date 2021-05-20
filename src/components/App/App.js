@@ -17,7 +17,7 @@ import Footer from '../Footer';
 function App() {
   return (
     <CurrentUserContext.Provider value={[]}>
-      <IsLoggedInContext.Provider>
+      <IsLoggedInContext.Provider value={false}>
         <body className="page">
           <Header />
           <Switch>
