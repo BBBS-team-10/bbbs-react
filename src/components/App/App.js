@@ -1,7 +1,8 @@
 import React from 'react';
-import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import './App.scss';
 
-// import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet';
 // import Modal from 'react-modal';
 // import lottie from 'lottie-web';
 // import { useForm } from 'react-hook-form';
@@ -9,11 +10,22 @@ import './App.css';
 // import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
+import Calendar from '../Calendar/Calendar';
+
 function App() {
   return (
     <CurrentUserContext.Provider value={[]}>
       <div className="root">
-        <div className="page"></div>
+        <div className="page">
+          <Switch>
+            <Route exact path="/calendar">
+              <Helmet>
+                <title>Календарь</title>
+              </Helmet>
+              <Calendar />
+            </Route>
+          </Switch>
+        </div>
       </div>
     </CurrentUserContext.Provider>
   );
