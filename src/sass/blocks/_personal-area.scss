@@ -45,7 +45,6 @@
   }
 }
 
-
 // пустая форма
 .personal-area__add-photo-button {
   padding: 0;
@@ -98,8 +97,8 @@
     resize: none;
   }
 
-  &[type="date"]:not(:focus):not(.has-value):before {
-    color:$lightGray;
+  &[type='date']:not(:focus):not(.has-value):before {
+    color: $lightGray;
     content: attr(placeholder);
   }
 }
@@ -237,7 +236,6 @@
   color: $lightGray;
 }
 
-
 @include atDesktop1024 {
   .personal-area__user-info {
     display: none;
@@ -304,6 +302,4 @@
   .personal-area__button {
     margin: 0;
   }
-
-
 }
