@@ -17,6 +17,8 @@ const MockAdapter = require('axios-mock-adapter');
 const mock = new MockAdapter(axios);
 
 function App() {
+  const [isLoggedIn] = useState(true);
+  // calendar
   const [calendarData, setCalendarData] = useState([]);
   const calendarCardsData = [
     {
@@ -78,7 +80,11 @@ function App() {
       <div className="page">
         <Switch>
           <Route exact path="/calendar">
-            <Calendar onInit={handelCalendarInit} calendarData={calendarData} />
+            <Calendar
+              onInit={handelCalendarInit}
+              calendarData={calendarData}
+              isLoggedIn={isLoggedIn}
+            />
           </Route>
         </Switch>
       </div>
