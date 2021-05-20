@@ -1,5 +1,7 @@
 import React from 'react';
 import './Calendar.scss';
+import '../../vendor/_mixins.scss';
+import '../../vendor/_variables.scss';
 
 // import SearchForm from '../SearchForm/SearchForm';
 
