@@ -12,6 +12,7 @@ function CalendarCard({ card }) {
   const hourEndOfMeeting = format(new Date(card.endAt), 'k', { locale: ru });
   const minuteEndOfMeeting = format(new Date(card.endAt), 'mm', { locale: ru });
   const freeSeats = card.seats - card.takenSeats;
+
   let freeSeatsText = '';
   if (card.booked) {
     freeSeatsText = '';
@@ -19,6 +20,13 @@ function CalendarCard({ card }) {
     freeSeatsText = `Осталось ${freeSeats} мест`;
   } else {
     freeSeatsText = 'Запись закрыта';
+  }
+
+  let buttonSignText = '';
+  if (card.booked) {
+    buttonSignText = 'Отменить запись';
+  } else {
+    buttonSignText = 'Записаться';
   }
   return (
     <article className={`calendar ${card.booked ? 'calendar_selected' : ''}`}>
@@ -46,10 +54,13 @@ function CalendarCard({ card }) {
         </ul>
         <div className="calendar__submit">
           <button
-            className="button button_theme_light calendar__button calendar__button_selected calendar__button_action_sign-up"
+            className={`button button_theme_light calendar__button  calendar__button_action_sign-up ${
+              card.booked ? 'calendar__button_selected' : ''
+            }`}
             type="button"
+            disabled={`${freeSeats <= 0 ? 'true' : ''}`}
           >
-            Отменить запись
+            {buttonSignText}
           </button>
           <p className="calendar__place-left">{freeSeatsText}</p>
           <button className="button calendar__button-dots button_theme_light" type="button">
