@@ -1,13 +1,15 @@
 import React from 'react';
-import './Calendar.scss';
-import '../../vendor/_mixins.scss';
-import '../../vendor/_variables.scss';
+import PropTypes from 'prop-types';
 
-// import SearchForm from '../SearchForm/SearchForm';
+import CalendarCard from './CalendarCard';
 
-function Calendar() {
+function Calendar({ onInit, calendarData }) {
+  React.useEffect(() => {
+    onInit();
+  }, []);
+
   return (
-    <div classNameName="main">
+    <div className="main">
       <section className="lead page__section">
         <h1 className="main-title">Календарь</h1>
         <div className="tags">
@@ -77,8 +79,26 @@ function Calendar() {
           </ul>
         </div>
       </section>
+
+      <section className="calendar-container page__section">
+        <>
+          {calendarData.map((item) => (
+            <CalendarCard key={item.id} card={item} />
+          ))}
+        </>
+      </section>
     </div>
   );
 }
+
+Calendar.defaultProps = {
+  onInit: undefined,
+  calendarData: [],
+};
+
+Calendar.propTypes = {
+  onInit: PropTypes.func,
+  calendarData: PropTypes.instanceOf(Array),
+};
 
 export default Calendar;
