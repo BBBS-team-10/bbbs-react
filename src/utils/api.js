@@ -1,33 +1,34 @@
-const axios = require('axios');
-const MockAdapter = require('axios-mock-adapter');
-const mock = new MockAdapter(axios);
+// const axios = require('axios');
+// const MockAdapter = require('axios-mock-adapter');
 
-class Api {
-  constructor({ headers }) {
-    this._headers = headers;
-  }
+// const mock = new MockAdapter(axios);
 
-  _handleOriginalResponse(response) {
-    if (!response.ok) {
-      return Promise.reject(`Error: ${response}`);
-    }
-    return response.json();
-  }
+// class Api {
+//   constructor({ headers }) {
+//     this._headers = headers;
+//   }
 
-  getCalendarInfo() {
-    return axios
-      .get(`${this._baseUrl}/calendar`, {
-        credentials: 'include',
-        headers: this._headers,
-      })
-      .then(this._handleOriginalResponse);
-  }
-}
+//   _handleOriginalResponse(response) {
+//     if (!response.ok) {
+//       return Promise.reject(`Error: ${response}`);
+//     }
+//     return response.json();
+//   }
 
-const api = new Api({
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+//   getCalendarInfo() {
+//     return axios
+//       .get(`${this._baseUrl}/calendar`, {
+//         credentials: 'include',
+//         headers: this._headers,
+//       })
+//       .then(this._handleOriginalResponse);
+//   }
+// }
 
-export default api;
+// const api = new Api({
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+// });
+
+// export default api;
