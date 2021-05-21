@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-// import { Link } from 'react-router-dom';
 
-function PopupCalendarSignin({ clickedCalendarCard, onCloseClick }) {
+function PopupCalendarSignin({ clickedCalendarCard, onCloseClick, onSubmitAppointCalendarClick }) {
   const monthOfMeeting = format(new Date(clickedCalendarCard.startAt), 'LLLL', { locale: ru });
   const dayNameOfMeeting = format(new Date(clickedCalendarCard.startAt), 'EEEE', { locale: ru });
   const dayNumberOfMeeting = format(new Date(clickedCalendarCard.startAt), 'd', { locale: ru });
@@ -29,6 +28,9 @@ function PopupCalendarSignin({ clickedCalendarCard, onCloseClick }) {
     buttonSignText = 'Записаться';
   }
 
+  function handleAppointCalendarPopupClick() {
+    onSubmitAppointCalendarClick(clickedCalendarCard);
+  }
   return (
     // <div className="popup popup_type_description popup_opened">
     <form className="popup__container popup__container_type_calendar">
@@ -66,7 +68,12 @@ function PopupCalendarSignin({ clickedCalendarCard, onCloseClick }) {
           <p className="paragraph calendar__desc-paragraph">{clickedCalendarCard.description}</p>
         </div>
         <div className="calendar__submit">
-          <button className="button button_theme_light button_action_confirm" type="button">
+          <button
+            className="button button_theme_light button_action_confirm"
+            type="button"
+            onClick={handleAppointCalendarPopupClick}
+            disabled={freeSeats <= 0}
+          >
             {buttonSignText}
           </button>
           <p className="calendar__place-left">{freeSeatsText}</p>
@@ -80,6 +87,7 @@ function PopupCalendarSignin({ clickedCalendarCard, onCloseClick }) {
 PopupCalendarSignin.defaultProps = {
   clickedCalendarCard: {},
   onCloseClick: undefined,
+  onSubmitAppointCalendarClick: undefined,
   // onCloseClick: undefined,
   // onSubmit: undefined,
   // isFormValid: true,
@@ -89,6 +97,7 @@ PopupCalendarSignin.defaultProps = {
 PopupCalendarSignin.propTypes = {
   clickedCalendarCard: PropTypes.instanceOf(Object),
   onCloseClick: PropTypes.func,
+  onSubmitAppointCalendarClick: PropTypes.func,
   // onCloseClick: PropTypes.func,
   // onSubmit: PropTypes.func,
   // isFormValid: PropTypes.bool,

@@ -17,7 +17,7 @@ const MockAdapter = require('axios-mock-adapter');
 const mock = new MockAdapter(axios);
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({ login: '111' });
   const history = useHistory();
 
   // calendar
@@ -31,8 +31,8 @@ function App() {
       title: 'Субботний meet up-1: учимся проходить интевью',
       description:
         'Наконец-то наступила весна и мы пережили эту долгую зиму! И возможно, что внутренних сил и ресурса сейчас не так много, а до окончания учебного года ещё целых несколько месяцев. Поэтому приглашаем вас на встречу нашего ресурсного клуба &quot;Наставник PRO&quot;, которую мы хотим посвятить теме поиска моральных сил, смыслов и внутреннего ресурса для общения и взаимодействия с нашими подопечными.',
-      startAt: '2021-05-10T06:00:00Z',
-      endAt: '2021-05-10T08:00:00Z',
+      startAt: '2021-05-11T06:00:00Z',
+      endAt: '2021-05-11T08:00:00Z',
       seats: 100,
       takenSeats: 0,
       city: 1,
@@ -45,8 +45,8 @@ function App() {
       title: 'Субботний meet up-2: учимся проходить интевью',
       description:
         'Наконец-то наступила весна и мы пережили эту долгую зиму! И возможно, что внутренних сил и ресурса сейчас не так много, а до окончания учебного года ещё целых несколько месяцев. Поэтому приглашаем вас на встречу нашего ресурсного клуба &quot;Наставник PRO&quot;, которую мы хотим посвятить теме поиска моральных сил, смыслов и внутреннего ресурса для общения и взаимодействия с нашими подопечными.',
-      startAt: '2021-05-10T02:00:00Z',
-      endAt: '2021-05-10T04:00:00Z',
+      startAt: '2021-05-17T02:00:00Z',
+      endAt: '2021-05-17T04:00:00Z',
       seats: 100,
       takenSeats: 49,
       city: 1,
@@ -59,8 +59,8 @@ function App() {
       title: 'Субботний meet up-3: учимся проходить интевью',
       description:
         'Наконец-то наступила весна и мы пережили эту долгую зиму! И возможно, что внутренних сил и ресурса сейчас не так много, а до окончания учебного года ещё целых несколько месяцев. Поэтому приглашаем вас на встречу нашего ресурсного клуба &quot;Наставник PRO&quot;, которую мы хотим посвятить теме поиска моральных сил, смыслов и внутреннего ресурса для общения и взаимодействия с нашими подопечными.',
-      startAt: '2021-05-10T05:00:00Z',
-      endAt: '2021-05-10T07:00:00Z',
+      startAt: '2021-09-19T05:00:00Z',
+      endAt: '2021-09-19T07:00:00Z',
       seats: 100,
       takenSeats: 100,
       city: 1,
@@ -96,7 +96,7 @@ function App() {
     }
   }, []);
 
-  // PopupCalendarDescription
+  // PopupCalendarDescription==================================================
   const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
   const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
 
@@ -105,10 +105,47 @@ function App() {
     setIsPopupCalendarDescriptionOpen(true);
   }
 
-  // close all popups
+  // PopupCalendarConfirm==========================================================
+  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
+
+  function handleChangelAppoitnCalendar(card, bool) {
+    const newCardsArray = calendarData.slice(0);
+    const ind = newCardsArray.indexOf(card);
+    newCardsArray[ind].booked = bool;
+    setCalendarData(newCardsArray);
+  }
+
+  // PopupCalendarDone===============================================================
+  const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
+
+  // на основной странице
+  function handleAppointCalendarCardClick(card) {
+    if (!card.booked) {
+      setClickedCalendarCard(card);
+      setIsPopupCalendarConfirmOpen(true);
+    } else {
+      handleChangelAppoitnCalendar(card, false);
+    }
+  }
+
+  // close all popups========================================================================
   function handlePopupCloseClick() {
     setIsPopupCalendarSigninOpen(false);
     setIsPopupCalendarDescriptionOpen(false);
+    setIsPopupCalendarConfirmOpen(false);
+    setIspopupCalendarDoneOpen(false);
+  }
+
+  // подтверждение или запись в попапе
+  function handleSubmitAppointCalendarClick(card) {
+    if (!card.booked) {
+      handleChangelAppoitnCalendar(card, true);
+      handlePopupCloseClick();
+      setIspopupCalendarDoneOpen(true);
+    } else {
+      handleChangelAppoitnCalendar(card, false);
+      handlePopupCloseClick();
+    }
   }
 
   return (
@@ -119,12 +156,17 @@ function App() {
             <Calendar
               calendarData={calendarData}
               isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
-              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
               onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
               onPopupCalendarSignin={handlePopupCalendarSignin}
+              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
               onOpenCalendarCardClick={handleOpenCalendarCardClick}
               clickedCalendarCard={clickedCalendarCard}
               onPopupCloseClick={handlePopupCloseClick}
+              isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
+              onAppointCalendarCardClick={handleAppointCalendarCardClick}
+              onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+              onCancelPopupClick={handlePopupCloseClick}
+              ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
             />
           </Route>
         </Switch>

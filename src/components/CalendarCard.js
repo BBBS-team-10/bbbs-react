@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
-function CalendarCard({ card, id, onOpenCalendarCardClick }) {
+function CalendarCard({ card, id, onOpenCalendarCardClick, onAppointCalendarCardClick }) {
   const monthOfMeeting = format(new Date(card.startAt), 'LLLL', { locale: ru });
   const dayNameOfMeeting = format(new Date(card.startAt), 'EEEE', { locale: ru });
   const dayNumberOfMeeting = format(new Date(card.startAt), 'd', { locale: ru });
@@ -31,6 +31,9 @@ function CalendarCard({ card, id, onOpenCalendarCardClick }) {
 
   function handleOpenCalendarCardClick() {
     onOpenCalendarCardClick(card);
+  }
+  function handleAppointCalendarCardClick() {
+    onAppointCalendarCardClick(card);
   }
   return (
     <article className={`calendar ${card.booked ? 'calendar_selected' : ''}`} id={id}>
@@ -63,6 +66,7 @@ function CalendarCard({ card, id, onOpenCalendarCardClick }) {
             }`}
             type="button"
             disabled={freeSeats <= 0}
+            onClick={handleAppointCalendarCardClick}
           >
             {buttonSignText}
           </button>
@@ -84,12 +88,14 @@ CalendarCard.defaultProps = {
   card: [],
   id: undefined,
   onOpenCalendarCardClick: undefined,
+  onAppointCalendarCardClick: undefined,
 };
 
 CalendarCard.propTypes = {
   card: PropTypes.instanceOf(Object),
   id: PropTypes.number,
   onOpenCalendarCardClick: PropTypes.func,
+  onAppointCalendarCardClick: PropTypes.func,
 };
 
 export default CalendarCard;
