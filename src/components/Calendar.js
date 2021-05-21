@@ -7,20 +7,43 @@ import { useFormWithValidation } from '../hooks/useForm';
 
 import CalendarCard from './CalendarCard';
 import PopupCalendarSignin from './PopupCalendarSignin';
+import PopupCalendarDescription from './PopupCalendarDescription';
 
 function Calendar({
   calendarData,
   isPopupCalendarSigninOpen,
+  isPopupCalendarDescriptionOpen,
   onPopupCalendarSigninClose,
   onPopupCalendarSignin,
+  onOpenCalendarCardClick,
+  clickedCalendarCard,
+  onPopupCloseClick,
 }) {
   const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
   const currentUser = React.useContext(CurrentUserContext);
+  const customModalStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, .5)',
+      overflow: 'scroll',
+      display: 'flex',
+    },
+    content: {
+      background: 'none',
+      border: 'none',
+      overflow: 'visible',
+      margin: '50px auto 0',
+      maxWidth: '770px',
+      padding: '0',
+      display: 'flex',
+      justifyContent: 'center',
+    },
+  };
 
+  // PopupCalendarSignin
   React.useEffect(() => {
     if (!currentUser.login) {
       resetForm();
-      setIsValid(true);
+      setIsValid(false);
     }
   }, [currentUser, isPopupCalendarSigninOpen, resetForm, setIsValid]);
 
@@ -30,6 +53,8 @@ function Calendar({
       password: values.password,
     });
   }
+
+  // PopupCalendarDescription
 
   Modal.setAppElement('#root');
   return (
@@ -108,16 +133,17 @@ function Calendar({
         <section className="calendar-container page__section">
           <>
             {calendarData.map((item) => (
-              <CalendarCard key={item.id} card={item} />
+              <CalendarCard
+                key={item.id}
+                id={item.id}
+                card={item}
+                onOpenCalendarCardClick={onOpenCalendarCardClick}
+              />
             ))}
           </>
         </section>
       </div>
-      <Modal
-        isOpen={isPopupCalendarSigninOpen}
-        // onRequestClose={() => { }}
-        // shouldCloseOnOverlayClick
-      >
+      <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
         <PopupCalendarSignin
           onCloseClick={onPopupCalendarSigninClose}
           onSubmit={handlePopupCalendarSigninSubmit}
@@ -125,7 +151,21 @@ function Calendar({
           handleChange={handleChange}
         />
       </Modal>
-      {/* <PopupCalendarDescription />
+
+      <Modal
+        isOpen={isPopupCalendarDescriptionOpen}
+        onRequestClose={() => {
+          onPopupCloseClick();
+        }}
+        shouldCloseOnOverlayClick
+        style={customModalStyles}
+      >
+        <PopupCalendarDescription
+          clickedCalendarCard={clickedCalendarCard}
+          onCloseClick={onPopupCloseClick}
+        />
+      </Modal>
+      {/*
       <PopupCalendarConfirm />
       <PopupCalendarDone /> */}
     </>
@@ -135,15 +175,23 @@ function Calendar({
 Calendar.defaultProps = {
   calendarData: [],
   isPopupCalendarSigninOpen: false,
+  isPopupCalendarDescriptionOpen: false,
   onPopupCalendarSigninClose: undefined,
   onPopupCalendarSignin: undefined,
+  onOpenCalendarCardClick: undefined,
+  clickedCalendarCard: [],
+  onPopupCloseClick: undefined,
 };
 
 Calendar.propTypes = {
   calendarData: PropTypes.instanceOf(Array),
   isPopupCalendarSigninOpen: PropTypes.bool,
+  isPopupCalendarDescriptionOpen: PropTypes.bool,
   onPopupCalendarSigninClose: PropTypes.func,
   onPopupCalendarSignin: PropTypes.func,
+  onOpenCalendarCardClick: PropTypes.func,
+  clickedCalendarCard: PropTypes.instanceOf(Array),
+  onPopupCloseClick: PropTypes.func,
 };
 
 export default Calendar;

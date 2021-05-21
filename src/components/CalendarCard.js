@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
-function CalendarCard({ card }) {
+function CalendarCard({ card, id, onOpenCalendarCardClick }) {
   const monthOfMeeting = format(new Date(card.startAt), 'LLLL', { locale: ru });
   const dayNameOfMeeting = format(new Date(card.startAt), 'EEEE', { locale: ru });
   const dayNumberOfMeeting = format(new Date(card.startAt), 'd', { locale: ru });
@@ -28,8 +28,12 @@ function CalendarCard({ card }) {
   } else {
     buttonSignText = 'Записаться';
   }
+
+  function handleOpenCalendarCardClick() {
+    onOpenCalendarCardClick(card);
+  }
   return (
-    <article className={`calendar ${card.booked ? 'calendar_selected' : ''}`}>
+    <article className={`calendar ${card.booked ? 'calendar_selected' : ''}`} id={id}>
       <div className="calendar__caption">
         <div className="calendar__info">
           <p className="calendar__type">Волонтёры + дети</p>
@@ -58,12 +62,16 @@ function CalendarCard({ card }) {
               card.booked ? 'calendar__button_selected' : ''
             }`}
             type="button"
-            disabled={`${freeSeats <= 0 ? 'true' : ''}`}
+            disabled={freeSeats <= 0}
           >
             {buttonSignText}
           </button>
           <p className="calendar__place-left">{freeSeatsText}</p>
-          <button className="button calendar__button-dots button_theme_light" type="button">
+          <button
+            className="button calendar__button-dots button_theme_light"
+            type="button"
+            onClick={handleOpenCalendarCardClick}
+          >
             &#8226;&#8226;&#8226;
           </button>
         </div>
@@ -74,10 +82,14 @@ function CalendarCard({ card }) {
 
 CalendarCard.defaultProps = {
   card: [],
+  id: undefined,
+  onOpenCalendarCardClick: undefined,
 };
 
 CalendarCard.propTypes = {
   card: PropTypes.instanceOf(Object),
+  id: PropTypes.number,
+  onOpenCalendarCardClick: PropTypes.func,
 };
 
 export default CalendarCard;
