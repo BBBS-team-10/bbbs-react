@@ -1,27 +1,36 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
+import { useFormWithValidation } from '../hooks/useForm';
 
 import CalendarCard from './CalendarCard';
 import PopupCalendarSignin from './PopupCalendarSignin';
 
-function Calendar({ onInit, calendarData, isLoggedIn }) {
-  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
-  const history = useHistory();
-  React.useEffect(() => {
-    onInit();
-    if (isLoggedIn) {
-      setIsPopupCalendarSigninOpen(false);
-    } else {
-      setIsPopupCalendarSigninOpen(true);
-    }
-  }, []);
+function Calendar({
+  calendarData,
+  isPopupCalendarSigninOpen,
+  onPopupCalendarSigninClose,
+  onPopupCalendarSignin,
+}) {
+  const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
+  const currentUser = React.useContext(CurrentUserContext);
 
-  function handlePopupCalendarSigninCloseClick() {
-    // setIsPopupCalendarSigninOpen(false);
-    history.push('/');
+  React.useEffect(() => {
+    if (!currentUser.login) {
+      resetForm();
+      setIsValid(true);
+    }
+  }, [currentUser, isPopupCalendarSigninOpen, resetForm, setIsValid]);
+
+  function handlePopupCalendarSigninSubmit() {
+    onPopupCalendarSignin({
+      login: values.login,
+      password: values.password,
+    });
   }
+
   Modal.setAppElement('#root');
   return (
     <>
@@ -109,7 +118,12 @@ function Calendar({ onInit, calendarData, isLoggedIn }) {
         // onRequestClose={() => { }}
         // shouldCloseOnOverlayClick
       >
-        <PopupCalendarSignin onCloseClick={handlePopupCalendarSigninCloseClick} />
+        <PopupCalendarSignin
+          onCloseClick={onPopupCalendarSigninClose}
+          onSubmit={handlePopupCalendarSigninSubmit}
+          isFormValid={isValid}
+          handleChange={handleChange}
+        />
       </Modal>
       {/* <PopupCalendarDescription />
       <PopupCalendarConfirm />
@@ -119,15 +133,17 @@ function Calendar({ onInit, calendarData, isLoggedIn }) {
 }
 
 Calendar.defaultProps = {
-  onInit: undefined,
   calendarData: [],
-  isLoggedIn: false,
+  isPopupCalendarSigninOpen: false,
+  onPopupCalendarSigninClose: undefined,
+  onPopupCalendarSignin: undefined,
 };
 
 Calendar.propTypes = {
-  onInit: PropTypes.func,
   calendarData: PropTypes.instanceOf(Array),
-  isLoggedIn: PropTypes.bool,
+  isPopupCalendarSigninOpen: PropTypes.bool,
+  onPopupCalendarSigninClose: PropTypes.func,
+  onPopupCalendarSignin: PropTypes.func,
 };
 
 export default Calendar;

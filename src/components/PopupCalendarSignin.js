@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-function PopupCalendarSignin({ onCloseClick }) {
+function PopupCalendarSignin({ onCloseClick, onSubmit, isFormValid, handleChange }) {
+  function handlerSubmitForm(e) {
+    e.preventDefault();
+    onSubmit();
+  }
   return (
     <div className="popup popup_type_sign-in popup_opened">
-      <form className="popup__container popup__container_type_sign-in">
+      <form className="popup__container popup__container_type_sign-in" onSubmit={handlerSubmitForm}>
         <button
           className="popup__close popup__cancel"
           type="button"
@@ -19,10 +24,31 @@ function PopupCalendarSignin({ onCloseClick }) {
           Пожалуйста, введите логин и пароль из письма. Если вам не приходило письмо, свяжитесь с
           вашим куратором.
         </p>
-        <input type="text" className="popup__input" required placeholder="Логин" />
-        <input type="password" className="popup__input" required placeholder="Пароль" />
-        <p className="popup__forgot-password ">Забыли пароль?</p>
-        <button className="button button_theme_light popup__enter" type="button" disabled>
+        <input
+          type="text"
+          name="login"
+          className="popup__input"
+          required
+          placeholder="Логин"
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          className="popup__input"
+          required
+          placeholder="Пароль"
+          onChange={handleChange}
+        />
+        <Link to="/" className="popup__forgot-password">
+          Забыли пароль?
+        </Link>
+        {/* <p className="popup__forgot-password ">Забыли пароль?</p> */}
+        <button
+          className="button button_theme_light popup__enter"
+          type="submit"
+          disabled={`${!isFormValid ? 'true' : ''}`}
+        >
           Войти
         </button>
       </form>
@@ -32,10 +58,16 @@ function PopupCalendarSignin({ onCloseClick }) {
 
 PopupCalendarSignin.defaultProps = {
   onCloseClick: undefined,
+  onSubmit: undefined,
+  isFormValid: true,
+  handleChange: undefined,
 };
 
 PopupCalendarSignin.propTypes = {
   onCloseClick: PropTypes.func,
+  onSubmit: PropTypes.func,
+  isFormValid: PropTypes.bool,
+  handleChange: PropTypes.func,
 };
 
 export default PopupCalendarSignin;

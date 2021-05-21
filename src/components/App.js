@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 // import { Helmet } from 'react-helmet';
 // import Modal from 'react-modal';
@@ -17,7 +17,9 @@ const MockAdapter = require('axios-mock-adapter');
 const mock = new MockAdapter(axios);
 
 function App() {
-  const [isLoggedIn] = useState(true);
+  const [currentUser, setCurrentUser] = useState({});
+  const history = useHistory();
+
   // calendar
   const [calendarData, setCalendarData] = useState([]);
   const calendarCardsData = [
@@ -75,15 +77,37 @@ function App() {
     });
   }
 
+  // PopupCalendarSignin
+  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
+  function handlePopupCalendarSignin(userData) {
+    setCurrentUser(userData);
+    setIsPopupCalendarSigninOpen(false);
+    console.log(userData);
+  }
+  function handlePopupCalendarSigninCloseClick() {
+    history.push('/');
+  }
+
+  React.useEffect(() => {
+    handelCalendarInit();
+    if (currentUser.login) {
+      setIsPopupCalendarSigninOpen(false);
+    } else {
+      setIsPopupCalendarSigninOpen(true);
+    }
+  }, []);
+
   return (
-    <CurrentUserContext.Provider value={[]}>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Switch>
           <Route exact path="/calendar">
             <Calendar
-              onInit={handelCalendarInit}
               calendarData={calendarData}
-              isLoggedIn={isLoggedIn}
+              // isLoggedIn={isLoggedIn}
+              isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
+              onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
+              onPopupCalendarSignin={handlePopupCalendarSignin}
             />
           </Route>
         </Switch>

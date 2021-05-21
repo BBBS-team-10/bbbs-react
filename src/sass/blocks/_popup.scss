@@ -19,7 +19,7 @@
     padding: 50px 100px;
     border-radius: 30px;
     max-width: 770px;
-    max-height: 80vh;
+    // max-height: 80vh;
     background-color: $white;
     font-family: $ptRootUI;
     box-sizing: border-box;
@@ -180,10 +180,12 @@
 
 .popup__forgot-password {
   margin: 0;
-  padding-bottom: 30px;
+  margin-bottom: 30px;
   font-size: 14px;
   line-height: 1.5;
   color: $darkGray;
+  text-decoration: none;
+  align-self: flex-start;
 }
 
 .popup__enter {
