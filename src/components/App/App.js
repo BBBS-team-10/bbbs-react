@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import './App.css';
 
 // import { Helmet } from 'react-helmet';
@@ -13,8 +13,24 @@ import { IsLoggedInContext } from '../../contexts/IsLoggedInContext';
 import Header from '../Header';
 import Main from '../Main';
 import Footer from '../Footer';
+import api from '../../utils/api';
 
 function App() {
+  // main page
+  const [mainPageData, setMainPageData] = useState({});
+  React.useEffect(() => {
+    api
+      .getMainPageInfo()
+      .then((response) => {
+        setMainPageData(response.data);
+      })
+      .catch((err) => {
+        console.log(`Ошибка при получении данных с сервера: ${err}`);
+      });
+  }, []);
+
+  // main page
+
   return (
     <CurrentUserContext.Provider value={[]}>
       <IsLoggedInContext.Provider value={false}>
@@ -22,7 +38,7 @@ function App() {
           <Header />
           <Switch>
             <Route exact path="/">
-              <Main />
+              <Main mainPageData={mainPageData} />
             </Route>
           </Switch>
           <Footer />

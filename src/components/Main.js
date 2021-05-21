@@ -1,13 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import isLoggedInContext from '../contexts/IsLoggedInContext';
 import BlockAbout from './BlockAbout';
 import BlockCalendar from './BlockCalendar';
 
-function Main() {
+function Main({ mainPageData }) {
   const isLoggedIn = React.useContext(isLoggedInContext);
 
   return (
     <main className="main">
+      {console.log(mainPageData)}
       <section className="lead page__section">
         <article className="card-container card-container_type_identical">
           {isLoggedIn ? <BlockCalendar /> : <BlockAbout />}
@@ -267,5 +269,13 @@ function Main() {
     </main>
   );
 }
+
+Main.propTypes = {
+  mainPageData: PropTypes.shape({}),
+};
+
+Main.defaultProps = {
+  mainPageData: {},
+};
 
 export default Main;
