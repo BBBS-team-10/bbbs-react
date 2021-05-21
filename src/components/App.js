@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 // import { Helmet } from 'react-helmet';
 // import Modal from 'react-modal';
@@ -59,13 +61,28 @@ function App() {
       title: 'Субботний meet up-3: учимся проходить интевью',
       description:
         'Наконец-то наступила весна и мы пережили эту долгую зиму! И возможно, что внутренних сил и ресурса сейчас не так много, а до окончания учебного года ещё целых несколько месяцев. Поэтому приглашаем вас на встречу нашего ресурсного клуба &quot;Наставник PRO&quot;, которую мы хотим посвятить теме поиска моральных сил, смыслов и внутреннего ресурса для общения и взаимодействия с нашими подопечными.',
-      startAt: '2021-09-19T05:00:00Z',
-      endAt: '2021-09-19T07:00:00Z',
+      startAt: '2021-06-19T05:00:00Z',
+      endAt: '2021-06-19T07:00:00Z',
       seats: 100,
       takenSeats: 100,
       city: 1,
     },
+    {
+      id: 4,
+      booked: false,
+      address: 'Садовническая наб., д. 77 стр. 1 (офис компании Ernst&Young)',
+      contact: 'Яна, +7 926 356-78-90',
+      title: 'Субботний meet up-4: учимся проходить интевью',
+      description:
+        'Наконец-то наступила весна и мы пережили эту долгую зиму! И возможно, что внутренних сил и ресурса сейчас не так много, а до окончания учебного года ещё целых несколько месяцев. Поэтому приглашаем вас на встречу нашего ресурсного клуба &quot;Наставник PRO&quot;, которую мы хотим посвятить теме поиска моральных сил, смыслов и внутреннего ресурса для общения и взаимодействия с нашими подопечными.',
+      startAt: '2021-09-19T01:00:00Z',
+      endAt: '2021-09-19T05:00:00Z',
+      seats: 100,
+      takenSeats: 93,
+      city: 1,
+    },
   ];
+  const [monthList, setMonthList] = useState([]);
 
   function handelCalendarInit() {
     mock.onGet('/calendar').reply(200, {
@@ -73,7 +90,20 @@ function App() {
     });
 
     axios.get('/calendar').then((res) => {
-      setCalendarData(res.data.calendarCards);
+      const cardsList = res.data.calendarCards;
+      setCalendarData(cardsList);
+      const monthListShorter = (arr) => {
+        const result = [];
+        for (let i = 0; i < arr.length; i += 1) {
+          const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
+          if (!result.includes(data)) {
+            result.push(data);
+          }
+        }
+        return result;
+      };
+      const newMonthList = monthListShorter(cardsList);
+      setMonthList(newMonthList);
     });
   }
 
@@ -167,6 +197,7 @@ function App() {
               onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
               onCancelPopupClick={handlePopupCloseClick}
               ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
+              monthList={monthList}
             />
           </Route>
         </Switch>

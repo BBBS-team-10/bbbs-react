@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import { useFormWithValidation } from '../hooks/useForm';
@@ -24,6 +26,7 @@ function Calendar({
   onAppointCalendarCardClick,
   onSubmitAppointCalendarClick,
   ispopupCalendarDoneOpen,
+  monthList,
 }) {
   const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
   const currentUser = React.useContext(CurrentUserContext);
@@ -60,7 +63,21 @@ function Calendar({
     });
   }
 
-  // PopupCalendarDescription
+  const [cardsListFiltered, setCardsListFiltered] = useState([]);
+  const [monthChecked, setMonthChecked] = useState('');
+
+  function getMonthName(card) {
+    return format(new Date(card.startAt), 'LLLL', { locale: ru });
+  }
+
+  function handleMonthElementClick(e) {
+    setMonthChecked(e.target.id);
+    setCardsListFiltered(calendarData.filter((item) => getMonthName(item) === e.target.id));
+  }
+  React.useEffect(() => {
+    // setMonthChecked(monthList[0]);
+    setCardsListFiltered(calendarData.slice(0));
+  }, [monthList]);
 
   Modal.setAppElement('#root');
   return (
@@ -70,75 +87,27 @@ function Calendar({
           <h1 className="main-title">Календарь</h1>
           <div className="tags">
             <ul className="tags__list">
-              <li className="tags__list-item">
-                <button className="button tags__button tags__button_active" type="button">
-                  Декабрь
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Январь
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Февраль
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Март
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Апрель
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Май
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Июнь
-                </button>
-              </li>
-            </ul>
-            <ul className="tags__list">
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Июль
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Август
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Сентябрь
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Октябрь
-                </button>
-              </li>
-              <li className="tags__list-item">
-                <button className="button tags__button" type="button">
-                  Ноябрь
-                </button>
-              </li>
+              {monthList.map((item) => (
+                <li className="tags__list-item" key={item}>
+                  <button
+                    className={`button tags__button ${
+                      item === monthChecked && 'tags__button_active'
+                    }`}
+                    type="button"
+                    onClick={handleMonthElementClick}
+                    id={item}
+                  >
+                    {item}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </section>
 
         <section className="calendar-container page__section">
           <>
-            {calendarData.map((item) => (
+            {cardsListFiltered.map((item) => (
               <CalendarCard
                 key={item.id}
                 id={item.id}
@@ -208,6 +177,7 @@ function Calendar({
 
 Calendar.defaultProps = {
   calendarData: [],
+  monthList: [],
   isPopupCalendarSigninOpen: false,
   isPopupCalendarDescriptionOpen: false,
   onPopupCalendarSigninClose: undefined,
@@ -223,6 +193,7 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   calendarData: PropTypes.instanceOf(Array),
+  monthList: PropTypes.instanceOf(Array),
   isPopupCalendarSigninOpen: PropTypes.bool,
   isPopupCalendarDescriptionOpen: PropTypes.bool,
   onPopupCalendarSigninClose: PropTypes.func,
