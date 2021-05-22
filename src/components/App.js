@@ -47,7 +47,7 @@ function App() {
     }
   }
 
-  // PopupCalendarSignin
+  // PopupCalendarSignin ===============================================================
   const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
   function handlePopupCalendarSignin(userData) {
     setCurrentUser(userData);
@@ -78,6 +78,7 @@ function App() {
   // PopupCalendarConfirm==========================================================
   const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
 
+  // записаться/отписаться от события
   function handleChangelAppoitnCalendar(card, bool) {
     const newCardsArray = calendarData.slice(0);
     const ind = newCardsArray.indexOf(card);
@@ -88,7 +89,7 @@ function App() {
   // PopupCalendarDone===============================================================
   const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
 
-  // на основной странице
+  // подтверждение на основной странице
   function handleAppointCalendarCardClick(card) {
     if (!card.booked) {
       setClickedCalendarCard(card);
