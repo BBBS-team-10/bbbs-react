@@ -1,34 +1,49 @@
-// const axios = require('axios');
-// const MockAdapter = require('axios-mock-adapter');
+import calendarCardsList from './calendarCardsList';
 
-// const mock = new MockAdapter(axios);
+const axios = require('axios');
+const MockAdapter = require('axios-mock-adapter');
 
-// class Api {
-//   constructor({ headers }) {
-//     this._headers = headers;
-//   }
+const mock = new MockAdapter(axios);
 
-//   _handleOriginalResponse(response) {
-//     if (!response.ok) {
-//       return Promise.reject(`Error: ${response}`);
-//     }
-//     return response.json();
-//   }
+class Api {
+  constructor({ baseUrl }) {
+    this.baseUrl = baseUrl;
+  }
 
-//   getCalendarInfo() {
-//     return axios
-//       .get(`${this._baseUrl}/calendar`, {
-//         credentials: 'include',
-//         headers: this._headers,
-//       })
-//       .then(this._handleOriginalResponse);
-//   }
-// }
+  getCalendarCardsLogin() {
+    mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
+      calendarCards: calendarCardsList,
+    });
+    return axios
+      .get(`${this.baseUrl}/afisha/events/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization:
+            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjIwNTM4NDU2LCJqdGkiOiIwMTJjMTMzNGQ5MjM0MWI4YWU1YmJhMDExYjAyMTdjOCIsInVzZXJfaWQiOjF9.S4JVKaVnUzr_XmLXOs6pfYKsLBhzEzm9Rhj1jnW6fhc',
+        },
+      })
+      .then((res) => res);
+  }
 
-// const api = new Api({
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// });
+  getCalendarCardsLogout(guestCity) {
+    mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
+      calendarCards: calendarCardsList,
+    });
+    return axios
+      .get(`${this.baseUrl}/afisha/events/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: { city: guestCity },
+      })
+      .then((res) => res);
+  }
+}
 
-// export default api;
+const api = new Api({
+  baseUrl: 'http://127.0.0.1:8000/api/v1/',
+});
+
+export default api;

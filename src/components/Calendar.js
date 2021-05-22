@@ -75,7 +75,6 @@ function Calendar({
     setCardsListFiltered(calendarData.filter((item) => getMonthName(item) === e.target.id));
   }
   React.useEffect(() => {
-    // setMonthChecked(monthList[0]);
     setCardsListFiltered(calendarData.slice(0));
   }, [monthList]);
 

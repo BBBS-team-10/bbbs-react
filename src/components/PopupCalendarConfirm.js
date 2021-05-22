@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 function PopupCalendarConfirm({ clickedCalendarCard, onSubmitAppointCalendarClick, onCloseClick }) {
-  const monthOfMeeting = format(new Date(clickedCalendarCard.startAt), 'LLLL', { locale: ru });
+  const monthOfMeeting = format(new Date(clickedCalendarCard.startAt), 'MMMM', { locale: ru });
   const dayNumberOfMeeting = format(new Date(clickedCalendarCard.startAt), 'd', { locale: ru });
   const hourStartOfMeeting = format(new Date(clickedCalendarCard.startAt), 'k', { locale: ru });
   const minuteStartOfMeeting = format(new Date(clickedCalendarCard.startAt), 'mm', { locale: ru });
