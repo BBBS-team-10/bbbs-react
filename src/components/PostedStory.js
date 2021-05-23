@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PostedStory({ onMenuClick }) {
+function PostedStory({ onDeleteClick }) {
   return (
-    <article className="card-container card-container_type_personal-area">
+    <form className="card-container card-container_type_personal-area">
       <div className="card card_content_media">
-        <img src="../../public/images/personal-area/lk.png" alt="Катя" className="personal-area__photo" />
+        <img src="./images/personal-area/lk.png" alt="Катя" className="personal-area__photo" />
       </div>
       <div className="card personal-area__card personal-area__date-container">
         <div className="personal-area__text-wrap">
@@ -47,7 +47,7 @@ function PostedStory({ onMenuClick }) {
               Редактировать
             </button>
             <button
-              onClick={onMenuClick}
+              onClick={onDeleteClick}
               className="caption personal-area__button
         personal-area__button_action_delete-card"
               type="button"
@@ -57,15 +57,15 @@ function PostedStory({ onMenuClick }) {
           </div>
         </div>
       </div>
-    </article>
+    </form>
   );
 }
 export default PostedStory;
 
 PostedStory.defaultProps = {
-  onMenuClick: undefined,
+  onDeleteClick: undefined,
 };
 
 PostedStory.propTypes = {
-  onMenuClick: PropTypes.func,
+  onDeleteClick: PropTypes.func,
 };

@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Profile from '../Profile';
 import PopupDeleteStory from '../PopupDeleteStory';
+import PopupCityChoice from '../PopupCityChoice';
 
 // import { Helmet } from 'react-helmet';
 // import Modal from 'react-modal';
@@ -13,14 +14,23 @@ import PopupDeleteStory from '../PopupDeleteStory';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
-  const [isDeleteStoryPopupOpen, setIsDeleteStoryPopupOpen] = React.useState(false);
+  const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
+  const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
 
   function handleDeleteStoryPopupClick() {
-    setIsDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
+    setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
+  }
+
+  function handleCityChoicePopupClick() {
+    setCityChoicePopupOpen(!isCityChoicePopupOpen);
   }
 
   function closeDeleteStoryPopup() {
-    setIsDeleteStoryPopupOpen(false);
+    setDeleteStoryPopupOpen(false);
+  }
+
+  function closeCityChoicePopup() {
+    setCityChoicePopupOpen(false);
   }
 
   return (
@@ -28,10 +38,14 @@ function App() {
       <div className="page">
         <Switch>
           <Route>
-            <Profile onMenuClick={handleDeleteStoryPopupClick} />
+            <Profile
+              onDeleteStoryClick={handleDeleteStoryPopupClick}
+              onCityChoiceClick={handleCityChoicePopupClick}
+            />
           </Route>
         </Switch>
         <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
+        <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
       </div>
     </CurrentUserContext.Provider>
   );

@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import ImageUploader from './ImageUploader';
 
@@ -76,15 +75,15 @@ function StoryForm() {
   }`;
 
   return (
-    <article className="card-container card-container_type_personal-area">
-      <div className="card card_content_media">
+    <form className="card-container card-container_type_personal-area">
+      <div className="card personal-area__card personal-area__card_type_add-photo">
         <ImageUploader />
       </div>
       <div className="card personal-area__card personal-area__card_type_content">
         <form
+          className="personal-area__form"
           onSubmit={handleSubmit(onSubmit)}
           name="add-story-form"
-          className="personal-area__form"
         >
           <input
             // eslint-disable-next-line
@@ -105,7 +104,8 @@ function StoryForm() {
             // eslint-disable-next-line
             {...register('story', { required: true, minLength: 2 })}
             className="personal-area__form-input personal-area__form-input_type_textarea"
-            placeholder="Опишите вашу встречу, какие чувства вы испытывали, что понравилось / не понравилось"
+            placeholder="Опишите вашу встречу, какие чувства вы испытывали,
+            что понравилось / не понравилось"
           />
           <div className="personal-area__rating">
             <button
@@ -155,7 +155,7 @@ function StoryForm() {
           </div>
         </form>
       </div>
-    </article>
+    </form>
   );
 }
 export default StoryForm;
