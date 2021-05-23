@@ -10,18 +10,17 @@ import BlockMovie from './BlockMovie';
 import BlockVideo from './BlockVideo';
 import BlockFacebook from './BlockFacebook';
 import BlockQuestion from './BlockQuestion';
+import BlockLead from './BlockLead';
 
 function Main({ mainPageData }) {
   const isLoggedIn = React.useContext(isLoggedInContext);
 
   return (
     <main className="main">
-      <section className="lead page__section">
-        <article className="card-container card-container_type_identical">
-          {isLoggedIn ? <BlockCalendar event={mainPageData.event} /> : <BlockAbout />}
-          <BlockStory history={mainPageData.history} />
-        </article>
-      </section>
+      <BlockLead>
+        {isLoggedIn ? <BlockCalendar event={mainPageData.event} /> : <BlockAbout />}
+        <BlockStory history={mainPageData.history} />
+      </BlockLead>
       <BlockPlace place={mainPageData.place} />
       <BlockArticle article={mainPageData.articles && mainPageData.articles[0]} />
       <section className="main-section page__section cards-grid cards-grid_content_small-cards">
