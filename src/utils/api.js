@@ -152,7 +152,12 @@ mock.onGet('http://127.0.0.1:8000/api/v1/users', { headers: { 'Content-Type': 'a
       tags: [
         {
           id: 771,
-          name: 'рубрика',
+          name: 'рубрика1',
+          slug: 'rubric',
+        },
+        {
+          id: 771,
+          name: 'рубрика2',
           slug: 'rubric',
         },
       ],

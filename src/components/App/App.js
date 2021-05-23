@@ -33,7 +33,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={[]}>
-      <IsLoggedInContext.Provider value={false}>
+      <IsLoggedInContext.Provider value>
         <body className="page">
           <Header />
           <Switch>
