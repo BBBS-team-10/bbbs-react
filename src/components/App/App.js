@@ -14,13 +14,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function App() {
   return (
     <CurrentUserContext.Provider value={[]}>
-      <body className="page">
+      <div className="page">
         <Switch>
           <Route>
             <Profile />
           </Route>
         </Switch>
-      </body>
+      </div>
     </CurrentUserContext.Provider>
   );
 }

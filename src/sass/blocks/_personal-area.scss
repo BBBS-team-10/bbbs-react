@@ -24,6 +24,16 @@
   border-bottom: 1px solid $darkGray;
 }
 
+.personal-area__user-link_type_city {
+  color: black;
+  padding: 0;
+  border: 0;
+}
+.button__add-story {
+  color: #224cff;
+  border-color: #224cff;
+}
+
 .personal-area__title {
   margin: 0 auto;
   max-width: 770px;
@@ -164,6 +174,10 @@
 .personal-area__buttons {
   display: flex;
   justify-content: flex-end;
+}
+.personal-area__delete {
+  border: none;
+  color: $lightGray;
 }
 
 //заполненная карточка
