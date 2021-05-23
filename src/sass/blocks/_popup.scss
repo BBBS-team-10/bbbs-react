@@ -1,25 +1,28 @@
 .popup {
-  visibility: hidden;
-  opacity: 0;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, .5);
-  transition: visibility .3s, opacity .3s linear;
+  // visibility: hidden;
+  // opacity: 0;
+  // position: fixed;
+  // top: 0;
+  // right: 0;
+  // left: 0;
+  // bottom: 0;
+  // background-color: rgba(0, 0, 0, .5);
+  // transition: visibility .3s, opacity .3s linear;
+  // overflow: scroll;
 
   &__container {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     z-index: 2;
-    margin: 75px auto 0;
+    // margin: 75px auto 0;
     padding: 50px 100px;
+    width: 100%;
     border-radius: 30px;
-    max-width: 770px;
-    max-height: 80vh;
+    // max-width: 770px;
+    // max-height: 80vh;
+    height: 670px;
     background-color: $white;
     font-family: $ptRootUI;
     box-sizing: border-box;
@@ -36,12 +39,14 @@
 
     &_type_done {
       justify-content: center;
+      align-items: center;
       height: 670px;
     }
 
     &_type_confirmation {
       height: 670px;
       justify-content: center;
+      align-items: center;
     }
 
     &_type_sign-in {
@@ -50,7 +55,7 @@
     }
 
     &_type_calendar {
-      height: 670px;
+      // height: 670px;
     }
 
     &_type_cities {
@@ -115,9 +120,9 @@
 }
 
 .popup_opened {
-  display: flex;
-  opacity: 1;
-  visibility: visible;
+  // display: flex;
+  // opacity: 1;
+  // visibility: visible;
 }
 
 .popup__close {
@@ -125,7 +130,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background-image: url('../images/svg/popup_close.svg');
+  background-image: url('../../images/svg/popup_close.svg');
   width: 40px;
   height: 40px;
   background-size: 40px 40px;
@@ -180,10 +185,12 @@
 
 .popup__forgot-password {
   margin: 0;
-  padding-bottom: 30px;
+  margin-bottom: 30px;
   font-size: 14px;
   line-height: 1.5;
   color: $darkGray;
+  text-decoration: none;
+  align-self: flex-start;
 }
 
 .popup__enter {
@@ -217,6 +224,7 @@
   .popup__container {
     padding: 50px;
     max-width: 570px;
+    height: 570px;
 
     &_type_cities {
       max-width: 320px;
@@ -243,6 +251,7 @@
   .popup__container {
     max-width: 450px;
     padding: 60px 15px 30px;
+    height: 530px;
   }
 
   .popup__input {
@@ -254,8 +263,15 @@
 
 @include atMobile {
   .popup__container {
-    max-width: 290px;
-    margin-top: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 550px;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    overflow: auto;
 
     &_type_recommendation {
       justify-content: flex-start;

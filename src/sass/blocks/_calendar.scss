@@ -15,13 +15,17 @@
     background-color: $lightBlue;
   }
 }
+.calendar__caption {
+  margin-bottom: 45px;
+}
 
 .calendar__title {
   max-width: 320px;
 }
 
 .calendar__title_type_popup {
-  max-width: 570px;
+  // max-width: 570px;
+  max-width: 400px;
   text-align: start;
   margin-bottom: 40px;
 }
@@ -140,7 +144,7 @@
 }
 
 .calendar__image-done {
-  background-image: url('../images/svg/popup_done.svg');
+  background-image: url('../../images/svg/popup_done.svg');
   background-repeat: no-repeat;
   align-self: center;
   margin-bottom: 30px;
