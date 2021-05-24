@@ -30,15 +30,19 @@ export function useFormWithValidation() {
   };
 
   // мемоизация, не триггерит useEffect
-  const resetForm = useCallback(
-    () => {
-      setValues({});
-      setErrors({});
-      setIsValid(false);
-    }, [setValues, setErrors, setIsValid],
-  );
+  const resetForm = useCallback(() => {
+    setValues({});
+    setErrors({});
+    setIsValid(false);
+  }, [setValues, setErrors, setIsValid]);
 
   return {
-    values, errors, isValid, handleChange, setValues, resetForm, setIsValid,
+    values,
+    errors,
+    isValid,
+    handleChange,
+    setValues,
+    resetForm,
+    setIsValid,
   };
 }

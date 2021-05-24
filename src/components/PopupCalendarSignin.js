@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function PopupCalendarSignin({ onCloseClick, onSubmit, isFormValid, handleChange }) {
+function PopupCalendarSignin({
+  onCloseClick, onSubmit, isFormValid, handleChange,
+}) {
   function handlerSubmitForm(e) {
     e.preventDefault();
     onSubmit();

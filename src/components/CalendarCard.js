@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
-function CalendarCard({ card, id, onOpenCalendarCardClick, onAppointCalendarCardClick }) {
+function CalendarCard({
+  card, id, onOpenCalendarCardClick, onAppointCalendarCardClick,
+}) {
   const monthOfMeeting = format(new Date(card.startAt), 'LLLL', { locale: ru });
   const dayNameOfMeeting = format(new Date(card.startAt), 'EEEE', { locale: ru });
   const dayNumberOfMeeting = format(new Date(card.startAt), 'd', { locale: ru });

@@ -7,11 +7,32 @@ import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Calendar from './Calendar';
+import Profile from './Profile';
+import PopupDeleteStory from './PopupDeleteStory';
+import PopupCityChoice from './PopupCityChoice';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ login: '111' });
+  const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
+  const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
   const [currentCityId] = useState('1');
   const history = useHistory();
+
+  function handleDeleteStoryPopupClick() {
+    setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
+  }
+
+  function handleCityChoicePopupClick() {
+    setCityChoicePopupOpen(!isCityChoicePopupOpen);
+  }
+
+  function closeDeleteStoryPopup() {
+    setDeleteStoryPopupOpen(false);
+  }
+
+  function closeCityChoicePopup() {
+    setCityChoicePopupOpen(false);
+  }
 
   // calendar
   const [calendarData, setCalendarData] = useState([]);
@@ -123,6 +144,12 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Switch>
+          <Route exact path="/profile">
+            <Profile
+              onDeleteStoryClick={handleDeleteStoryPopupClick}
+              onCityChoiceClick={handleCityChoicePopupClick}
+            />
+          </Route>
           <Route exact path="/calendar">
             <Helmet>
               <title>Календарь</title>
@@ -145,6 +172,8 @@ function App() {
             />
           </Route>
         </Switch>
+        <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
+        <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
       </div>
     </CurrentUserContext.Provider>
   );

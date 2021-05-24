@@ -28,7 +28,9 @@ function Calendar({
   ispopupCalendarDoneOpen,
   monthList,
 }) {
-  const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
+  const {
+    values, handleChange, isValid, resetForm, setIsValid,
+  } = useFormWithValidation();
   const currentUser = React.useContext(CurrentUserContext);
   const customModalStyles = {
     overlay: {
