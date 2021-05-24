@@ -17,14 +17,45 @@ import api from '../utils/api';
 
 function App() {
   // header
-  const [headerClass, setHeaderClass] = useState('');
+  const [headerClasses, setHeaderClasses] = useState({
+    header: '',
+    menuBurger: '',
+    menuListSWrap: 'menu__lists-wrap_hidden',
+    menuListSocial: 'menu__list_hidden',
+    headerOuted: '',
+  });
+  function handleMenuButton() {
+    if (headerClasses.header === '') {
+      setHeaderClasses({
+        ...headerClasses,
+        header: 'header_displayed',
+        menuBurger: 'menu__burger_active',
+        menuListSWrap: '',
+        menuListSocial: '',
+      });
+    } else {
+      setHeaderClasses({
+        ...headerClasses,
+        header: '',
+        menuBurger: '',
+        menuListSWrap: 'menu__lists-wrap_hidden',
+        menuListSocial: 'menu__list_hidden',
+      });
+    }
+  }
   let scrollPrev = 0;
   function handleScroll() {
     const scrolled = document.documentElement.scrollTop;
     if (scrolled > 100 && scrolled > scrollPrev) {
-      setHeaderClass('header_outed');
+      setHeaderClasses({
+        ...headerClasses,
+        headerOuted: 'header_outed',
+      });
     } else {
-      setHeaderClass('');
+      setHeaderClasses({
+        ...headerClasses,
+        headerOuted: '',
+      });
     }
     scrollPrev = scrolled;
   }
@@ -56,7 +87,7 @@ function App() {
     <CurrentUserContext.Provider value={[]}>
       <IsLoggedInContext.Provider value={false}>
         <div className="page">
-          <Header headerClass={headerClass} />
+          <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
           <Switch>
             <Route exact path="/">
               <Main mainPageData={mainPageData} />
