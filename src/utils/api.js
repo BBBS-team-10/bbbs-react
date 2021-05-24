@@ -10,7 +10,7 @@ class Api {
     this.baseUrl = baseUrl;
   }
 
-  getCalendarCardsLogin() {
+  getCalendarCardsLoggedIn() {
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
     });
@@ -26,7 +26,7 @@ class Api {
       .then((res) => res);
   }
 
-  getCalendarCardsLogout(guestCity) {
+  getCalendarCardsLoggedOut(guestCity) {
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
     });

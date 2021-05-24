@@ -7,6 +7,7 @@ import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Calendar from './Calendar';
+import About from './About';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ login: '111' });
@@ -31,14 +32,14 @@ function App() {
     };
 
     if (currentUser.login) {
-      api.getCalendarCardsLogin().then((res) => {
+      api.getCalendarCardsLoggedIn().then((res) => {
         const cardsList = res.data.calendarCards;
         setCalendarData(cardsList);
         const newMonthList = monthListShorter(cardsList);
         setMonthList(newMonthList);
       });
     } else {
-      api.getCalendarCardsLogout(currentCityId).then((res) => {
+      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
         const cardsList = res.data.calendarCards;
         setCalendarData(cardsList);
         const newMonthList = monthListShorter(cardsList);
@@ -143,6 +144,13 @@ function App() {
               ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
               monthList={monthList}
             />
+          </Route>
+
+          <Route exact path="/about">
+            <Helmet>
+              <title>О проектк</title>
+            </Helmet>
+            <About />
           </Route>
         </Switch>
       </div>
