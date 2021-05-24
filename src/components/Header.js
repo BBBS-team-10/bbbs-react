@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function Header() {
+function Header({ headerClass }) {
   return (
-    <header className="header page__section">
+    <header className={`header page__section ${headerClass}`}>
       <nav className="menu">
         <a href="./index.html" target="_self" className="menu__logo">
           наставники.про
@@ -195,5 +196,13 @@ function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  headerClass: PropTypes.string,
+};
+
+Header.defaultProps = {
+  headerClass: '',
+};
 
 export default Header;
