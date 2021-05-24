@@ -9,13 +9,25 @@
 }
 
 @include atDesktop1440 {
+  .lead {
+    padding: 90px 75px 0;
+  }
   .lead__text {
     max-width: 970px;
   }
 }
 
 @include atDesktop1024 {
+  .lead {
+    padding: 80px 75px 0;
+  }
   .lead__text {
     margin-top: 20px;
+  }
+}
+
+@include atMobile{
+  .lead {
+    padding: 60px 75px 0;
   }
 }

@@ -1,4 +1,4 @@
-import MockedMainPageData from './mockedData';
+import MockedMainPageData from './mocks';
 /*  eslint no-underscore-dangle: ["error", { "allowAfterThis": true }]  */
 const axios = require('axios');
 

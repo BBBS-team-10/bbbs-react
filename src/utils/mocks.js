@@ -156,7 +156,12 @@ const MockedMainPageData = {
       tags: [
         {
           id: 771,
-          name: 'рубрика',
+          name: 'рубрика1',
+          slug: 'rubric',
+        },
+        {
+          id: 772,
+          name: 'рубрика2',
           slug: 'rubric',
         },
       ],

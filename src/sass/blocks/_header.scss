@@ -3,20 +3,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 75px 0;
-  width: calc(100% - 160px);
+  padding: 0;
+  width: 100%;
   min-height: 80px;
   background-color: $background;
+  max-width: 1920px;
 
   z-index: 100;
   // padding-top: 40px;
   transition: .2s linear;
 }
 
-.heder_displayed {
-  background-color: #fff;
-  border-radius: 0px 0px 30px 30px;
-}
+// .heder_displayed {
+//   background-color: #fff;
+//   border-radius: 0px 0px 30px 30px;
+// }
 
 .header_outed {
   transform: translateY(-100%);
@@ -24,12 +25,14 @@
 
 @include atDesktop1024 {
   .header {
-    padding-top: 30px;
+    min-height: 60px;
+    // padding-top: 30px;
   }
 }
 
 @include atMobile {
   .header {
-    padding-top: 15px;
+    // padding-top: 15px;
+    min-height: 50px;
   }
 }
