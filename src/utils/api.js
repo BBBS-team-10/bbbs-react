@@ -11,6 +11,7 @@ class Api {
   }
 
   getCalendarCardsLoggedIn() {
+    console.log('api');
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
     });
