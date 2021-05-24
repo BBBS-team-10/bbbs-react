@@ -3,10 +3,6 @@ import { useForm } from 'react-hook-form';
 import ImageUploader from './ImageUploader';
 
 function StoryForm() {
-  const [isGoodRated, setGoodRated] = React.useState(false);
-  const [isNeutralRated, setNeutralRated] = React.useState(false);
-  const [isBadRated, setBadRated] = React.useState(false);
-  const [phrase, setPhrase] = React.useState('Оцените проведенное время');
   const {
     register,
     handleSubmit,
@@ -17,62 +13,6 @@ function StoryForm() {
   function onSubmit(data) {
     console.log(data);
   }
-
-  function changeGoodRate() {
-    if (!isBadRated && !isGoodRated && !isNeutralRated) {
-      setGoodRated(true);
-      setPhrase('Было классно!');
-    } else if (!isBadRated && !isNeutralRated) {
-      setGoodRated(false);
-      setPhrase('Оцените проведенное время');
-    } else {
-      setGoodRated(false);
-    }
-  }
-
-  function changeBadRate() {
-    if (!isBadRated && !isGoodRated && !isNeutralRated) {
-      setBadRated(true);
-      setPhrase('Что-пошло не так');
-    } else if (!isGoodRated && !isNeutralRated) {
-      setBadRated(false);
-      setPhrase('Оцените проведенное время');
-    } else {
-      setBadRated(false);
-    }
-  }
-
-  function changeNeutralRate() {
-    if (!isBadRated && !isGoodRated && !isNeutralRated) {
-      setNeutralRated(true);
-      setPhrase('Нормально');
-    } else if (!isBadRated && !isGoodRated) {
-      setNeutralRated(false);
-      setPhrase('Оцените проведенное время');
-    } else {
-      setNeutralRated(false);
-    }
-  }
-
-  const goodRateButtonClassName = `personal-area__rate ${
-    isGoodRated ? 'personal-area__rate_type_active-good' : 'personal-area__rate_type_good'
-  }`;
-
-  const neutralRateButtonClassName = `personal-area__rate ${
-    isNeutralRated ? 'personal-area__rate_type_active-neutral' : 'personal-area__rate_type_neutral'
-  }`;
-
-  const badRateButtonClassName = `personal-area__rate ${
-    isBadRated ? 'personal-area__rate_type_active-bad' : 'personal-area__rate_type_bad'
-  }`;
-
-  const badRatingLabelClassName = `caption personal-area__rating-label ${
-    isBadRated ? 'personal-area__rating-label_type_bad' : ''
-  }`;
-
-  const goodRatingLabelClassName = `caption personal-area__rating-label ${
-    isGoodRated ? 'personal-area__rating-label_type_good' : ''
-  }`;
 
   return (
     <form className="card-container card-container_type_personal-area">
@@ -108,33 +48,35 @@ function StoryForm() {
             что понравилось / не понравилось"
           />
           <div className="personal-area__rating">
-            <button
-              className={goodRateButtonClassName}
-              onClick={changeGoodRate}
-              type="button"
-              aria-label="good rate"
-            />
-
-            <button
-              className={neutralRateButtonClassName}
-              onClick={changeNeutralRate}
-              type="button"
-              aria-label="neutral rate"
-            />
-
-            <button
-              className={badRateButtonClassName}
-              onClick={changeBadRate}
-              type="button"
-              aria-label="bad rate"
-            />
-            {isBadRated && <p className={badRatingLabelClassName}>{phrase}</p>}
-            {isGoodRated && <p className={goodRatingLabelClassName}>{phrase}</p>}
-            {isNeutralRated && <p className="caption personal-area__rating-label">{phrase}</p>}
-            {!isNeutralRated && !isGoodRated && !isBadRated && (
-              <p className="caption personal-area__rating-label">{phrase}</p>
-            )}
+            <label htmlFor="good-rate" className="personal-area__radio-label">
+              <input
+                type="radio"
+                name="rate"
+                id="good-rate"
+                className="personal-area__rate personal-area__rate_type_good"
+              />
+              <img className="personal-area__rate-icon" alt="good rate" src="./images/personal-area/good.svg" />
+            </label>
+            <label htmlFor="neutral-rate" className="personal-area__radio-label">
+              <input
+                type="radio"
+                name="rate"
+                id="neutral-rate"
+                className="personal-area__rate personal-area__rate_type_neutral"
+              />
+              <img className="personal-area__rate-icon" alt="neutral rate" src="./images/personal-area/neutral.svg" />
+            </label>
+            <label htmlFor="neutral-rate" className="personal-area__radio-label">
+              <input
+                type="radio"
+                name="rate"
+                id="bad-rate"
+                className="personal-area__rate personal-area__rate_type_bad"
+              />
+              <img className="personal-area__rate-icon" alt="neutral rate" src="./images/personal-area/bad.svg" />
+            </label>
           </div>
+          {/* Рефакторинг иконок в радиокнопки в процессе */}
           <div className="personal-area__buttons">
             <button
               type="button"

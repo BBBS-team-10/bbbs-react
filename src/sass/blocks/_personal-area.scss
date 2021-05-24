@@ -118,42 +118,69 @@
   align-items: center;
 }
 
-.personal-area__rate {
+.personal-area__radio-label {
+  position: relative;
+  margin-right: 15px;
   width: 26px;
   height: 26px;
-  padding: 0;
-  margin-right: 15px;
-  border: none;
-  outline: none;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  cursor: pointer;
-
-  &_type_good {
-    background-image: url('../images/personal-area/good.svg');
-  }
-
-  &_type_neutral {
-    background-image: url('../images/personal-area/neutral.svg');
-  }
-
-  &_type_bad {
-    background-image: url('../images/personal-area/bad.svg');
-  }
-
-  &_type_active-good {
-    background-image: url('../images/personal-area/good-active.svg');
-  }
-
-  &_type_active-neutral {
-    background-image: url('../images/personal-area/neutral-active.svg');
-  }
-
-  &_type_active-bad {
-    background-image: url('../images/personal-area/bad-active.svg');
-  }
 }
+
+.personal-area__rate {
+  position: absolute;
+  left: 15%;
+  top: 15%;
+  opacity: 0;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+
+.personal-area__rate-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.personal-area__rate + .personal-area__rate-icon {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.personal-area__rate_type_good:checked + .personal-area__rate-icon {
+  background: url('../images/personal-area/good-active.svg') no-repeat;
+}
+.personal-area__rate_type_neutral:checked + .personal-area__rate-icon {
+  background-image: url('../images/personal-area/neutral-active.svg');
+}
+.personal-area__rate_type_bad:checked + .personal-area__rate-icon {
+  background-image: url('../images/personal-area/bad-active.svg');
+}
+
+  //&_type_good {
+  //  background: url('../images/personal-area/good.svg');
+  //}
+//
+//  &_type_neutral {
+//    background-image: url('../images/personal-area/neutral.svg');
+//  }
+//
+//  &_type_bad {
+//    background-image: url('../images/personal-area/bad.svg');
+//  }
+//
+//  &_type_active-good {
+//    background-image: url('../images/personal-area/good-active.svg');
+//  }
+//
+//  &_type_active-neutral {
+//    background-image: url('../images/personal-area/neutral-active.svg');
+//  }
+//
+//  &_type_active-bad {
+//    background-image: url('../images/personal-area/bad-active.svg');
+//  }
+//}
 
 .personal-area__rating-label {
   color: $lightGray;

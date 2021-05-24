@@ -39,6 +39,7 @@ function App() {
         <Switch>
           <Route>
             <Profile
+              path="/profile"
               onDeleteStoryClick={handleDeleteStoryPopupClick}
               onCityChoiceClick={handleCityChoicePopupClick}
             />
