@@ -55,7 +55,11 @@ function StoryForm() {
                 id="good-rate"
                 className="personal-area__rate personal-area__rate_type_good"
               />
-              <img className="personal-area__rate-icon" alt="good rate" src="./images/personal-area/good.svg" />
+              <img
+                className="personal-area__rate-icon"
+                alt="good rate"
+                src="./images/personal-area/good.svg"
+              />
             </label>
             <label htmlFor="neutral-rate" className="personal-area__radio-label">
               <input
@@ -64,7 +68,11 @@ function StoryForm() {
                 id="neutral-rate"
                 className="personal-area__rate personal-area__rate_type_neutral"
               />
-              <img className="personal-area__rate-icon" alt="neutral rate" src="./images/personal-area/neutral.svg" />
+              <img
+                className="personal-area__rate-icon"
+                alt="neutral rate"
+                src="./images/personal-area/neutral.svg"
+              />
             </label>
             <label htmlFor="neutral-rate" className="personal-area__radio-label">
               <input
@@ -73,7 +81,11 @@ function StoryForm() {
                 id="bad-rate"
                 className="personal-area__rate personal-area__rate_type_bad"
               />
-              <img className="personal-area__rate-icon" alt="neutral rate" src="./images/personal-area/bad.svg" />
+              <img
+                className="personal-area__rate-icon"
+                alt="neutral rate"
+                src="./images/personal-area/bad.svg"
+              />
             </label>
           </div>
           {/* Рефакторинг иконок в радиокнопки в процессе */}

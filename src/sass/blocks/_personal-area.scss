@@ -63,7 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(../images/svg/personal-area-plus.svg) center no-repeat;
+  background: url(../../images/svg/personal-area-plus.svg) center no-repeat;
   border: 1px solid $lightGray;
   border-radius: 100%;
   outline: none;
@@ -135,7 +135,6 @@
   height: 20px;
 }
 
-
 .personal-area__rate-icon {
   width: 28px;
   height: 28px;
@@ -145,42 +144,40 @@
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   cursor: pointer;
+
+  &_type_good {
+    background-image: url('../../images/personal-area/good.svg');
+  }
+
+  &_type_neutral {
+    background-image: url('../../images/personal-area/neutral.svg');
+  }
+
+  &_type_bad {
+    background-image: url('../../images/personal-area/bad.svg');
+  }
 }
 
 .personal-area__rate_type_good:checked + .personal-area__rate-icon {
-  background: url('../images/personal-area/good-active.svg') no-repeat;
+  background: url('../../images/personal-area/good-active.svg') no-repeat;
 }
 .personal-area__rate_type_neutral:checked + .personal-area__rate-icon {
-  background-image: url('../images/personal-area/neutral-active.svg');
+  background-image: url('../../images/personal-area/neutral-active.svg');
 }
 .personal-area__rate_type_bad:checked + .personal-area__rate-icon {
-  background-image: url('../images/personal-area/bad-active.svg');
-}
+  background-image: url('../../images/personal-area/bad-active.svg');
+  &_type_active-good {
+    background-image: url('../../images/personal-area/good-active.svg');
+  }
 
-  //&_type_good {
-  //  background: url('../images/personal-area/good.svg');
-  //}
-//
-//  &_type_neutral {
-//    background-image: url('../images/personal-area/neutral.svg');
-//  }
-//
-//  &_type_bad {
-//    background-image: url('../images/personal-area/bad.svg');
-//  }
-//
-//  &_type_active-good {
-//    background-image: url('../images/personal-area/good-active.svg');
-//  }
-//
-//  &_type_active-neutral {
-//    background-image: url('../images/personal-area/neutral-active.svg');
-//  }
-//
-//  &_type_active-bad {
-//    background-image: url('../images/personal-area/bad-active.svg');
-//  }
-//}
+  &_type_active-neutral {
+    background-image: url('../../images/personal-area/neutral-active.svg');
+  }
+
+  &_type_active-bad {
+    background-image: url('../../images/personal-area/bad-active.svg');
+  }
+}
 
 .personal-area__rating-label {
   color: $lightGray;
