@@ -12,21 +12,21 @@ import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
 
 function Calendar({
+  onCalendarInit,
   calendarData,
-  isPopupCalendarSigninOpen,
-  isPopupCalendarDescriptionOpen,
-  onPopupCalendarSigninClose,
-  onPopupCalendarSigninLoogedIn,
   onOpenCalendarCardClick,
   clickedCalendarCard,
   onPopupCloseClick,
-  isPopupCalendarConfirmOpen,
-  onAppointCalendarCardClick,
+  onAppointCalendarClick,
   onSubmitAppointCalendarClick,
-  ispopupCalendarDoneOpen,
   monthList,
-  onCalendarInit,
+  isPopupCalendarSigninOpen,
   onPopupCalendarSigninOpen,
+  onPopupCalendarSigninClose,
+  onPopupCalendarSigninLoogedIn,
+  isPopupCalendarDescriptionOpen,
+  isPopupCalendarConfirmOpen,
+  ispopupCalendarDoneOpen,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const customModalStyles = {
@@ -105,7 +105,7 @@ function Calendar({
                 id={item.id}
                 card={item}
                 onOpenCalendarCardClick={onOpenCalendarCardClick}
-                onAppointCalendarCardClick={onAppointCalendarCardClick}
+                onAppointCalendarCardClick={onAppointCalendarClick}
               />
             ))}
           </>
@@ -176,7 +176,7 @@ Calendar.defaultProps = {
   clickedCalendarCard: [],
   onPopupCloseClick: undefined,
   isPopupCalendarConfirmOpen: false,
-  onAppointCalendarCardClick: undefined,
+  onAppointCalendarClick: undefined,
   onSubmitAppointCalendarClick: undefined,
   ispopupCalendarDoneOpen: false,
   onCalendarInit: undefined,
@@ -194,7 +194,7 @@ Calendar.propTypes = {
   clickedCalendarCard: PropTypes.instanceOf(Object),
   onPopupCloseClick: PropTypes.func,
   isPopupCalendarConfirmOpen: PropTypes.bool,
-  onAppointCalendarCardClick: PropTypes.func,
+  onAppointCalendarClick: PropTypes.func,
   onSubmitAppointCalendarClick: PropTypes.func,
   ispopupCalendarDoneOpen: PropTypes.bool,
   onCalendarInit: PropTypes.func,

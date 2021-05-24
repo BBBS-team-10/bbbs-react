@@ -4,7 +4,6 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
 import api from '../utils/api';
-// import auth from '../utils/auth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Calendar from './Calendar';
@@ -86,7 +85,7 @@ function App() {
   const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
 
   // подтверждение на основной странице
-  function handleAppointCalendarCardClick(card) {
+  function handleCalendarAppointBtnClick(card) {
     if (!card.booked) {
       setClickedCalendarCard(card);
       setIsPopupCalendarConfirmOpen(true);
@@ -124,22 +123,25 @@ function App() {
               <title>Календарь</title>
             </Helmet>
             <Calendar
+              onCalendarInit={handelCalendarInit}
               calendarData={calendarData}
-              isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
-              onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
-              onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
-              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
               onOpenCalendarCardClick={handleOpenCalendarCardClick}
               clickedCalendarCard={clickedCalendarCard}
               onPopupCloseClick={handlePopupCloseClick}
-              isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
-              onAppointCalendarCardClick={handleAppointCalendarCardClick}
+              onAppointCalendarClick={handleCalendarAppointBtnClick}
               onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-              onCancelPopupClick={handlePopupCloseClick}
-              ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
               monthList={monthList}
-              onCalendarInit={handelCalendarInit}
+              // popupSignin
+              isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
               onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
+              onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
+              onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
+              // popupDescription
+              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
+              // popupConfirm
+              isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
+              // popupDone
+              ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
             />
           </Route>
 
