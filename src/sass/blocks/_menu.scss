@@ -283,7 +283,7 @@
     padding-bottom: 50px;
     display: flex;
     justify-content: space-between;
-
+    max-width: 400px;
 
     &_hidden {
       display: none;
@@ -365,5 +365,23 @@
     /* & .menu__user-info {
       display: none;
     } */
+  }
+}
+
+@include atMobile {
+  .menu {
+    padding-right: 0;
+  }
+
+  .menu__lists-wrap {
+    max-width: 300px;
+  }
+
+  .menu__logo {
+    padding-left: 0;
+  }
+
+  .menu__button-list {
+    padding-left: 10px;
   }
 }

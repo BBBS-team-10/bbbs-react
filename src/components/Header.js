@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Header({ headerClass }) {
+function Header({ headerClasses, handleMenuButton }) {
   return (
-    <header className={`header page__section ${headerClass}`}>
+    <header className={`header page__section ${headerClasses.headerOuted} ${headerClasses.header}`}>
       <nav className="menu">
         <a href="./index.html" target="_self" className="menu__logo">
           наставники.про
         </a>
-        <div className="menu__lists-wrap menu__lists-wrap_hidden">
+        <div className={`menu__lists-wrap ${headerClasses.menuListSWrap}`}>
           <ul className="menu__list">
             <li className="menu__list-item">
               <a href="./calendar.html" className="menu__link">
@@ -68,7 +68,7 @@ function Header({ headerClass }) {
               </a>
             </li>
           </ul>
-          <ul className="menu__list menu__list_type_social menu__list_hidden">
+          <ul className={`menu__list menu__list_type_social ${headerClasses.menuListSocial}`}>
             <li className="menu__list-item">
               <a
                 href="https://www.facebook.com/BigBrothers.BigSisters.Russia/"
@@ -111,7 +111,7 @@ function Header({ headerClass }) {
             </li>
           </ul>
         </div>
-        <button className="menu__burger" type="button">
+        <button className={`menu__burger ${headerClasses.menuBurger}`} type="button" onClick={handleMenuButton}>
           <span className="menu__burger-line" />
           <span className="menu__burger-line" />
           <span className="menu__burger-line" />
@@ -198,11 +198,25 @@ function Header({ headerClass }) {
 }
 
 Header.propTypes = {
-  headerClass: PropTypes.string,
+  headerClasses: PropTypes.shape({
+    header: PropTypes.string,
+    menuBurger: PropTypes.string,
+    menuListSWrap: PropTypes.string,
+    menuListSocial: PropTypes.string,
+    headerOuted: PropTypes.string,
+  }),
+  handleMenuButton: PropTypes.func,
 };
 
 Header.defaultProps = {
-  headerClass: '',
+  headerClasses: {
+    header: '',
+    menuBurger: '',
+    menuListSWrap: 'menu__lists-wrap_hidden',
+    menuListSocial: 'menu__list_hidden',
+    headerOuted: '',
+  },
+  handleMenuButton: () => {},
 };
 
 export default Header;
