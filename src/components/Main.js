@@ -65,12 +65,12 @@ Main.propTypes = {
       description: PropTypes.string,
       booked: PropTypes.bool,
     }),
-    history: {
+    history: PropTypes.shape({
       id: PropTypes.number,
       imageUrl: PropTypes.string,
-      title: PropTypes.sting,
-    },
-    place: {
+      title: PropTypes.string,
+    }),
+    place: PropTypes.shape({
       chosen: PropTypes.bool,
       id: PropTypes.number,
       title: PropTypes.string,
@@ -79,45 +79,51 @@ Main.propTypes = {
       description: PropTypes.string,
       imageUrl: PropTypes.string,
       link: PropTypes.string,
-    },
-    articles: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      color: PropTypes.string,
-      title: PropTypes.string,
-    })),
-    movies: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      imageUrl: PropTypes.string,
-      title: PropTypes.string,
-      info: PropTypes.string,
-      link: PropTypes.string,
-      tags: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number,
-          name: PropTypes.string,
-          slug: PropTypes.string,
-        }),
-      ),
-    })),
-    video: {
+    }),
+    articles: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        color: PropTypes.string,
+        title: PropTypes.string,
+      }),
+    ),
+    movies: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        imageUrl: PropTypes.string,
+        title: PropTypes.string,
+        info: PropTypes.string,
+        link: PropTypes.string,
+        tags: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+            slug: PropTypes.string,
+          }),
+        ),
+      }),
+    ),
+    video: PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
       info: PropTypes.string,
       link: PropTypes.string,
       imageUrl: PropTypes.string,
       duration: PropTypes.number,
-    },
-    questions: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      tags: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.number,
-          name: PropTypes.string,
-          slug: PropTypes.string,
-        }),
-      ),
-      title: PropTypes.string,
-    })),
+    }),
+    questions: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        tags: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string,
+            slug: PropTypes.string,
+          }),
+        ),
+        title: PropTypes.string,
+      }),
+    ),
   }),
 };
 

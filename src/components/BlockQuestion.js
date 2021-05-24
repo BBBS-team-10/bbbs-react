@@ -7,7 +7,7 @@ function BlockQuestion({ question }) {
       return <></>;
     }
     return tags.map((tag) => (
-      <li tags__list-item>
+      <li key={tag.id} className="tags__list-item">
         <p className="rubric question__rubric main-questions__rubric">{tag.name}</p>
       </li>
     ));
@@ -23,7 +23,7 @@ function BlockQuestion({ question }) {
 }
 
 BlockQuestion.propTypes = {
-  question: {
+  question: PropTypes.shape({
     id: PropTypes.number,
     tags: PropTypes.arrayOf(
       PropTypes.shape({
@@ -33,7 +33,7 @@ BlockQuestion.propTypes = {
       }),
     ),
     title: PropTypes.string,
-  },
+  }),
 };
 
 BlockQuestion.defaultProps = {

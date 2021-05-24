@@ -54,8 +54,8 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={[]}>
-      <IsLoggedInContext.Provider value>
-        <body className="page">
+      <IsLoggedInContext.Provider value={false}>
+        <div className="page">
           <Header headerClass={headerClass} />
           <Switch>
             <Route exact path="/">
@@ -63,7 +63,7 @@ function App() {
             </Route>
           </Switch>
           <Footer />
-        </body>
+        </div>
       </IsLoggedInContext.Provider>
     </CurrentUserContext.Provider>
   );

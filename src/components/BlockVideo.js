@@ -26,14 +26,14 @@ function BlockVideo({ video }) {
 }
 
 BlockVideo.propTypes = {
-  video: {
+  video: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
     info: PropTypes.string,
     link: PropTypes.string,
     imageUrl: PropTypes.string,
     duration: PropTypes.number,
-  },
+  }),
 };
 
 BlockVideo.defaultProps = {

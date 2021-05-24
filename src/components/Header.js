@@ -188,7 +188,7 @@ function Header({ headerClass }) {
               type="button"
               aria-label="Личный кабинет"
               title="Личный кабинет"
-              onClick="document.location='./index_active.html'"
+              // onClick="document.location='./index_active.html'"
             />
           </li>
         </ul>

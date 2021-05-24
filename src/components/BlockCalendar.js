@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parseJSON } from 'date-fns';
+// import { parseJSON } from 'date-fns';
 
 function showTags(tags) {
   if (!tags) {
@@ -17,7 +17,6 @@ function showTags(tags) {
 function BlockCalendar({ event }) {
   return (
     <article className="calendar main-calendar">
-      {console.log(parseJSON('2021-05-08T19:22:00Z'))}
       <div className="calendar__caption">
         <div className="calendar__info">
           <p className="calendar__type">

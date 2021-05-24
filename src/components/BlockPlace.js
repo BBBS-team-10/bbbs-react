@@ -34,7 +34,7 @@ function BlockPlace({ place }) {
 }
 
 BlockPlace.propTypes = {
-  place: {
+  place: PropTypes.shape({
     chosen: PropTypes.bool,
     id: PropTypes.number,
     title: PropTypes.string,
@@ -43,7 +43,7 @@ BlockPlace.propTypes = {
     description: PropTypes.string,
     imageUrl: PropTypes.string,
     link: PropTypes.string,
-  },
+  }),
 };
 
 BlockPlace.defaultProps = {

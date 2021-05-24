@@ -17,11 +17,11 @@ function BlockArticle({ article }) {
 }
 
 BlockArticle.propTypes = {
-  article: {
+  article: PropTypes.shape({
     id: PropTypes.number,
     color: PropTypes.string,
     title: PropTypes.string,
-  },
+  }),
 };
 
 BlockArticle.defaultProps = {

@@ -13,11 +13,11 @@ function BlockStory({ history }) {
 }
 
 BlockStory.propTypes = {
-  history: {
+  history: PropTypes.shape({
     id: PropTypes.number,
     imageUrl: PropTypes.string,
-    title: PropTypes.sting,
-  },
+    title: PropTypes.string,
+  }),
 };
 
 BlockStory.defaultProps = {

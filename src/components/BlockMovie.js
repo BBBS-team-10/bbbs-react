@@ -7,7 +7,7 @@ function BlockMovie({ movie }) {
       return <></>;
     }
     return tags.map((tag) => (
-      <li>
+      <li key={tag.id}>
         <p className="rubric video__rubric">{tag.name}</p>
       </li>
     ));
@@ -35,7 +35,7 @@ function BlockMovie({ movie }) {
 }
 
 BlockMovie.propTypes = {
-  movie: {
+  movie: PropTypes.shape({
     id: PropTypes.number,
     imageUrl: PropTypes.string,
     title: PropTypes.string,
@@ -48,7 +48,7 @@ BlockMovie.propTypes = {
         slug: PropTypes.string,
       }),
     ),
-  },
+  }),
 };
 
 BlockMovie.defaultProps = {
