@@ -1,76 +1,66 @@
 import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-// import { format } from 'date-fns';
-// import { ru } from 'date-fns/locale';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
-// import api from '../utils/api';
-import auth from '../utils/auth';
+import api from '../utils/api';
+// import auth from '../utils/auth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import Calendar from './Calendar';
 import About from './About';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({ login: '111' });
-  // const [currentCityId] = useState('1');
+  const [currentUser, setCurrentUser] = useState({});
+  const [currentCityId] = useState('1');
   const history = useHistory();
 
   // calendar
   const [calendarData, setCalendarData] = useState([]);
 
-  const [monthList] = useState([]);
+  const [monthList, setMonthList] = useState([]);
 
   function handelCalendarInit() {
-    // const monthListShorter = (arr) => {
-    //   const result = [];
-    //   for (let i = 0; i < arr.length; i += 1) {
-    //     const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
-    //     if (!result.includes(data)) {
-    //       result.push(data);
-    //     }
-    //   }
-    //   return result;
-    // };
-    // if (currentUser.login) {
-    //   api.getCalendarCardsLoggedIn().then((res) => {
-    //     const cardsList = res.data.calendarCards;
-    //     setCalendarData(cardsList);
-    //     const newMonthList = monthListShorter(cardsList);
-    //     setMonthList(newMonthList);
-    //   });
-    // } else {
-    //   api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
-    //     const cardsList = res.data.calendarCards;
-    //     setCalendarData(cardsList);
-    //     const newMonthList = monthListShorter(cardsList);
-    //     setMonthList(newMonthList);
-    //   });
-    // }
+    const toGetMonthListShorter = (arr) => {
+      const result = [];
+      for (let i = 0; i < arr.length; i += 1) {
+        const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
+        if (!result.includes(data)) {
+          result.push(data);
+        }
+      }
+      return result;
+    };
+
+    if (currentUser.login) {
+      api.getCalendarCardsLoggedIn().then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      });
+    } else {
+      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      });
+    }
   }
 
   // PopupCalendarSignin ===============================================================
   const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
 
   function handlePopupCalendarSigninLoggedIn(userData) {
-    auth.login(userData).then((res) => {
-      setCurrentUser({ login: res.data.data.login, password: res.data.data.password });
-      console.log(`user ${res.data.data.login}`);
+    api.login(userData).then(() => {
+      setCurrentUser({ login: '111' });
       setIsPopupCalendarSigninOpen(false);
     });
   }
   function handlePopupCalendarSigninCloseClick() {
     history.push('/');
   }
-
-  React.useEffect(() => {
-    if (currentUser.login) {
-      console.log('запуск апи календаря');
-      handelCalendarInit();
-      setIsPopupCalendarSigninOpen(false);
-    } else {
-      setIsPopupCalendarSigninOpen(true);
-    }
-  }, [currentUser]);
 
   // PopupCalendarDescription==================================================
   const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
