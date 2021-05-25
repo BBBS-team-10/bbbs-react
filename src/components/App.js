@@ -24,6 +24,7 @@ function App() {
     menuListSocial: 'menu__list_hidden',
     headerOuted: '',
   });
+  // переключение классов мобильной версии меню
   function handleMenuButton() {
     if (headerClasses.header === '') {
       setHeaderClasses({
@@ -43,6 +44,7 @@ function App() {
       });
     }
   }
+  // реализация появления меню при обратном скролле
   let scrollPrev = 0;
   function handleScroll() {
     const scrolled = document.documentElement.scrollTop;

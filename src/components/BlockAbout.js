@@ -7,7 +7,7 @@ function BlockAbout() {
       <div className="stub__upper-element">
         {/* <a href="./index.html"> */}
         <img
-          src="./images/svg/calendar_logo.svg"
+          src="../images/svg/calendar_logo.svg"
           alt="Логотип Старшие Братья Старшие Сестры России"
           className="stub__logo"
         />

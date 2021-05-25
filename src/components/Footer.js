@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="footer">
       <a href="./index.html" className="footer__logo" target="_self">
-        <img className="footer__logo-image" src="./images/svg/footer-logo.svg" alt="Логотип Старшие Братья Старшие Сестры России" />
+        <img className="footer__logo-image" src="../images/svg/footer-logo.svg" alt="Логотип Старшие Братья Старшие Сестры России" />
       </a>
       <button className="button footer__button" type="button">Помочь деньгами</button>
       <div className="footer__column footer__column_content_concept">
