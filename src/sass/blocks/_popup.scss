@@ -50,7 +50,7 @@
     }
 
     &_type_calendar {
-      height: 670px;
+      min-height: 670px;
     }
 
     &_type_cities {
@@ -222,6 +222,10 @@
       max-width: 320px;
     }
 
+    &_type_calendar {
+      min-height: 530px;
+    }
+
     &_type_lk {
       padding: 50px 15px;
       width: 320px;
@@ -264,6 +268,18 @@
 
     &_type_cities {
       max-width: 320px;
+    }
+
+    &_type_calendar{
+      position: fixed;
+      top: 0;
+      left: 0;
+      max-width: 550px;
+      width: 100vw;
+      min-height: 100vh;
+      margin: 0;
+      overflow: auto;
+      justify-content: flex-start;
     }
   }
 

@@ -39,8 +39,9 @@ function Calendar({
       background: 'none',
       border: 'none',
       overflow: 'visible',
-      margin: '50px auto 0',
+      margin: '0 auto 0',
       maxWidth: '770px',
+      maxHeight: '100vh',
       padding: '0',
       display: 'flex',
       justifyContent: 'center',
@@ -77,8 +78,8 @@ function Calendar({
       <div className="main">
         <section className="lead page__section">
           <h1 className="main-title">Календарь</h1>
-          <div className="tags">
-            <ul className="tags__list">
+          <div className="tags calendar__tags">
+            <ul className="tags__list tags__list_type_calendar">
               {monthList.map((item) => (
                 <li className="tags__list-item" key={item}>
                   <button

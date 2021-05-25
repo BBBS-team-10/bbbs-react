@@ -2,6 +2,11 @@
   padding-top: 25px;
   position: relative;
 }
+.calendar__tags{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
 
 .tags__list {
   margin: 0;
@@ -13,6 +18,9 @@
   list-style-type: none;
 
   &_type_long {
+    flex-wrap: wrap;
+  }
+  &_type_calendar{
     flex-wrap: wrap;
   }
 }

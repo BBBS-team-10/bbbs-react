@@ -88,20 +88,12 @@ PopupCalendarSignin.defaultProps = {
   clickedCalendarCard: {},
   onCloseClick: undefined,
   onSubmitAppointCalendarClick: undefined,
-  // onCloseClick: undefined,
-  // onSubmit: undefined,
-  // isFormValid: true,
-  // handleChange: undefined,
 };
 
 PopupCalendarSignin.propTypes = {
   clickedCalendarCard: PropTypes.instanceOf(Object),
   onCloseClick: PropTypes.func,
   onSubmitAppointCalendarClick: PropTypes.func,
-  // onCloseClick: PropTypes.func,
-  // onSubmit: PropTypes.func,
-  // isFormValid: PropTypes.bool,
-  // handleChange: PropTypes.func,
 };
 
 export default PopupCalendarSignin;
