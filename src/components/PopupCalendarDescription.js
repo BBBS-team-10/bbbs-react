@@ -11,8 +11,8 @@ function PopupCalendarSignin({ clickedCalendarCard, onCloseClick, onSubmitAppoin
   const minuteStartOfMeeting = format(new Date(clickedCalendarCard.startAt), 'mm', { locale: ru });
   const hourEndOfMeeting = format(new Date(clickedCalendarCard.endAt), 'k', { locale: ru });
   const minuteEndOfMeeting = format(new Date(clickedCalendarCard.endAt), 'mm', { locale: ru });
-  const freeSeats = clickedCalendarCard.seats - clickedCalendarCard.takenSeats;
-
+  const freeSeats = clickedCalendarCard.remainSeats
+    || clickedCalendarCard.seats - clickedCalendarCard.takenSeats;
   let freeSeatsText = '';
   if (clickedCalendarCard.booked) {
     freeSeatsText = '';

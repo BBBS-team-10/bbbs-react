@@ -13,19 +13,23 @@ import BlockQuestion from './BlockQuestion';
 import BlockLead from './BlockLead';
 import CalendarCard from './CalendarCard';
 
-function Main({ mainPageData, onOpenCalendarCardClick, onAppointCalendarCardClick }) {
+function Main({
+  mainPageData,
+  mainPageCalendarCard,
+  onOpenCalendarCardClick,
+  onAppointCalendarCardClick,
+}) {
   const isLoggedIn = React.useContext(isLoggedInContext);
 
   return (
     <main className="main">
       <BlockLead>
         {isLoggedIn ? (
-          mainPageData.event
-          && (
+          mainPageCalendarCard.id && (
             <CalendarCard
-              key={mainPageData.event.id}
-              id={mainPageData.event.id}
-              card={mainPageData.event}
+              key={mainPageCalendarCard.id}
+              id={mainPageCalendarCard.id}
+              card={mainPageCalendarCard}
               onOpenCalendarCardClick={onOpenCalendarCardClick}
               onAppointCalendarCardClick={onAppointCalendarCardClick}
             />
@@ -139,12 +143,31 @@ Main.propTypes = {
       }),
     ),
   }),
+  mainPageCalendarCard: PropTypes.shape({
+    id: PropTypes.number,
+    tags: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        slug: PropTypes.string,
+      }),
+    ),
+    title: PropTypes.string,
+    startAt: PropTypes.string,
+    endAt: PropTypes.string,
+    address: PropTypes.string,
+    contact: PropTypes.string,
+    remainSeats: PropTypes.number,
+    description: PropTypes.string,
+    booked: PropTypes.bool,
+  }),
   onOpenCalendarCardClick: PropTypes.func,
   onAppointCalendarCardClick: PropTypes.func,
 };
 
 Main.defaultProps = {
   mainPageData: {},
+  mainPageCalendarCard: {},
   onOpenCalendarCardClick: () => {},
   onAppointCalendarCardClick: () => {},
 };

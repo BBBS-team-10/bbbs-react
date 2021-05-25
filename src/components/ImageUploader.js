@@ -1,4 +1,5 @@
 import React from 'react';
+/* eslint import/no-unresolved: [2, { ignore: ['react-images-uploading'] }] */
 import ImageUploading from 'react-images-uploading';
 
 function ImageUploader() {
