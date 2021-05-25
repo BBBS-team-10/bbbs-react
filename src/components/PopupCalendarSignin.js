@@ -2,12 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function PopupCalendarSignin({
-  onCloseClick, onSubmit, isFormValid, handleChange,
-}) {
+import { useFormWithValidation } from '../hooks/useForm';
+
+function PopupCalendarSignin({ onCloseClick, onSubmit }) {
+  const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
+
+  React.useEffect(() => {
+    resetForm();
+    setIsValid(false);
+  }, []);
+
   function handlerSubmitForm(e) {
     e.preventDefault();
-    onSubmit();
+    onSubmit({
+      login: values.login,
+      password: values.password,
+    });
   }
   return (
     // <div className="popup popup_type_sign-in popup_opened">
@@ -47,11 +57,7 @@ function PopupCalendarSignin({
       <Link to="/" className="popup__forgot-password">
         Забыли пароль?
       </Link>
-      <button
-        className="button button_theme_light popup__enter"
-        type="submit"
-        disabled={!isFormValid}
-      >
+      <button className="button button_theme_light popup__enter" type="submit" disabled={!isValid}>
         Войти
       </button>
     </form>
@@ -62,15 +68,11 @@ function PopupCalendarSignin({
 PopupCalendarSignin.defaultProps = {
   onCloseClick: undefined,
   onSubmit: undefined,
-  isFormValid: true,
-  handleChange: undefined,
 };
 
 PopupCalendarSignin.propTypes = {
   onCloseClick: PropTypes.func,
   onSubmit: PropTypes.func,
-  isFormValid: PropTypes.bool,
-  handleChange: PropTypes.func,
 };
 
 export default PopupCalendarSignin;

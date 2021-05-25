@@ -10,11 +10,13 @@ import Calendar from './Calendar';
 import Profile from './Profile';
 import PopupDeleteStory from './PopupDeleteStory';
 import PopupCityChoice from './PopupCityChoice';
+import About from './About';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ login: '111' });
   const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
+
   const [currentCityId] = useState('1');
   const history = useHistory();
 
@@ -40,7 +42,7 @@ function App() {
   const [monthList, setMonthList] = useState([]);
 
   function handelCalendarInit() {
-    const monthListShorter = (arr) => {
+    const toGetMonthListShorter = (arr) => {
       const result = [];
       for (let i = 0; i < arr.length; i += 1) {
         const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
@@ -52,17 +54,17 @@ function App() {
     };
 
     if (currentUser.login) {
-      api.getCalendarCardsLogin().then((res) => {
+      api.getCalendarCardsLoggedIn().then((res) => {
         const cardsList = res.data.calendarCards;
         setCalendarData(cardsList);
-        const newMonthList = monthListShorter(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
         setMonthList(newMonthList);
       });
     } else {
-      api.getCalendarCardsLogout(currentCityId).then((res) => {
+      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
         const cardsList = res.data.calendarCards;
         setCalendarData(cardsList);
-        const newMonthList = monthListShorter(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
         setMonthList(newMonthList);
       });
     }
@@ -70,22 +72,16 @@ function App() {
 
   // PopupCalendarSignin ===============================================================
   const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
-  function handlePopupCalendarSignin(userData) {
-    setCurrentUser(userData);
-    setIsPopupCalendarSigninOpen(false);
+
+  function handlePopupCalendarSigninLoggedIn(userData) {
+    api.login(userData).then(() => {
+      setCurrentUser({ login: '111' });
+      setIsPopupCalendarSigninOpen(false);
+    });
   }
   function handlePopupCalendarSigninCloseClick() {
     history.push('/');
   }
-
-  React.useEffect(() => {
-    if (currentUser.login) {
-      handelCalendarInit();
-      setIsPopupCalendarSigninOpen(false);
-    } else {
-      setIsPopupCalendarSigninOpen(true);
-    }
-  }, [currentUser]);
 
   // PopupCalendarDescription==================================================
   const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
@@ -111,7 +107,7 @@ function App() {
   const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
 
   // подтверждение на основной странице
-  function handleAppointCalendarCardClick(card) {
+  function handleCalendarAppointBtnClick(card) {
     if (!card.booked) {
       setClickedCalendarCard(card);
       setIsPopupCalendarConfirmOpen(true);
@@ -155,21 +151,33 @@ function App() {
               <title>Календарь</title>
             </Helmet>
             <Calendar
+              onCalendarInit={handelCalendarInit}
               calendarData={calendarData}
-              isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
-              onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
-              onPopupCalendarSignin={handlePopupCalendarSignin}
-              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
               onOpenCalendarCardClick={handleOpenCalendarCardClick}
               clickedCalendarCard={clickedCalendarCard}
               onPopupCloseClick={handlePopupCloseClick}
-              isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
-              onAppointCalendarCardClick={handleAppointCalendarCardClick}
+              onAppointCalendarClick={handleCalendarAppointBtnClick}
               onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-              onCancelPopupClick={handlePopupCloseClick}
-              ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
               monthList={monthList}
+              // popupSignin
+              isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
+              onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
+              onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
+              onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
+              // popupDescription
+              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
+              // popupConfirm
+              isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
+              // popupDone
+              ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
             />
+          </Route>
+
+          <Route exact path="/about">
+            <Helmet>
+              <title>О проекте</title>
+            </Helmet>
+            <About />
           </Route>
         </Switch>
         <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />

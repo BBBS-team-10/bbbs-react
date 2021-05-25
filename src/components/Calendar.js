@@ -5,8 +5,6 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-import { useFormWithValidation } from '../hooks/useForm';
-
 import CalendarCard from './CalendarCard';
 import PopupCalendarSignin from './PopupCalendarSignin';
 import PopupCalendarDescription from './PopupCalendarDescription';
@@ -14,23 +12,22 @@ import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
 
 function Calendar({
+  onCalendarInit,
   calendarData,
-  isPopupCalendarSigninOpen,
-  isPopupCalendarDescriptionOpen,
-  onPopupCalendarSigninClose,
-  onPopupCalendarSignin,
   onOpenCalendarCardClick,
   clickedCalendarCard,
   onPopupCloseClick,
-  isPopupCalendarConfirmOpen,
-  onAppointCalendarCardClick,
+  onAppointCalendarClick,
   onSubmitAppointCalendarClick,
-  ispopupCalendarDoneOpen,
   monthList,
+  isPopupCalendarSigninOpen,
+  onPopupCalendarSigninOpen,
+  onPopupCalendarSigninClose,
+  onPopupCalendarSigninLoogedIn,
+  isPopupCalendarDescriptionOpen,
+  isPopupCalendarConfirmOpen,
+  ispopupCalendarDoneOpen,
 }) {
-  const {
-    values, handleChange, isValid, resetForm, setIsValid,
-  } = useFormWithValidation();
   const currentUser = React.useContext(CurrentUserContext);
   const customModalStyles = {
     overlay: {
@@ -50,20 +47,14 @@ function Calendar({
     },
   };
 
-  // PopupCalendarSignin
   React.useEffect(() => {
-    if (!currentUser.login) {
-      resetForm();
-      setIsValid(false);
+    if (currentUser.login) {
+      onCalendarInit();
+      onPopupCalendarSigninOpen(false);
+    } else {
+      onPopupCalendarSigninOpen(true);
     }
-  }, [currentUser, isPopupCalendarSigninOpen, resetForm, setIsValid]);
-
-  function handlePopupCalendarSigninSubmit() {
-    onPopupCalendarSignin({
-      login: values.login,
-      password: values.password,
-    });
-  }
+  }, [currentUser]);
 
   const [cardsListFiltered, setCardsListFiltered] = useState([]);
   const [monthChecked, setMonthChecked] = useState('');
@@ -114,7 +105,7 @@ function Calendar({
                 id={item.id}
                 card={item}
                 onOpenCalendarCardClick={onOpenCalendarCardClick}
-                onAppointCalendarCardClick={onAppointCalendarCardClick}
+                onAppointCalendarCardClick={onAppointCalendarClick}
               />
             ))}
           </>
@@ -123,9 +114,7 @@ function Calendar({
       <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
         <PopupCalendarSignin
           onCloseClick={onPopupCalendarSigninClose}
-          onSubmit={handlePopupCalendarSigninSubmit}
-          isFormValid={isValid}
-          handleChange={handleChange}
+          onSubmit={onPopupCalendarSigninLoogedIn}
         />
       </Modal>
 
@@ -182,14 +171,16 @@ Calendar.defaultProps = {
   isPopupCalendarSigninOpen: false,
   isPopupCalendarDescriptionOpen: false,
   onPopupCalendarSigninClose: undefined,
-  onPopupCalendarSignin: undefined,
+  onPopupCalendarSigninLoogedIn: undefined,
   onOpenCalendarCardClick: undefined,
   clickedCalendarCard: [],
   onPopupCloseClick: undefined,
   isPopupCalendarConfirmOpen: false,
-  onAppointCalendarCardClick: undefined,
+  onAppointCalendarClick: undefined,
   onSubmitAppointCalendarClick: undefined,
   ispopupCalendarDoneOpen: false,
+  onCalendarInit: undefined,
+  onPopupCalendarSigninOpen: undefined,
 };
 
 Calendar.propTypes = {
@@ -198,14 +189,16 @@ Calendar.propTypes = {
   isPopupCalendarSigninOpen: PropTypes.bool,
   isPopupCalendarDescriptionOpen: PropTypes.bool,
   onPopupCalendarSigninClose: PropTypes.func,
-  onPopupCalendarSignin: PropTypes.func,
+  onPopupCalendarSigninLoogedIn: PropTypes.func,
   onOpenCalendarCardClick: PropTypes.func,
   clickedCalendarCard: PropTypes.instanceOf(Object),
   onPopupCloseClick: PropTypes.func,
   isPopupCalendarConfirmOpen: PropTypes.bool,
-  onAppointCalendarCardClick: PropTypes.func,
+  onAppointCalendarClick: PropTypes.func,
   onSubmitAppointCalendarClick: PropTypes.func,
   ispopupCalendarDoneOpen: PropTypes.bool,
+  onCalendarInit: PropTypes.func,
+  onPopupCalendarSigninOpen: PropTypes.func,
 };
 
 export default Calendar;

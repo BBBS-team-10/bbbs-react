@@ -10,7 +10,7 @@ class Api {
     this.baseUrl = baseUrl;
   }
 
-  getCalendarCardsLogin() {
+  getCalendarCardsLoggedIn() {
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
     });
@@ -26,7 +26,7 @@ class Api {
       .then((res) => res);
   }
 
-  getCalendarCardsLogout(guestCity) {
+  getCalendarCardsLoggedOut(guestCity) {
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
     });
@@ -37,6 +37,21 @@ class Api {
           'Content-Type': 'application/json',
         },
         data: { city: guestCity },
+      })
+      .then((res) => res);
+  }
+
+  login(userData) {
+    mock.onPost(`${this.baseUrl}/signin`).reply(200, {
+      data: userData,
+    });
+    return axios
+      .post(`${this.baseUrl}/signin`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userData }),
       })
       .then((res) => res);
   }
