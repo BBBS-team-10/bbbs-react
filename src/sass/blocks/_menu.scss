@@ -12,7 +12,8 @@
   line-height: 1.1;
   color: $blue;
   text-decoration: none;
-  transition: 0.2s linear;
+  transition: .2s linear;
+  padding-left: 75px;
 
   &:hover {
     color: $darkBlue;
@@ -111,7 +112,7 @@
 
 .menu__button-list {
   margin: 5px 0 0;
-  padding: 0;
+  padding: 0 75px 0;
   list-style-type: none;
   display: flex;
   justify-content: center;
@@ -198,6 +199,7 @@
     grid-template-rows: 30px 1fr;
     justify-items: center;
     align-items: start;
+    padding-right: 75px;
   }
 
   .menu__button-list {
@@ -280,6 +282,7 @@
     padding-bottom: 50px;
     display: flex;
     justify-content: space-between;
+    max-width: 400px;
 
     &_hidden {
       display: none;
@@ -361,5 +364,23 @@
     /* & .menu__user-info {
       display: none;
     } */
+  }
+}
+
+@include atMobile {
+  .menu {
+    padding-right: 0;
+  }
+
+  .menu__lists-wrap {
+    max-width: 300px;
+  }
+
+  .menu__logo {
+    padding-left: 0;
+  }
+
+  .menu__button-list {
+    padding-left: 10px;
   }
 }

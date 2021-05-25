@@ -1,6 +1,8 @@
 import calendarCardsList from './calendarCardsList';
+import MockedMainPageData from './mocks';
 
 const axios = require('axios');
+
 const MockAdapter = require('axios-mock-adapter');
 
 const mock = new MockAdapter(axios);
@@ -55,10 +57,29 @@ class Api {
       })
       .then((res) => res);
   }
+
+  static checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(new Error(`Ошибка: ${res.status}`));
+  }
+
+  getMainPageInfo() {
+    mock
+      .onGet('http://127.0.0.1:8000/api/v1/users', { headers: { 'Content-Type': 'application/json' } })
+      .reply(200, MockedMainPageData);
+
+    return axios.get(`${this.baseUrl}/users`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(this.checkResponse);
+  }
 }
 
 const api = new Api({
-  baseUrl: 'http://127.0.0.1:8000/api/v1/',
+  baseUrl: 'http://127.0.0.1:8000/api/v1',
 });
 
 export default api;

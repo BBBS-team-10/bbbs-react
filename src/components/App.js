@@ -5,7 +5,11 @@ import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
 
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 import Calendar from './Calendar';
 import Profile from './Profile';
 import PopupDeleteStory from './PopupDeleteStory';
@@ -136,53 +140,128 @@ function App() {
     }
   }
 
+  // header
+  const [headerClasses, setHeaderClasses] = useState({
+    header: '',
+    menuBurger: '',
+    menuListSWrap: 'menu__lists-wrap_hidden',
+    menuListSocial: 'menu__list_hidden',
+    headerOuted: '',
+  });
+  // переключение классов мобильной версии меню
+  function handleMenuButton() {
+    if (headerClasses.header === '') {
+      setHeaderClasses({
+        ...headerClasses,
+        header: 'header_displayed',
+        menuBurger: 'menu__burger_active',
+        menuListSWrap: '',
+        menuListSocial: '',
+      });
+    } else {
+      setHeaderClasses({
+        ...headerClasses,
+        header: '',
+        menuBurger: '',
+        menuListSWrap: 'menu__lists-wrap_hidden',
+        menuListSocial: 'menu__list_hidden',
+      });
+    }
+  }
+  // реализация появления меню при обратном скролле
+  let scrollPrev = 0;
+  function handleScroll() {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 100 && scrolled > scrollPrev) {
+      setHeaderClasses({
+        ...headerClasses,
+        headerOuted: 'header_outed',
+      });
+    } else {
+      setHeaderClasses({
+        ...headerClasses,
+        headerOuted: '',
+      });
+    }
+    scrollPrev = scrolled;
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  // header
+
+  // main page
+  const [mainPageData, setMainPageData] = useState({});
+  React.useEffect(() => {
+    api
+      .getMainPageInfo()
+      .then((response) => {
+        setMainPageData(response.data);
+      })
+      .catch((err) => {
+        console.log(`Ошибка при получении данных с сервера: ${err}`);
+      });
+  }, []);
+  // main page
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <Switch>
-          <Route exact path="/profile">
-            <Profile
-              onDeleteStoryClick={handleDeleteStoryPopupClick}
-              onCityChoiceClick={handleCityChoicePopupClick}
-            />
-          </Route>
-          <Route exact path="/calendar">
-            <Helmet>
-              <title>Календарь</title>
-            </Helmet>
-            <Calendar
-              onCalendarInit={handelCalendarInit}
-              calendarData={calendarData}
-              onOpenCalendarCardClick={handleOpenCalendarCardClick}
-              clickedCalendarCard={clickedCalendarCard}
-              onPopupCloseClick={handlePopupCloseClick}
-              onAppointCalendarClick={handleCalendarAppointBtnClick}
-              onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-              monthList={monthList}
-              // popupSignin
-              isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
-              onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
-              onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
-              onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
-              // popupDescription
-              isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
-              // popupConfirm
-              isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
-              // popupDone
-              ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
-            />
-          </Route>
+      <IsLoggedInContext.Provider value={false}>
+        <div className="page">
+          <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
+          <Switch>
+            <Route exact path="/">
+              <Main mainPageData={mainPageData} />
+            </Route>
+            <Route exact path="/profile">
+              <Profile
+                onDeleteStoryClick={handleDeleteStoryPopupClick}
+                onCityChoiceClick={handleCityChoicePopupClick}
+              />
+            </Route>
+            <Route exact path="/calendar">
+              <Helmet>
+                <title>Календарь</title>
+              </Helmet>
+              <Calendar
+                onCalendarInit={handelCalendarInit}
+                calendarData={calendarData}
+                onOpenCalendarCardClick={handleOpenCalendarCardClick}
+                clickedCalendarCard={clickedCalendarCard}
+                onPopupCloseClick={handlePopupCloseClick}
+                onAppointCalendarClick={handleCalendarAppointBtnClick}
+                onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+                monthList={monthList}
+                // popupSignin
+                isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
+                onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
+                onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
+                onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
+                // popupDescription
+                isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
+                // popupConfirm
+                isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
+                // popupDone
+                ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
+              />
+            </Route>
 
-          <Route exact path="/about">
-            <Helmet>
-              <title>О проекте</title>
-            </Helmet>
-            <About />
-          </Route>
-        </Switch>
-        <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
-        <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
-      </div>
+            <Route exact path="/about">
+              <Helmet>
+                <title>О проекте</title>
+              </Helmet>
+              <About />
+            </Route>
+          </Switch>
+          <Footer />
+          <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
+          <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
+        </div>
+      </IsLoggedInContext.Provider>
     </CurrentUserContext.Provider>
   );
 }
