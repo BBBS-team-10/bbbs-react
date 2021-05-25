@@ -33,6 +33,7 @@ function CalendarCard({
 
   function handleOpenCalendarCardClick() {
     onOpenCalendarCardClick(card);
+    console.log(1);
   }
   function handleAppointCalendarCardClick() {
     onAppointCalendarCardClick(card);

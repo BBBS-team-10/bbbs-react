@@ -210,12 +210,16 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <IsLoggedInContext.Provider value={false}>
+      <IsLoggedInContext.Provider value>
         <div className="page">
           <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
           <Switch>
             <Route exact path="/">
-              <Main mainPageData={mainPageData} />
+              <Main
+                mainPageData={mainPageData}
+                onOpenCalendarCardClick={handleOpenCalendarCardClick}
+                onAppointCalendarCardClick={handleCalendarAppointBtnClick}
+              />
             </Route>
             <Route exact path="/profile">
               <Profile
