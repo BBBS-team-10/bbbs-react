@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function BlockPlace({ place }) {
-  const stopEvent = (event) => event.stopPropagation();
+  function handleExternalLinkClick() {
+    if (place.link) {
+      window.location = place.link;
+    }
+  }
   return (
     <section className="main-section page__section">
-      <NavLink to="/place" className="card__link-wrap">
+      <Link id="RouterNavLink" to="/place" className="card__link-wrap">
         <article className="card-container card-container_type_main-article">
           <div className="card card_type_main card_color_yellow">
             <p className="rubric card__rubric">Выбор наставника</p>
@@ -17,9 +21,9 @@ function BlockPlace({ place }) {
             <div className="card__link-wrap card__link-wrap_content_article-img">
               <img src={place.imageUrl} alt={place.title} className="card__img" />
             </div>
-            <a href={place.link} className="link card__link" onClick={stopEvent}>
+            <button type="button" className="link link_type_main-place card__link" onClick={handleExternalLinkClick}>
               перейти на сайт
-            </a>
+            </button>
           </div>
           <div className="card card_content_annotation card_type_main">
             <div className="card__content">
@@ -30,7 +34,7 @@ function BlockPlace({ place }) {
             </div>
           </div>
         </article>
-      </NavLink>
+      </Link>
     </section>
   );
 }

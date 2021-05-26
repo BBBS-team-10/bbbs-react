@@ -13,6 +13,11 @@
   margin-top: 40px;
 }
 
+.link_type_main-place {
+  border-style: none;
+  background-color: transparent;
+}
+
 @include atDesktop1024 {
   .link {
     font-size: 12px;
