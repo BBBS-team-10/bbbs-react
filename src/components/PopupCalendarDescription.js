@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
-function PopupCalendarSignin({ clickedCalendarCard, onCloseClick, onSubmitAppointCalendarClick }) {
+function PopupCalendarDescription({
+  clickedCalendarCard,
+  onCloseClick,
+  onSubmitAppointCalendarClick,
+}) {
   const monthOfMeeting = format(new Date(clickedCalendarCard.startAt), 'LLLL', { locale: ru });
   const dayNameOfMeeting = format(new Date(clickedCalendarCard.startAt), 'EEEE', { locale: ru });
   const dayNumberOfMeeting = format(new Date(clickedCalendarCard.startAt), 'd', { locale: ru });
@@ -11,8 +15,8 @@ function PopupCalendarSignin({ clickedCalendarCard, onCloseClick, onSubmitAppoin
   const minuteStartOfMeeting = format(new Date(clickedCalendarCard.startAt), 'mm', { locale: ru });
   const hourEndOfMeeting = format(new Date(clickedCalendarCard.endAt), 'k', { locale: ru });
   const minuteEndOfMeeting = format(new Date(clickedCalendarCard.endAt), 'mm', { locale: ru });
-  const freeSeats = clickedCalendarCard.remainSeats
-    || clickedCalendarCard.seats - clickedCalendarCard.takenSeats;
+  const freeSeats =
+    clickedCalendarCard.remainSeats || clickedCalendarCard.seats - clickedCalendarCard.takenSeats;
   let freeSeatsText = '';
   if (clickedCalendarCard.booked) {
     freeSeatsText = '';
@@ -84,16 +88,16 @@ function PopupCalendarSignin({ clickedCalendarCard, onCloseClick, onSubmitAppoin
   );
 }
 
-PopupCalendarSignin.defaultProps = {
+PopupCalendarDescription.defaultProps = {
   clickedCalendarCard: {},
   onCloseClick: undefined,
   onSubmitAppointCalendarClick: undefined,
 };
 
-PopupCalendarSignin.propTypes = {
+PopupCalendarDescription.propTypes = {
   clickedCalendarCard: PropTypes.instanceOf(Object),
   onCloseClick: PropTypes.func,
   onSubmitAppointCalendarClick: PropTypes.func,
 };
 
-export default PopupCalendarSignin;
+export default PopupCalendarDescription;

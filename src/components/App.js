@@ -193,7 +193,7 @@ function App() {
   const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
 
   // записаться/отписаться от события
-  function handleChangelAppoitnCalendar(card, bool) {
+  function handleChangeAppoitnCalendar(card, bool) {
     if (calendarData) {
       const newCardsArray = calendarData.slice(0);
       const ind = newCardsArray.indexOf(card);
@@ -205,7 +205,7 @@ function App() {
   }
 
   // PopupCalendarDone===============================================================
-  const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
+  const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false);
 
   // подтверждение на основной странице
   function handleCalendarAppointBtnClick(card) {
@@ -213,7 +213,7 @@ function App() {
       setClickedCalendarCard(card);
       setIsPopupCalendarConfirmOpen(true);
     } else {
-      handleChangelAppoitnCalendar(card, false);
+      handleChangeAppoitnCalendar(card, false);
     }
   }
 
@@ -222,17 +222,17 @@ function App() {
     setIsPopupCalendarSigninOpen(false);
     setIsPopupCalendarDescriptionOpen(false);
     setIsPopupCalendarConfirmOpen(false);
-    setIspopupCalendarDoneOpen(false);
+    setIsPopupCalendarDoneOpen(false);
   }
 
   // подтверждение или запись в попапе
   function handleSubmitAppointCalendarClick(card) {
     if (!card.booked) {
-      handleChangelAppoitnCalendar(card, true);
+      handleChangeAppoitnCalendar(card, true);
       handlePopupCloseClick();
-      setIspopupCalendarDoneOpen(true);
+      setIsPopupCalendarDoneOpen(true);
     } else {
-      handleChangelAppoitnCalendar(card, false);
+      handleChangeAppoitnCalendar(card, false);
       handlePopupCloseClick();
     }
   }
@@ -280,7 +280,7 @@ function App() {
                 // popupConfirm
                 isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
                 // popupDone
-                ispopupCalendarDoneOpen={ispopupCalendarDoneOpen}
+                isPopupCalendarDoneOpen={isPopupCalendarDoneOpen}
               />
             </Route>
 
@@ -324,7 +324,7 @@ function App() {
           </Modal>
 
           <Modal
-            isOpen={ispopupCalendarDoneOpen}
+            isOpen={isPopupCalendarDoneOpen}
             onRequestClose={() => {
               handlePopupCloseClick();
             }}

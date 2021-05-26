@@ -26,7 +26,7 @@ function Calendar({
   onPopupCalendarSigninLoogedIn,
   isPopupCalendarDescriptionOpen,
   isPopupCalendarConfirmOpen,
-  ispopupCalendarDoneOpen,
+  isPopupCalendarDoneOpen,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const customModalStyles = {
@@ -152,7 +152,7 @@ function Calendar({
       </Modal>
 
       <Modal
-        isOpen={ispopupCalendarDoneOpen}
+        isOpen={isPopupCalendarDoneOpen}
         onRequestClose={() => {
           onPopupCloseClick();
         }}
@@ -181,7 +181,7 @@ Calendar.defaultProps = {
   isPopupCalendarConfirmOpen: false,
   onAppointCalendarClick: undefined,
   onSubmitAppointCalendarClick: undefined,
-  ispopupCalendarDoneOpen: false,
+  isPopupCalendarDoneOpen: false,
   onCalendarInit: undefined,
   onPopupCalendarSigninOpen: undefined,
 };
@@ -199,7 +199,7 @@ Calendar.propTypes = {
   isPopupCalendarConfirmOpen: PropTypes.bool,
   onAppointCalendarClick: PropTypes.func,
   onSubmitAppointCalendarClick: PropTypes.func,
-  ispopupCalendarDoneOpen: PropTypes.bool,
+  isPopupCalendarDoneOpen: PropTypes.bool,
   onCalendarInit: PropTypes.func,
   onPopupCalendarSigninOpen: PropTypes.func,
 };
