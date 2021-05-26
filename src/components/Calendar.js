@@ -69,7 +69,9 @@ function Calendar({
     setCardsListFiltered(calendarData.filter((item) => getMonthName(item) === e.target.id));
   }
   React.useEffect(() => {
-    setCardsListFiltered(calendarData.slice(0));
+    if (calendarData) {
+      setCardsListFiltered(calendarData.slice(0));
+    }
   }, [monthList]);
 
   Modal.setAppElement('#root');
