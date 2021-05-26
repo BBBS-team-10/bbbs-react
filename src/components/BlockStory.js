@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 function BlockStory({ history }) {
   return (
     <article className="card card_content_media">
       <img src={history.imageUrl} alt={history.title} className="card__media-img" />
-      <a href="./stories.html" className="card__media-link section-title">
+      <NavLink to="/stories" className="card__media-link section-title">
         {history.title}
-      </a>
+      </NavLink>
     </article>
   );
 }

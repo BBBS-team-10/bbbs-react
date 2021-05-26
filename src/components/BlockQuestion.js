@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 function BlockQuestion({ question }) {
   function showTags(tags) {
@@ -14,9 +15,9 @@ function BlockQuestion({ question }) {
   }
   return (
     <article className="question main-questions__item">
-      <a href="./questions.html" className="main-questions__link">
+      <NavLink to="/questions" className="main-questions__link">
         <h2 className="section-title question__title main-questions__title">{question.title}</h2>
-      </a>
+      </NavLink>
       <ul className="tags__list">{showTags(question.tags)}</ul>
     </article>
   );

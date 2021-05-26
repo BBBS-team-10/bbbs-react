@@ -1,15 +1,16 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Footer() {
   return (
     <footer className="footer">
-      <a href="./index.html" className="footer__logo" target="_self">
+      <NavLink to="/" className="footer__logo">
         <img
           className="footer__logo-image"
           src="../images/svg/footer-logo.svg"
           alt="Логотип Старшие Братья Старшие Сестры России"
         />
-      </a>
+      </NavLink>
       <button className="button footer__button" type="button">
         Помочь деньгами
       </button>
@@ -17,7 +18,7 @@ function Footer() {
         <p className="footer__brand">&copy; Старшие Братья Старшие Сестры</p>
         <div className="footer__copyright">
           <p className="footer__authors">
-            Разработка – студенты
+            {'Разработка – студенты '}
             <a
               href="https://praktikum.yandex.ru/"
               className="footer__production"
@@ -43,39 +44,39 @@ function Footer() {
       <nav className="footer__column footer__column_content_info">
         <ul className="footer__column-list">
           <li className="footer__column-links">
-            <a href="./about" className="footer__column-link" target="_self">
+            <NavLink to="/about" className="footer__column-link">
               о проекте
-            </a>
+            </NavLink>
           </li>
           <li className="footer__column-links">
-            <a href="./calendar" className="footer__column-link" target="_self">
+            <NavLink to="/calendar" className="footer__column-link">
               календарь
-            </a>
+            </NavLink>
           </li>
           <li className="footer__column-links">
-            <a href="./place" className="footer__column-link" target="_self">
+            <NavLink to="/place" className="footer__column-link">
               куда пойти
-            </a>
+            </NavLink>
           </li>
           <li className="footer__column-links">
-            <a href="./questions" className="footer__column-link" target="_self">
+            <NavLink to="/questions" className="footer__column-link">
               вопросы
-            </a>
+            </NavLink>
           </li>
           <li className="footer__column-links">
-            <a href="./read-watch-main" className="footer__column-link" target="_self">
+            <NavLink to="/read-watch-main" className="footer__column-link">
               читать и смотреть
-            </a>
+            </NavLink>
           </li>
           <li className="footer__column-links">
-            <a href="./rights" className="footer__column-link" target="_self">
+            <NavLink to="/rights" className="footer__column-link">
               права детей
-            </a>
+            </NavLink>
           </li>
           <li className="footer__column-links">
-            <a href="./stories" className="footer__column-link" target="_self">
+            <NavLink to="/stories" className="footer__column-link">
               истории
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>

@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 function BlockArticle({ article }) {
   return (
     <section className="main-section page__section">
       <article className="card card_color_blue card_content_quote" style={{ backgroundColor: article.color }}>
-        <a href="./articles.html" className="card__link-wrap">
+        <NavLink to="/articles" className="card__link-wrap">
           <h3 className="chapter-title card__quote">{article.title}</h3>
-        </a>
-        <a href="./articles.html" className="link card__link">
+        </NavLink>
+        <NavLink to="/articles" className="link card__link">
           читать статью
-        </a>
+        </NavLink>
       </article>
     </section>
   );
