@@ -17,7 +17,7 @@ import PopupCityChoice from './PopupCityChoice';
 import About from './About';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({ login: '111' });
+  const [currentUser, setCurrentUser] = useState({});
   const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
 

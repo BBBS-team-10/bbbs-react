@@ -36,21 +36,24 @@
 
     &_type_done {
       justify-content: center;
-      height: 670px;
+      min-height: 670px;
     }
 
     &_type_confirmation {
-      height: 670px;
+      min-height: 670px;
       justify-content: center;
+      align-self: center;
     }
 
     &_type_sign-in {
       justify-content: space-between;
-      height: 559px;
+      min-height: 630px;
+      align-self: center;
     }
 
     &_type_calendar {
       min-height: 670px;
+      align-self: center;
     }
 
     &_type_cities {
@@ -222,7 +225,19 @@
       max-width: 320px;
     }
 
+    &_type_confirmation{
+      min-height: 430px;
+    }
+
+    &_type_sign-in{
+      min-height: 530px;
+    }
+
     &_type_calendar {
+      min-height: 530px;
+    }
+
+    &_type_done {
       min-height: 530px;
     }
 
@@ -270,11 +285,48 @@
       max-width: 320px;
     }
 
+    &_type_confirmation{
+      position: fixed;
+      left: 0;
+      max-width: 650px;
+      width: 100vw;
+      min-height: 100vh;
+      margin: 0;
+      overflow: auto;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    &_type_sign-in{
+      position: fixed;
+      left: 0;
+      max-width: 650px;
+      width: 100vw;
+      min-height: 100vh;
+      margin: 0;
+      overflow: auto;
+      justify-content: flex-start;
+      align-items: stretch;
+    }
+
+    &_type_done {
+      position: fixed;
+      top: 0;
+      left: 0;
+      max-width: 650px;
+      width: 100vw;
+      min-height: 100vh;
+      margin: 0;
+      overflow: auto;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
     &_type_calendar{
       position: fixed;
       top: 0;
       left: 0;
-      max-width: 550px;
+      max-width: 650px;
       width: 100vw;
       min-height: 100vh;
       margin: 0;
