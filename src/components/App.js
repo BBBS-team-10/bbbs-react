@@ -3,6 +3,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
+import Modal from 'react-modal';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
@@ -15,6 +16,9 @@ import Profile from './Profile';
 import PopupDeleteStory from './PopupDeleteStory';
 import PopupCityChoice from './PopupCityChoice';
 import About from './About';
+import PopupCalendarDescription from './PopupCalendarDescription';
+import PopupCalendarConfirm from './PopupCalendarConfirm';
+import PopupCalendarDone from './PopupCalendarDone';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -38,106 +42,6 @@ function App() {
 
   function closeCityChoicePopup() {
     setCityChoicePopupOpen(false);
-  }
-
-  // calendar
-  const [calendarData, setCalendarData] = useState([]);
-
-  const [monthList, setMonthList] = useState([]);
-
-  function handelCalendarInit() {
-    const toGetMonthListShorter = (arr) => {
-      const result = [];
-      for (let i = 0; i < arr.length; i += 1) {
-        const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
-        if (!result.includes(data)) {
-          result.push(data);
-        }
-      }
-      return result;
-    };
-
-    if (currentUser.login) {
-      api.getCalendarCardsLoggedIn().then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      });
-    } else {
-      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      });
-    }
-  }
-
-  // PopupCalendarSignin ===============================================================
-  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
-
-  function handlePopupCalendarSigninLoggedIn(userData) {
-    api.login(userData).then(() => {
-      setCurrentUser({ login: '111' });
-      setIsPopupCalendarSigninOpen(false);
-    });
-  }
-  function handlePopupCalendarSigninCloseClick() {
-    history.push('/');
-  }
-
-  // PopupCalendarDescription==================================================
-  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
-  const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
-
-  function handleOpenCalendarCardClick(card) {
-    setClickedCalendarCard(card);
-    setIsPopupCalendarDescriptionOpen(true);
-  }
-
-  // PopupCalendarConfirm==========================================================
-  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
-
-  // записаться/отписаться от события
-  function handleChangelAppoitnCalendar(card, bool) {
-    const newCardsArray = calendarData.slice(0);
-    const ind = newCardsArray.indexOf(card);
-    newCardsArray[ind].booked = bool;
-    setCalendarData(newCardsArray);
-  }
-
-  // PopupCalendarDone===============================================================
-  const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
-
-  // подтверждение на основной странице
-  function handleCalendarAppointBtnClick(card) {
-    if (!card.booked) {
-      setClickedCalendarCard(card);
-      setIsPopupCalendarConfirmOpen(true);
-    } else {
-      handleChangelAppoitnCalendar(card, false);
-    }
-  }
-
-  // close all popups========================================================================
-  function handlePopupCloseClick() {
-    setIsPopupCalendarSigninOpen(false);
-    setIsPopupCalendarDescriptionOpen(false);
-    setIsPopupCalendarConfirmOpen(false);
-    setIspopupCalendarDoneOpen(false);
-  }
-
-  // подтверждение или запись в попапе
-  function handleSubmitAppointCalendarClick(card) {
-    if (!card.booked) {
-      handleChangelAppoitnCalendar(card, true);
-      handlePopupCloseClick();
-      setIspopupCalendarDoneOpen(true);
-    } else {
-      handleChangelAppoitnCalendar(card, false);
-      handlePopupCloseClick();
-    }
   }
 
   // header
@@ -196,11 +100,14 @@ function App() {
 
   // main page
   const [mainPageData, setMainPageData] = useState({});
+  const [mainPageCalendarCard, setMainPageCalendarCard] = useState({});
   React.useEffect(() => {
+    Modal.setAppElement('.page');
     api
       .getMainPageInfo()
       .then((response) => {
         setMainPageData(response.data);
+        setMainPageCalendarCard(response.data.event);
       })
       .catch((err) => {
         console.log(`Ошибка при получении данных с сервера: ${err}`);
@@ -208,14 +115,141 @@ function App() {
   }, []);
   // main page
 
+  // calendar
+  const [calendarData, setCalendarData] = useState(null);
+
+  const [monthList, setMonthList] = useState([]);
+
+  function handelCalendarInit() {
+    const toGetMonthListShorter = (arr) => {
+      const result = [];
+      for (let i = 0; i < arr.length; i += 1) {
+        const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
+        if (!result.includes(data)) {
+          result.push(data);
+        }
+      }
+      return result;
+    };
+
+    if (currentUser.login) {
+      api.getCalendarCardsLoggedIn().then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      });
+    } else {
+      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      });
+    }
+  }
+
+  // PopupCalendarSignin ===============================================================
+  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
+
+  function handlePopupCalendarSigninLoggedIn(userData) {
+    api.login(userData).then(() => {
+      setCurrentUser({ login: '111' });
+      setIsPopupCalendarSigninOpen(false);
+    });
+  }
+  function handlePopupCalendarSigninCloseClick() {
+    history.push('/');
+  }
+
+  // PopupCalendarDescription==================================================
+  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
+  const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
+
+  const customModalStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, .5)',
+      overflow: 'scroll',
+      display: 'flex',
+    },
+    content: {
+      background: 'none',
+      border: 'none',
+      overflow: 'visible',
+      margin: '50px auto 0',
+      maxWidth: '770px',
+      padding: '0',
+      display: 'flex',
+      justifyContent: 'center',
+    },
+  };
+
+  function handleOpenCalendarCardClick(card) {
+    setClickedCalendarCard(card);
+    setIsPopupCalendarDescriptionOpen(true);
+  }
+
+  // PopupCalendarConfirm==========================================================
+  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
+
+  // записаться/отписаться от события
+  function handleChangelAppoitnCalendar(card, bool) {
+    if (calendarData) {
+      const newCardsArray = calendarData.slice(0);
+      const ind = newCardsArray.indexOf(card);
+      newCardsArray[ind].booked = bool;
+      setCalendarData(newCardsArray);
+    } else {
+      setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
+    }
+  }
+
+  // PopupCalendarDone===============================================================
+  const [ispopupCalendarDoneOpen, setIspopupCalendarDoneOpen] = useState(false);
+
+  // подтверждение на основной странице
+  function handleCalendarAppointBtnClick(card) {
+    if (!card.booked) {
+      setClickedCalendarCard(card);
+      setIsPopupCalendarConfirmOpen(true);
+    } else {
+      handleChangelAppoitnCalendar(card, false);
+    }
+  }
+
+  // close all popups========================================================================
+  function handlePopupCloseClick() {
+    setIsPopupCalendarSigninOpen(false);
+    setIsPopupCalendarDescriptionOpen(false);
+    setIsPopupCalendarConfirmOpen(false);
+    setIspopupCalendarDoneOpen(false);
+  }
+
+  // подтверждение или запись в попапе
+  function handleSubmitAppointCalendarClick(card) {
+    if (!card.booked) {
+      handleChangelAppoitnCalendar(card, true);
+      handlePopupCloseClick();
+      setIspopupCalendarDoneOpen(true);
+    } else {
+      handleChangelAppoitnCalendar(card, false);
+      handlePopupCloseClick();
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <IsLoggedInContext.Provider value={false}>
+      <IsLoggedInContext.Provider value>
         <div className="page">
           <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
           <Switch>
             <Route exact path="/">
-              <Main mainPageData={mainPageData} />
+              <Main
+                mainPageData={mainPageData}
+                mainPageCalendarCard={mainPageCalendarCard}
+                onOpenCalendarCardClick={handleOpenCalendarCardClick}
+                onAppointCalendarCardClick={handleCalendarAppointBtnClick}
+              />
             </Route>
             <Route exact path="/profile">
               <Profile
@@ -260,6 +294,48 @@ function App() {
           <Footer />
           <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
           <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
+          <Modal
+            isOpen={isPopupCalendarDescriptionOpen}
+            onRequestClose={() => {
+              handlePopupCloseClick();
+            }}
+            shouldCloseOnOverlayClick
+            style={customModalStyles}
+          >
+            <PopupCalendarDescription
+              clickedCalendarCard={clickedCalendarCard}
+              onCloseClick={handlePopupCloseClick}
+              onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+            />
+          </Modal>
+          <Modal
+            isOpen={isPopupCalendarConfirmOpen}
+            onRequestClose={() => {
+              handlePopupCloseClick();
+            }}
+            shouldCloseOnOverlayClick
+            style={customModalStyles}
+          >
+            <PopupCalendarConfirm
+              clickedCalendarCard={clickedCalendarCard}
+              onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+              onCloseClick={handlePopupCloseClick}
+            />
+          </Modal>
+
+          <Modal
+            isOpen={ispopupCalendarDoneOpen}
+            onRequestClose={() => {
+              handlePopupCloseClick();
+            }}
+            shouldCloseOnOverlayClick
+            style={customModalStyles}
+          >
+            <PopupCalendarDone
+              clickedCalendarCard={clickedCalendarCard}
+              onCloseClick={handlePopupCloseClick}
+            />
+          </Modal>
         </div>
       </IsLoggedInContext.Provider>
     </CurrentUserContext.Provider>

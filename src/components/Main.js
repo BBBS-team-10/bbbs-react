@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isLoggedInContext from '../contexts/IsLoggedInContext';
 import BlockAbout from './BlockAbout';
-import BlockCalendar from './BlockCalendar';
+// import BlockCalendar from './BlockCalendar';
 import BlockStory from './BlockStory';
 import BlockPlace from './BlockPlace';
 import BlockArticle from './BlockArticle';
@@ -11,14 +11,32 @@ import BlockVideo from './BlockVideo';
 import BlockFacebook from './BlockFacebook';
 import BlockQuestion from './BlockQuestion';
 import BlockLead from './BlockLead';
+import CalendarCard from './CalendarCard';
 
-function Main({ mainPageData }) {
+function Main({
+  mainPageData,
+  mainPageCalendarCard,
+  onOpenCalendarCardClick,
+  onAppointCalendarCardClick,
+}) {
   const isLoggedIn = React.useContext(isLoggedInContext);
 
   return (
     <main className="main">
       <BlockLead>
-        {isLoggedIn ? <BlockCalendar event={mainPageData.event} /> : <BlockAbout />}
+        {isLoggedIn ? (
+          mainPageCalendarCard.id && (
+            <CalendarCard
+              key={mainPageCalendarCard.id}
+              id={mainPageCalendarCard.id}
+              card={mainPageCalendarCard}
+              onOpenCalendarCardClick={onOpenCalendarCardClick}
+              onAppointCalendarCardClick={onAppointCalendarCardClick}
+            />
+          )
+        ) : (
+          <BlockAbout />
+        )}
         <BlockStory history={mainPageData.history} />
       </BlockLead>
       <BlockPlace place={mainPageData.place} />
@@ -125,10 +143,33 @@ Main.propTypes = {
       }),
     ),
   }),
+  mainPageCalendarCard: PropTypes.shape({
+    id: PropTypes.number,
+    tags: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        slug: PropTypes.string,
+      }),
+    ),
+    title: PropTypes.string,
+    startAt: PropTypes.string,
+    endAt: PropTypes.string,
+    address: PropTypes.string,
+    contact: PropTypes.string,
+    remainSeats: PropTypes.number,
+    description: PropTypes.string,
+    booked: PropTypes.bool,
+  }),
+  onOpenCalendarCardClick: PropTypes.func,
+  onAppointCalendarCardClick: PropTypes.func,
 };
 
 Main.defaultProps = {
   mainPageData: {},
+  mainPageCalendarCard: {},
+  onOpenCalendarCardClick: () => {},
+  onAppointCalendarCardClick: () => {},
 };
 
 export default Main;

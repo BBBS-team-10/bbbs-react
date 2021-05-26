@@ -13,7 +13,7 @@ function CalendarCard({
   const minuteStartOfMeeting = format(new Date(card.startAt), 'mm', { locale: ru });
   const hourEndOfMeeting = format(new Date(card.endAt), 'k', { locale: ru });
   const minuteEndOfMeeting = format(new Date(card.endAt), 'mm', { locale: ru });
-  const freeSeats = card.seats - card.takenSeats;
+  const freeSeats = card.remainSeats || card.seats - card.takenSeats;
 
   let freeSeatsText = '';
   if (card.booked) {

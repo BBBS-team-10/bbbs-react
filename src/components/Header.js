@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 function Header({ headerClasses, handleMenuButton }) {
   const history = useHistory();
+
   function handleProfileButton() {
     history.push('/profile');
   }
