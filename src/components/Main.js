@@ -16,7 +16,7 @@ import CalendarCard from './CalendarCard';
 function Main({
   mainPageData,
   mainPageCalendarCard,
-  onOpenCalendarCardClick,
+  onOpenCalendarDescriptionPopup,
   onAppointCalendarCardClick,
 }) {
   const isLoggedIn = React.useContext(isLoggedInContext);
@@ -30,7 +30,7 @@ function Main({
               key={mainPageCalendarCard.id}
               id={mainPageCalendarCard.id}
               card={mainPageCalendarCard}
-              onOpenCalendarCardClick={onOpenCalendarCardClick}
+              onOpenCalendarDescriptionPopup={onOpenCalendarDescriptionPopup}
               onAppointCalendarCardClick={onAppointCalendarCardClick}
             />
           )
@@ -161,14 +161,14 @@ Main.propTypes = {
     description: PropTypes.string,
     booked: PropTypes.bool,
   }),
-  onOpenCalendarCardClick: PropTypes.func,
+  onOpenCalendarDescriptionPopup: PropTypes.func,
   onAppointCalendarCardClick: PropTypes.func,
 };
 
 Main.defaultProps = {
   mainPageData: {},
   mainPageCalendarCard: {},
-  onOpenCalendarCardClick: () => {},
+  onOpenCalendarDescriptionPopup: () => {},
   onAppointCalendarCardClick: () => {},
 };
 

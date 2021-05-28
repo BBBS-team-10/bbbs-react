@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
-function CalendarCard({
-  card, id, onOpenCalendarCardClick, onAppointCalendarCardClick,
-}) {
+function CalendarCard({ card, id, onOpenCalendarDescriptionPopup, onAppointCalendarCardClick }) {
   const monthOfMeeting = format(new Date(card.startAt), 'LLLL', { locale: ru });
   const dayNameOfMeeting = format(new Date(card.startAt), 'EEEE', { locale: ru });
   const dayNumberOfMeeting = format(new Date(card.startAt), 'd', { locale: ru });
@@ -32,7 +30,7 @@ function CalendarCard({
   }
 
   function handleOpenCalendarCardClick() {
-    onOpenCalendarCardClick(card);
+    onOpenCalendarDescriptionPopup(card);
   }
   function handleAppointCalendarCardClick() {
     onAppointCalendarCardClick(card);
@@ -89,14 +87,14 @@ function CalendarCard({
 CalendarCard.defaultProps = {
   card: [],
   id: undefined,
-  onOpenCalendarCardClick: undefined,
+  onOpenCalendarDescriptionPopup: undefined,
   onAppointCalendarCardClick: undefined,
 };
 
 CalendarCard.propTypes = {
   card: PropTypes.instanceOf(Object),
   id: PropTypes.number,
-  onOpenCalendarCardClick: PropTypes.func,
+  onOpenCalendarDescriptionPopup: PropTypes.func,
   onAppointCalendarCardClick: PropTypes.func,
 };
 

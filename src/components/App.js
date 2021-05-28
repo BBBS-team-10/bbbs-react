@@ -19,6 +19,7 @@ import About from './About';
 import PopupCalendarDescription from './PopupCalendarDescription';
 import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
+import PopupCalendarSignin from './PopupCalendarSignin';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -115,56 +116,9 @@ function App() {
   }, []);
   // main page
 
-  // calendar
+  // calendar===============================================================================
   const [calendarData, setCalendarData] = useState(null);
-
   const [monthList, setMonthList] = useState([]);
-
-  function handelCalendarInit() {
-    const toGetMonthListShorter = (arr) => {
-      const result = [];
-      for (let i = 0; i < arr.length; i += 1) {
-        const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
-        if (!result.includes(data)) {
-          result.push(data);
-        }
-      }
-      return result;
-    };
-
-    if (currentUser.login) {
-      api.getCalendarCardsLoggedIn().then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      });
-    } else {
-      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      });
-    }
-  }
-
-  // PopupCalendarSignin ===============================================================
-  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
-
-  function handlePopupCalendarSigninLoggedIn(userData) {
-    api.login(userData).then(() => {
-      setCurrentUser({ login: '111' });
-      setIsPopupCalendarSigninOpen(false);
-    });
-  }
-  function handlePopupCalendarSigninCloseClick() {
-    history.push('/');
-  }
-
-  // PopupCalendarDescription==================================================
-  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
-  const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
 
   const customModalStyles = {
     overlay: {
@@ -184,13 +138,71 @@ function App() {
     },
   };
 
-  function handleOpenCalendarCardClick(card) {
+  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
+  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
+  const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
+  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
+  const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false);
+
+  // close all popups================================
+  function handlePopupCloseClick() {
+    setIsPopupCalendarSigninOpen(false);
+    setIsPopupCalendarDescriptionOpen(false);
+    setIsPopupCalendarConfirmOpen(false);
+    setIsPopupCalendarDoneOpen(false);
+  }
+
+  // PopupCalendarSignin ===============================
+  function handelCalendarInit() {
+    const toGetMonthListShorter = (arr) => {
+      const result = [];
+      for (let i = 0; i < arr.length; i += 1) {
+        const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
+        if (!result.includes(data)) {
+          result.push(data);
+        }
+      }
+      return result;
+    };
+
+    if (currentUser.login) {
+      // получение карточек для зарегестрированного пользователя
+      setIsPopupCalendarSigninOpen(false);
+      api.getCalendarCardsLoggedIn().then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      });
+    } else {
+      // получение карточек для незарегестрированного пользователя
+      setIsPopupCalendarSigninOpen(true);
+      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      });
+    }
+  }
+
+  function handlePopupCalendarSigninLoggedIn(userData) {
+    api.login(userData).then(() => {
+      setCurrentUser({ login: userData.login, password: userData.password });
+      setIsPopupCalendarSigninOpen(false);
+    });
+  }
+  function handlePopupCalendarSigninCloseClick() {
+    handlePopupCloseClick();
+    history.push('/');
+  }
+
+  // PopupCalendarDescription===========================
+
+  function handleOpenCalendarDescriptionPopup(card) {
     setClickedCalendarCard(card);
     setIsPopupCalendarDescriptionOpen(true);
   }
-
-  // PopupCalendarConfirm==========================================================
-  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
 
   // записаться/отписаться от события
   function handleChangeAppoitnCalendar(card, bool) {
@@ -204,10 +216,7 @@ function App() {
     }
   }
 
-  // PopupCalendarDone===============================================================
-  const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false);
-
-  // подтверждение на основной странице
+  // подтверждение или отписка на основной странице
   function handleCalendarAppointBtnClick(card) {
     if (!card.booked) {
       setClickedCalendarCard(card);
@@ -215,14 +224,6 @@ function App() {
     } else {
       handleChangeAppoitnCalendar(card, false);
     }
-  }
-
-  // close all popups========================================================================
-  function handlePopupCloseClick() {
-    setIsPopupCalendarSigninOpen(false);
-    setIsPopupCalendarDescriptionOpen(false);
-    setIsPopupCalendarConfirmOpen(false);
-    setIsPopupCalendarDoneOpen(false);
   }
 
   // подтверждение или запись в попапе
@@ -247,7 +248,7 @@ function App() {
               <Main
                 mainPageData={mainPageData}
                 mainPageCalendarCard={mainPageCalendarCard}
-                onOpenCalendarCardClick={handleOpenCalendarCardClick}
+                onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
                 onAppointCalendarCardClick={handleCalendarAppointBtnClick}
               />
             </Route>
@@ -264,23 +265,24 @@ function App() {
               <Calendar
                 onCalendarInit={handelCalendarInit}
                 calendarData={calendarData}
-                onOpenCalendarCardClick={handleOpenCalendarCardClick}
-                clickedCalendarCard={clickedCalendarCard}
-                onPopupCloseClick={handlePopupCloseClick}
+                onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
                 onAppointCalendarClick={handleCalendarAppointBtnClick}
-                onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
                 monthList={monthList}
-                // popupSignin
-                isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
-                onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
-                onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
-                onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
-                // popupDescription
-                isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
-                // popupConfirm
-                isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
-                // popupDone
-                isPopupCalendarDoneOpen={isPopupCalendarDoneOpen}
+                // --------------------
+                // clickedCalendarCard={clickedCalendarCard}
+                // onPopupCloseClick={handlePopupCloseClick}
+                // onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+                // // popupSignin
+                // isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
+                // onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
+                // onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
+                // onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
+                // // popupDescription
+                // isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
+                // // popupConfirm
+                // isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
+                // // popupDone
+                // isPopupCalendarDoneOpen={isPopupCalendarDoneOpen}
               />
             </Route>
 
@@ -294,6 +296,12 @@ function App() {
           <Footer />
           <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
           <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
+          <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
+            <PopupCalendarSignin
+              onCloseClick={handlePopupCalendarSigninCloseClick}
+              onSubmit={handlePopupCalendarSigninLoggedIn}
+            />
+          </Modal>
           <Modal
             isOpen={isPopupCalendarDescriptionOpen}
             onRequestClose={() => {
@@ -308,6 +316,7 @@ function App() {
               onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
             />
           </Modal>
+
           <Modal
             isOpen={isPopupCalendarConfirmOpen}
             onRequestClose={() => {

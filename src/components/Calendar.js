@@ -6,55 +6,51 @@ import { ru } from 'date-fns/locale';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 import CalendarCard from './CalendarCard';
-import PopupCalendarSignin from './PopupCalendarSignin';
-import PopupCalendarDescription from './PopupCalendarDescription';
-import PopupCalendarConfirm from './PopupCalendarConfirm';
-import PopupCalendarDone from './PopupCalendarDone';
+// import PopupCalendarSignin from './PopupCalendarSignin';
+// import PopupCalendarDescription from './PopupCalendarDescription';
+// import PopupCalendarConfirm from './PopupCalendarConfirm';
+// import PopupCalendarDone from './PopupCalendarDone';
 
 function Calendar({
   onCalendarInit,
   calendarData,
-  onOpenCalendarCardClick,
-  clickedCalendarCard,
-  onPopupCloseClick,
+  onOpenCalendarDescriptionPopup,
   onAppointCalendarClick,
-  onSubmitAppointCalendarClick,
   monthList,
-  isPopupCalendarSigninOpen,
-  onPopupCalendarSigninOpen,
-  onPopupCalendarSigninClose,
-  onPopupCalendarSigninLoogedIn,
-  isPopupCalendarDescriptionOpen,
-  isPopupCalendarConfirmOpen,
-  isPopupCalendarDoneOpen,
+  // ---------------
+  // clickedCalendarCard,
+  // onPopupCloseClick,
+  // onSubmitAppointCalendarClick,
+  // isPopupCalendarSigninOpen,
+  // onPopupCalendarSigninOpen,
+  // onPopupCalendarSigninClose,
+  // onPopupCalendarSigninLoogedIn,
+  // isPopupCalendarDescriptionOpen,
+  // isPopupCalendarConfirmOpen,
+  // isPopupCalendarDoneOpen,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const customModalStyles = {
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      overflow: 'scroll',
-      display: 'flex',
-    },
-    content: {
-      background: 'none',
-      border: 'none',
-      overflow: 'visible',
-      margin: '0 auto 0',
-      maxWidth: '770px',
-      maxHeight: '100vh',
-      padding: '0',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  };
+  // const customModalStyles = {
+  //   overlay: {
+  //     backgroundColor: 'rgba(0, 0, 0, .5)',
+  //     overflow: 'scroll',
+  //     display: 'flex',
+  //   },
+  //   content: {
+  //     background: 'none',
+  //     border: 'none',
+  //     overflow: 'visible',
+  //     margin: '0 auto 0',
+  //     maxWidth: '770px',
+  //     maxHeight: '100vh',
+  //     padding: '0',
+  //     display: 'flex',
+  //     justifyContent: 'center',
+  //   },
+  // };
 
   React.useEffect(() => {
-    if (currentUser.login) {
-      onCalendarInit();
-      onPopupCalendarSigninOpen(false);
-    } else {
-      onPopupCalendarSigninOpen(true);
-    }
+    onCalendarInit();
   }, [currentUser]);
 
   const [cardsListFiltered, setCardsListFiltered] = useState([]);
@@ -107,14 +103,14 @@ function Calendar({
                 key={item.id}
                 id={item.id}
                 card={item}
-                onOpenCalendarCardClick={onOpenCalendarCardClick}
+                onOpenCalendarDescriptionPopup={onOpenCalendarDescriptionPopup}
                 onAppointCalendarCardClick={onAppointCalendarClick}
               />
             ))}
           </>
         </section>
       </div>
-      <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
+      {/* <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
         <PopupCalendarSignin
           onCloseClick={onPopupCalendarSigninClose}
           onSubmit={onPopupCalendarSigninLoogedIn}
@@ -163,45 +159,45 @@ function Calendar({
           clickedCalendarCard={clickedCalendarCard}
           onCloseClick={onPopupCloseClick}
         />
-      </Modal>
+      </Modal> */}
     </>
   );
 }
 
 Calendar.defaultProps = {
-  calendarData: [],
-  monthList: [],
-  isPopupCalendarSigninOpen: false,
-  isPopupCalendarDescriptionOpen: false,
-  onPopupCalendarSigninClose: undefined,
-  onPopupCalendarSigninLoogedIn: undefined,
-  onOpenCalendarCardClick: undefined,
-  clickedCalendarCard: [],
-  onPopupCloseClick: undefined,
-  isPopupCalendarConfirmOpen: false,
-  onAppointCalendarClick: undefined,
-  onSubmitAppointCalendarClick: undefined,
-  isPopupCalendarDoneOpen: false,
   onCalendarInit: undefined,
-  onPopupCalendarSigninOpen: undefined,
+  calendarData: [],
+  onOpenCalendarDescriptionPopup: undefined,
+  onAppointCalendarClick: undefined,
+  monthList: [],
+  // isPopupCalendarSigninOpen: false,
+  // isPopupCalendarDescriptionOpen: false,
+  // onPopupCalendarSigninClose: undefined,
+  // onPopupCalendarSigninLoogedIn: undefined,
+  // clickedCalendarCard: [],
+  // onPopupCloseClick: undefined,
+  // isPopupCalendarConfirmOpen: false,
+  // onSubmitAppointCalendarClick: undefined,
+  // isPopupCalendarDoneOpen: false,
+  // onPopupCalendarSigninOpen: undefined,
 };
 
 Calendar.propTypes = {
-  calendarData: PropTypes.instanceOf(Array),
-  monthList: PropTypes.instanceOf(Array),
-  isPopupCalendarSigninOpen: PropTypes.bool,
-  isPopupCalendarDescriptionOpen: PropTypes.bool,
-  onPopupCalendarSigninClose: PropTypes.func,
-  onPopupCalendarSigninLoogedIn: PropTypes.func,
-  onOpenCalendarCardClick: PropTypes.func,
-  clickedCalendarCard: PropTypes.instanceOf(Object),
-  onPopupCloseClick: PropTypes.func,
-  isPopupCalendarConfirmOpen: PropTypes.bool,
-  onAppointCalendarClick: PropTypes.func,
-  onSubmitAppointCalendarClick: PropTypes.func,
-  isPopupCalendarDoneOpen: PropTypes.bool,
   onCalendarInit: PropTypes.func,
-  onPopupCalendarSigninOpen: PropTypes.func,
+  calendarData: PropTypes.instanceOf(Array),
+  onOpenCalendarDescriptionPopup: PropTypes.func,
+  onAppointCalendarClick: PropTypes.func,
+  monthList: PropTypes.instanceOf(Array),
+  // isPopupCalendarSigninOpen: PropTypes.bool,
+  // isPopupCalendarDescriptionOpen: PropTypes.bool,
+  // onPopupCalendarSigninClose: PropTypes.func,
+  // onPopupCalendarSigninLoogedIn: PropTypes.func,
+  // clickedCalendarCard: PropTypes.instanceOf(Object),
+  // onPopupCloseClick: PropTypes.func,
+  // isPopupCalendarConfirmOpen: PropTypes.bool,
+  // onSubmitAppointCalendarClick: PropTypes.func,
+  // isPopupCalendarDoneOpen: PropTypes.bool,
+  // onPopupCalendarSigninOpen: PropTypes.func,
 };
 
 export default Calendar;
