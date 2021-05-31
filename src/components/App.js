@@ -120,24 +120,6 @@ function App() {
   const [calendarData, setCalendarData] = useState(null);
   const [monthList, setMonthList] = useState([]);
 
-  const customModalStyles = {
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      overflow: 'scroll',
-      display: 'flex',
-    },
-    content: {
-      background: 'none',
-      border: 'none',
-      overflow: 'visible',
-      margin: '50px auto 0',
-      maxWidth: '770px',
-      padding: '0',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  };
-
   const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
   const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
   const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
@@ -268,21 +250,6 @@ function App() {
                 onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
                 onAppointCalendarClick={handleCalendarAppointBtnClick}
                 monthList={monthList}
-                // --------------------
-                // clickedCalendarCard={clickedCalendarCard}
-                // onPopupCloseClick={handlePopupCloseClick}
-                // onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-                // // popupSignin
-                // isPopupCalendarSigninOpen={isPopupCalendarSigninOpen}
-                // onPopupCalendarSigninOpen={setIsPopupCalendarSigninOpen}
-                // onPopupCalendarSigninClose={handlePopupCalendarSigninCloseClick}
-                // onPopupCalendarSigninLoogedIn={handlePopupCalendarSigninLoggedIn}
-                // // popupDescription
-                // isPopupCalendarDescriptionOpen={isPopupCalendarDescriptionOpen}
-                // // popupConfirm
-                // isPopupCalendarConfirmOpen={isPopupCalendarConfirmOpen}
-                // // popupDone
-                // isPopupCalendarDoneOpen={isPopupCalendarDoneOpen}
               />
             </Route>
 
@@ -296,7 +263,7 @@ function App() {
           <Footer />
           <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
           <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
-          <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
+          <Modal isOpen={isPopupCalendarSigninOpen} className="modal" overlayClassName="overlay">
             <PopupCalendarSignin
               onCloseClick={handlePopupCalendarSigninCloseClick}
               onSubmit={handlePopupCalendarSigninLoggedIn}
@@ -308,7 +275,8 @@ function App() {
               handlePopupCloseClick();
             }}
             shouldCloseOnOverlayClick
-            style={customModalStyles}
+            className="modal"
+            overlayClassName="overlay"
           >
             <PopupCalendarDescription
               clickedCalendarCard={clickedCalendarCard}
@@ -323,7 +291,8 @@ function App() {
               handlePopupCloseClick();
             }}
             shouldCloseOnOverlayClick
-            style={customModalStyles}
+            className="modal"
+            overlayClassName="overlay"
           >
             <PopupCalendarConfirm
               clickedCalendarCard={clickedCalendarCard}
@@ -338,7 +307,8 @@ function App() {
               handlePopupCloseClick();
             }}
             shouldCloseOnOverlayClick
-            style={customModalStyles}
+            className="modal"
+            overlayClassName="overlay"
           >
             <PopupCalendarDone
               clickedCalendarCard={clickedCalendarCard}
