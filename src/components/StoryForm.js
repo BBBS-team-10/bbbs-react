@@ -9,6 +9,26 @@ function StoryForm() {
     reset,
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
+  const [goodRateChecked, setGoodRateChecked] = React.useState(false);
+  const [neutralRateChecked, setNeutralRateChecked] = React.useState(false);
+  const [badRateChecked, setBadRateChecked] = React.useState(false);
+  function onChangeGood() {
+    setNeutralRateChecked(false);
+    setBadRateChecked(false);
+    setGoodRateChecked(true);
+  }
+
+  function onChangeNeutral() {
+    setGoodRateChecked(false);
+    setBadRateChecked(false);
+    setNeutralRateChecked(true);
+  }
+
+  function onChangeBad() {
+    setGoodRateChecked(false);
+    setNeutralRateChecked(false);
+    setBadRateChecked(true);
+  }
 
   function onSubmit(data) {
     console.log(data);
@@ -48,24 +68,34 @@ function StoryForm() {
             что понравилось / не понравилось"
           />
           <div className="personal-area__rating">
-            <label htmlFor="good-rate" className="personal-area__radio-label">
+            <div className="personal-area__radio-label">
               <input
                 type="radio"
                 name="rate"
                 id="good-rate"
                 className="personal-area__rate personal-area__rate_type_good"
+                onClick={onChangeGood}
               />
               <img
                 className="personal-area__rate-icon"
                 alt="good rate"
                 src="./images/personal-area/good.svg"
               />
-            </label>
-            <label htmlFor="neutral-rate" className="personal-area__radio-label">
+              {/* eslint-disable-next-line */}
+              <label
+                htmlFor="good-rate"
+                className="personal-area__radio-phrase personal-area__radio-phrase_type_good"
+              >
+                {goodRateChecked && 'Было классно!'}
+                {(!goodRateChecked && !badRateChecked && !neutralRateChecked) && 'Оцените проведенное время'}
+              </label>
+            </div>
+            <div className="personal-area__radio-label">
               <input
                 type="radio"
                 name="rate"
                 id="neutral-rate"
+                onClick={onChangeNeutral}
                 className="personal-area__rate personal-area__rate_type_neutral"
               />
               <img
@@ -73,12 +103,20 @@ function StoryForm() {
                 alt="neutral rate"
                 src="./images/personal-area/neutral.svg"
               />
-            </label>
-            <label htmlFor="neutral-rate" className="personal-area__radio-label">
+              {/* eslint-disable-next-line */}
+              <label
+                htmlFor="neutral-rate"
+                className="personal-area__radio-phrase personal-area__radio-phrase_type_neutral"
+              >
+                {neutralRateChecked ? 'Нормально' : ''}
+              </label>
+            </div>
+            <div className="personal-area__radio-label">
               <input
                 type="radio"
                 name="rate"
                 id="bad-rate"
+                onClick={onChangeBad}
                 className="personal-area__rate personal-area__rate_type_bad"
               />
               <img
@@ -86,9 +124,15 @@ function StoryForm() {
                 alt="neutral rate"
                 src="./images/personal-area/bad.svg"
               />
-            </label>
+              {/* eslint-disable-next-line */}
+              <label
+                htmlFor="bad-rate"
+                className="personal-area__radio-phrase personal-area__radio-phrase_type_bad"
+              >
+                {badRateChecked ? 'Что-то пошло не так' : ''}
+              </label>
+            </div>
           </div>
-          {/* Рефакторинг иконок в радиокнопки в процессе */}
           <div className="personal-area__buttons">
             <button
               type="button"

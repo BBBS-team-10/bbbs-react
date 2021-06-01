@@ -5,7 +5,10 @@ import { NavLink } from 'react-router-dom';
 function BlockArticle({ article }) {
   return (
     <section className="main-section page__section">
-      <article className="card card_color_blue card_content_quote" style={{ backgroundColor: article.color }}>
+      <article
+        className="card card_color_blue card_content_quote"
+        style={{ backgroundColor: article.color }}
+      >
         <NavLink to="/articles" className="card__link-wrap">
           <h3 className="chapter-title card__quote">{article.title}</h3>
         </NavLink>

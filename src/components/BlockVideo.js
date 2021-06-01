@@ -13,11 +13,17 @@ function BlockVideo({ video }) {
             </NavLink>
             <p className="caption card__title-caption">{video.info}</p>
           </div>
-          <NavLink to={video.link} className="link card__link link_action_open-video">смотреть видео</NavLink>
+          <NavLink to={video.link} className="link card__link link_action_open-video">
+            смотреть видео
+          </NavLink>
         </div>
         <div className="card card_color_yellow card_content_video video">
           <NavLink to="./video" className="card__link-wrap">
-            <img src={video.imageUrl} alt={`Превью видео ${video.title}`} className="video__img video__img_position_main-video" />
+            <img
+              src={video.imageUrl}
+              alt={`Превью видео ${video.title}`}
+              className="video__img video__img_position_main-video"
+            />
             <p className="video__duration video__duration_position_main-video paragraph">59:44</p>
           </NavLink>
         </div>

@@ -21,7 +21,11 @@ function BlockPlace({ place }) {
             <div className="card__link-wrap card__link-wrap_content_article-img">
               <img src={place.imageUrl} alt={place.title} className="card__img" />
             </div>
-            <button type="button" className="link link_type_main-place card__link" onClick={handleExternalLinkClick}>
+            <button
+              type="button"
+              className="link link_type_main-place card__link"
+              onClick={handleExternalLinkClick}
+            >
               перейти на сайт
             </button>
           </div>

@@ -116,6 +116,7 @@
 .personal-area__rating {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .personal-area__radio-label {
@@ -123,6 +124,11 @@
   margin-right: 15px;
   width: 26px;
   height: 26px;
+}
+
+.personal-area__rate-icon {
+  width: 28px;
+  height: 28px;
 }
 
 .personal-area__rate {
@@ -133,17 +139,6 @@
   cursor: pointer;
   width: 20px;
   height: 20px;
-}
-
-.personal-area__rate-icon {
-  width: 28px;
-  height: 28px;
-}
-
-.personal-area__rate + .personal-area__rate-icon {
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-  cursor: pointer;
 
   &_type_good {
     background-image: url('../../images/personal-area/good.svg');
@@ -158,6 +153,12 @@
   }
 }
 
+.personal-area__rate + .personal-area__rate-icon {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
 .personal-area__rate_type_good:checked + .personal-area__rate-icon {
   background: url('../../images/personal-area/good-active.svg') no-repeat;
 }
@@ -166,33 +167,40 @@
 }
 .personal-area__rate_type_bad:checked + .personal-area__rate-icon {
   background-image: url('../../images/personal-area/bad-active.svg');
-  &_type_active-good {
-    background-image: url('../../images/personal-area/good-active.svg');
-  }
-
-  &_type_active-neutral {
-    background-image: url('../../images/personal-area/neutral-active.svg');
-  }
-
-  &_type_active-bad {
-    background-image: url('../../images/personal-area/bad-active.svg');
-  }
 }
 
-.personal-area__rating-label {
+.personal-area__radio-phrase {
+  font-family: $ptRootUI;
+  font-style: normal;
+  font-weight: normal;
+  width: 192px;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.2px;
+  position: absolute;
+  right: -285px;
+  bottom: 0;
   color: $lightGray;
+}
 
-  &_type_good {
-    color: $green;
-  }
+.personal-area__radio-phrase_type_neutral {
+  right: -245px;
+}
+.personal-area__radio-phrase_type_bad {
+  right: -205px;
+}
 
-  &_type_neutral {
-    color: $lightGray;
-  }
+.personal-area__rate_type_good:checked + .personal-area__rate-icon + .personal-area__radio-phrase_type_good {
+  color: $green;
+}
 
-  &_type_bad {
-    color: $error;
-  }
+.personal-area__rate_type_neutral:checked + .personal-area__rate-icon + .personal-area__radio-phrase_type_neutral {
+
+  color: $darkGray;
+}
+
+.personal-area__rate_type_bad:checked + .personal-area__rate-icon + .personal-area__radio-phrase_type_bad {
+  color: $error;
 }
 
 .personal-area__buttons {

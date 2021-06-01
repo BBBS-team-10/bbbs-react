@@ -117,7 +117,11 @@ function Header({ headerClasses, handleMenuButton }) {
             </li>
           </ul>
         </div>
-        <button className={`menu__burger ${headerClasses.menuBurger}`} type="button" onClick={handleMenuButton}>
+        <button
+          className={`menu__burger ${headerClasses.menuBurger}`}
+          type="button"
+          onClick={handleMenuButton}
+        >
           <span className="menu__burger-line" />
           <span className="menu__burger-line" />
           <span className="menu__burger-line" />
