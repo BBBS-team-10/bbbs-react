@@ -263,7 +263,11 @@ function App() {
           <Footer />
           <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
           <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
-          <Modal isOpen={isPopupCalendarSigninOpen} className="modal" overlayClassName="overlay">
+          <Modal
+            isOpen={isPopupCalendarSigninOpen}
+            className="popup__modal"
+            overlayClassName="popup__overlay"
+          >
             <PopupCalendarSignin
               onCloseClick={handlePopupCalendarSigninCloseClick}
               onSubmit={handlePopupCalendarSigninLoggedIn}
@@ -275,8 +279,8 @@ function App() {
               handlePopupCloseClick();
             }}
             shouldCloseOnOverlayClick
-            className="modal"
-            overlayClassName="overlay"
+            className="popup__modal"
+            overlayClassName="popup__overlay"
           >
             <PopupCalendarDescription
               clickedCalendarCard={clickedCalendarCard}
@@ -291,8 +295,8 @@ function App() {
               handlePopupCloseClick();
             }}
             shouldCloseOnOverlayClick
-            className="modal"
-            overlayClassName="overlay"
+            className="popup__modal"
+            overlayClassName="popup__overlay"
           >
             <PopupCalendarConfirm
               clickedCalendarCard={clickedCalendarCard}
@@ -307,8 +311,8 @@ function App() {
               handlePopupCloseClick();
             }}
             shouldCloseOnOverlayClick
-            className="modal"
-            overlayClassName="overlay"
+            className="popup__modal"
+            overlayClassName="popup__overlay"
           >
             <PopupCalendarDone
               clickedCalendarCard={clickedCalendarCard}
