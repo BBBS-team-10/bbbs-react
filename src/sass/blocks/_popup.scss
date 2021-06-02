@@ -8,7 +8,6 @@
   display: flex;
   justify-content: center;
   outline: none;
-  z-index: 200;
 }
 .popup__overlay{
   background-color: rgba(0, 0, 0, .5);
@@ -31,14 +30,13 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   transition: visibility 0.3s, opacity 0.3s linear;
-  z-index: 200;
 
   &__container {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    z-index: 2;
+    z-index: 200;
     margin: 75px auto 0;
     padding: 50px 100px;
     border-radius: 30px;
@@ -311,6 +309,7 @@
 
     &_type_confirmation{
       position: fixed;
+      top: 0;
       left: 0;
       max-width: 650px;
       width: 100vw;
@@ -323,6 +322,7 @@
 
     &_type_sign-in{
       position: fixed;
+      top: 0;
       left: 0;
       max-width: 650px;
       width: 100vw;
