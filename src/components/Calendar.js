@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentContext } from '../contexts/CurrentContext';
 
 import CalendarCard from './CalendarCard';
-// import PopupCalendarSignin from './PopupCalendarSignin';
-// import PopupCalendarDescription from './PopupCalendarDescription';
-// import PopupCalendarConfirm from './PopupCalendarConfirm';
-// import PopupCalendarDone from './PopupCalendarDone';
 
 function Calendar({
   onCalendarInit,
@@ -18,7 +14,7 @@ function Calendar({
   onAppointCalendarClick,
   monthList,
 }) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const context = React.useContext(CurrentContext);
   // перемотка в начало страницы
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,7 +23,7 @@ function Calendar({
   // загрузка данных
   React.useEffect(() => {
     onCalendarInit();
-  }, [currentUser]);
+  }, [context.currentUser]);
 
   const [cardsListFiltered, setCardsListFiltered] = useState([]);
   const [monthChecked, setMonthChecked] = useState('');
@@ -86,56 +82,6 @@ function Calendar({
           </>
         </section>
       </div>
-      {/* <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
-        <PopupCalendarSignin
-          onCloseClick={onPopupCalendarSigninClose}
-          onSubmit={onPopupCalendarSigninLoogedIn}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isPopupCalendarDescriptionOpen}
-        onRequestClose={() => {
-          onPopupCloseClick();
-        }}
-        shouldCloseOnOverlayClick
-        style={customModalStyles}
-      >
-        <PopupCalendarDescription
-          clickedCalendarCard={clickedCalendarCard}
-          onCloseClick={onPopupCloseClick}
-          onSubmitAppointCalendarClick={onSubmitAppointCalendarClick}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isPopupCalendarConfirmOpen}
-        onRequestClose={() => {
-          onPopupCloseClick();
-        }}
-        shouldCloseOnOverlayClick
-        style={customModalStyles}
-      >
-        <PopupCalendarConfirm
-          clickedCalendarCard={clickedCalendarCard}
-          onSubmitAppointCalendarClick={onSubmitAppointCalendarClick}
-          onCloseClick={onPopupCloseClick}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isPopupCalendarDoneOpen}
-        onRequestClose={() => {
-          onPopupCloseClick();
-        }}
-        shouldCloseOnOverlayClick
-        style={customModalStyles}
-      >
-        <PopupCalendarDone
-          clickedCalendarCard={clickedCalendarCard}
-          onCloseClick={onPopupCloseClick}
-        />
-      </Modal> */}
     </>
   );
 }
@@ -146,16 +92,6 @@ Calendar.defaultProps = {
   onOpenCalendarDescriptionPopup: undefined,
   onAppointCalendarClick: undefined,
   monthList: [],
-  // isPopupCalendarSigninOpen: false,
-  // isPopupCalendarDescriptionOpen: false,
-  // onPopupCalendarSigninClose: undefined,
-  // onPopupCalendarSigninLoogedIn: undefined,
-  // clickedCalendarCard: [],
-  // onPopupCloseClick: undefined,
-  // isPopupCalendarConfirmOpen: false,
-  // onSubmitAppointCalendarClick: undefined,
-  // isPopupCalendarDoneOpen: false,
-  // onPopupCalendarSigninOpen: undefined,
 };
 
 Calendar.propTypes = {
@@ -164,16 +100,6 @@ Calendar.propTypes = {
   onOpenCalendarDescriptionPopup: PropTypes.func,
   onAppointCalendarClick: PropTypes.func,
   monthList: PropTypes.instanceOf(Array),
-  // isPopupCalendarSigninOpen: PropTypes.bool,
-  // isPopupCalendarDescriptionOpen: PropTypes.bool,
-  // onPopupCalendarSigninClose: PropTypes.func,
-  // onPopupCalendarSigninLoogedIn: PropTypes.func,
-  // clickedCalendarCard: PropTypes.instanceOf(Object),
-  // onPopupCloseClick: PropTypes.func,
-  // isPopupCalendarConfirmOpen: PropTypes.bool,
-  // onSubmitAppointCalendarClick: PropTypes.func,
-  // isPopupCalendarDoneOpen: PropTypes.bool,
-  // onPopupCalendarSigninOpen: PropTypes.func,
 };
 
 export default Calendar;

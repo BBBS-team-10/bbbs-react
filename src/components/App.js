@@ -5,8 +5,8 @@ import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
 import Modal from 'react-modal';
 import api from '../utils/api';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
+import { CurrentContext } from '../contexts/CurrentContext';
+// import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
 
 import Header from './Header';
 import Main from './Main';
@@ -240,107 +240,105 @@ function App() {
   Modal.setAppElement('#root');
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <IsLoggedInContext.Provider value={isLoggedIn}>
-        <div className="page">
-          <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
-          <Switch>
-            <Route exact path="/">
-              <Main
-                mainPageData={mainPageData}
-                mainPageCalendarCard={mainPageCalendarCard}
-                onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
-                onAppointCalendarCardClick={handleCalendarAppointBtnClick}
-              />
-            </Route>
-            <Route exact path="/profile">
-              <Profile
-                onDeleteStoryClick={handleDeleteStoryPopupClick}
-                onCityChoiceClick={handleCityChoicePopupClick}
-              />
-            </Route>
-            <Route exact path="/calendar">
-              <Helmet>
-                <title>Календарь</title>
-              </Helmet>
-              <Calendar
-                onCalendarInit={handelCalendarInit}
-                calendarData={calendarData}
-                onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
-                onAppointCalendarClick={handleCalendarAppointBtnClick}
-                monthList={monthList}
-              />
-            </Route>
+    <CurrentContext.Provider value={{ currentUser, isLoggedIn }}>
+      <div className="page">
+        <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
+        <Switch>
+          <Route exact path="/">
+            <Main
+              mainPageData={mainPageData}
+              mainPageCalendarCard={mainPageCalendarCard}
+              onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
+              onAppointCalendarCardClick={handleCalendarAppointBtnClick}
+            />
+          </Route>
+          <Route exact path="/profile">
+            <Profile
+              onDeleteStoryClick={handleDeleteStoryPopupClick}
+              onCityChoiceClick={handleCityChoicePopupClick}
+            />
+          </Route>
+          <Route exact path="/calendar">
+            <Helmet>
+              <title>Календарь</title>
+            </Helmet>
+            <Calendar
+              onCalendarInit={handelCalendarInit}
+              calendarData={calendarData}
+              onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
+              onAppointCalendarClick={handleCalendarAppointBtnClick}
+              monthList={monthList}
+            />
+          </Route>
 
-            <Route exact path="/about">
-              <Helmet>
-                <title>О проекте</title>
-              </Helmet>
-              <About />
-            </Route>
-          </Switch>
-          <Footer />
-          <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
-          <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
-          <Modal
-            isOpen={isPopupCalendarSigninOpen}
-            className="popup__modal"
-            overlayClassName="popup__overlay"
-          >
-            <PopupCalendarSignin
-              onCloseClick={handlePopupCalendarSigninCloseClick}
-              onSubmit={handlePopupCalendarSigninLoggedIn}
-            />
-          </Modal>
-          <Modal
-            isOpen={isPopupCalendarDescriptionOpen}
-            onRequestClose={() => {
-              handlePopupCloseClick();
-            }}
-            shouldCloseOnOverlayClick
-            className="popup__modal"
-            overlayClassName="popup__overlay"
-          >
-            <PopupCalendarDescription
-              clickedCalendarCard={clickedCalendarCard}
-              onCloseClick={handlePopupCloseClick}
-              onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-            />
-          </Modal>
+          <Route exact path="/about">
+            <Helmet>
+              <title>О проекте</title>
+            </Helmet>
+            <About />
+          </Route>
+        </Switch>
+        <Footer />
+        <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
+        <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
+        <Modal
+          isOpen={isPopupCalendarSigninOpen}
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCalendarSignin
+            onCloseClick={handlePopupCalendarSigninCloseClick}
+            onSubmit={handlePopupCalendarSigninLoggedIn}
+          />
+        </Modal>
+        <Modal
+          isOpen={isPopupCalendarDescriptionOpen}
+          onRequestClose={() => {
+            handlePopupCloseClick();
+          }}
+          shouldCloseOnOverlayClick
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCalendarDescription
+            clickedCalendarCard={clickedCalendarCard}
+            onCloseClick={handlePopupCloseClick}
+            onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+          />
+        </Modal>
 
-          <Modal
-            isOpen={isPopupCalendarConfirmOpen}
-            onRequestClose={() => {
-              handlePopupCloseClick();
-            }}
-            shouldCloseOnOverlayClick
-            className="popup__modal"
-            overlayClassName="popup__overlay"
-          >
-            <PopupCalendarConfirm
-              clickedCalendarCard={clickedCalendarCard}
-              onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-              onCloseClick={handlePopupCloseClick}
-            />
-          </Modal>
+        <Modal
+          isOpen={isPopupCalendarConfirmOpen}
+          onRequestClose={() => {
+            handlePopupCloseClick();
+          }}
+          shouldCloseOnOverlayClick
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCalendarConfirm
+            clickedCalendarCard={clickedCalendarCard}
+            onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+            onCloseClick={handlePopupCloseClick}
+          />
+        </Modal>
 
-          <Modal
-            isOpen={isPopupCalendarDoneOpen}
-            onRequestClose={() => {
-              handlePopupCloseClick();
-            }}
-            shouldCloseOnOverlayClick
-            className="popup__modal"
-            overlayClassName="popup__overlay"
-          >
-            <PopupCalendarDone
-              clickedCalendarCard={clickedCalendarCard}
-              onCloseClick={handlePopupCloseClick}
-            />
-          </Modal>
-        </div>
-      </IsLoggedInContext.Provider>
-    </CurrentUserContext.Provider>
+        <Modal
+          isOpen={isPopupCalendarDoneOpen}
+          onRequestClose={() => {
+            handlePopupCloseClick();
+          }}
+          shouldCloseOnOverlayClick
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCalendarDone
+            clickedCalendarCard={clickedCalendarCard}
+            onCloseClick={handlePopupCloseClick}
+          />
+        </Modal>
+      </div>
+    </CurrentContext.Provider>
   );
 }
 

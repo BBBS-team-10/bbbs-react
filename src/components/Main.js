@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isLoggedInContext from '../contexts/IsLoggedInContext';
+import { CurrentContext } from '../contexts/CurrentContext';
 import BlockAbout from './BlockAbout';
 // import BlockCalendar from './BlockCalendar';
 import BlockStory from './BlockStory';
@@ -19,12 +19,12 @@ function Main({
   onOpenCalendarDescriptionPopup,
   onAppointCalendarCardClick,
 }) {
-  const isLoggedIn = React.useContext(isLoggedInContext);
+  const context = React.useContext(CurrentContext);
 
   return (
     <main className="main">
       <BlockLead>
-        {isLoggedIn ? (
+        {context.isLoggedIn ? (
           mainPageCalendarCard.id && (
             <CalendarCard
               key={mainPageCalendarCard.id}
