@@ -22,12 +22,21 @@ import PopupCalendarDone from './PopupCalendarDone';
 import PopupCalendarSignin from './PopupCalendarSignin';
 
 function App() {
+  // context
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
+  const [currentCityId] = useState(undefined);
 
-  const [currentCityId] = useState('1');
+  // city modal open on init=======================================================================
+  React.useEffect(() => {
+    if (isLoggedIn && !currentCityId) {
+      setCityChoicePopupOpen(true);
+    }
+  }, [isLoggedIn]);
+
   const history = useHistory();
 
   function handleDeleteStoryPopupClick() {
@@ -134,6 +143,7 @@ function App() {
     setIsPopupCalendarDescriptionOpen(false);
     setIsPopupCalendarConfirmOpen(false);
     setIsPopupCalendarDoneOpen(false);
+    setCityChoicePopupOpen(false);
   }
 
   function handelCalendarInit() {
@@ -337,6 +347,18 @@ function App() {
             onCloseClick={handlePopupCloseClick}
           />
         </Modal>
+
+        {/* <Modal
+          isOpen={isCityChoicePopupOpen}
+          onRequestClose={() => {
+            handlePopupCloseClick();
+          }}
+          shouldCloseOnOverlayClick
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCityChoice />
+        </Modal> */}
       </div>
     </CurrentContext.Provider>
   );
