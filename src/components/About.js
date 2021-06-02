@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import logoImg from '../images/svg/calendar_logo.svg';
 
 function About() {
+  // перемотка в начало страницы
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="main">

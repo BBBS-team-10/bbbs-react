@@ -17,38 +17,14 @@ function Calendar({
   onOpenCalendarDescriptionPopup,
   onAppointCalendarClick,
   monthList,
-  // ---------------
-  // clickedCalendarCard,
-  // onPopupCloseClick,
-  // onSubmitAppointCalendarClick,
-  // isPopupCalendarSigninOpen,
-  // onPopupCalendarSigninOpen,
-  // onPopupCalendarSigninClose,
-  // onPopupCalendarSigninLoogedIn,
-  // isPopupCalendarDescriptionOpen,
-  // isPopupCalendarConfirmOpen,
-  // isPopupCalendarDoneOpen,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  // const customModalStyles = {
-  //   overlay: {
-  //     backgroundColor: 'rgba(0, 0, 0, .5)',
-  //     overflow: 'scroll',
-  //     display: 'flex',
-  //   },
-  //   content: {
-  //     background: 'none',
-  //     border: 'none',
-  //     overflow: 'visible',
-  //     margin: '0 auto 0',
-  //     maxWidth: '770px',
-  //     maxHeight: '100vh',
-  //     padding: '0',
-  //     display: 'flex',
-  //     justifyContent: 'center',
-  //   },
-  // };
+  // перемотка в начало страницы
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  // загрузка данных
   React.useEffect(() => {
     onCalendarInit();
   }, [currentUser]);

@@ -23,6 +23,7 @@ import PopupCalendarSignin from './PopupCalendarSignin';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
 
@@ -102,10 +103,11 @@ function App() {
   // main page
   const [mainPageData, setMainPageData] = useState({});
   const [mainPageCalendarCard, setMainPageCalendarCard] = useState({});
+
   React.useEffect(() => {
-    Modal.setAppElement('.page');
+    const access = localStorage.getItem('access');
     api
-      .getMainPageInfo()
+      .getMainPageInfo(access)
       .then((response) => {
         setMainPageData(response.data);
         setMainPageCalendarCard(response.data.event);
@@ -134,7 +136,6 @@ function App() {
     setIsPopupCalendarDoneOpen(false);
   }
 
-  // PopupCalendarSignin ===============================
   function handelCalendarInit() {
     const toGetMonthListShorter = (arr) => {
       const result = [];
@@ -146,11 +147,11 @@ function App() {
       }
       return result;
     };
-
-    if (currentUser.login) {
+    const access = localStorage.getItem('access');
+    if (isLoggedIn) {
       // получение карточек для зарегестрированного пользователя
-      setIsPopupCalendarSigninOpen(false);
-      api.getCalendarCardsLoggedIn().then((res) => {
+      // setIsPopupCalendarSigninOpen(false);
+      api.getCalendarCardsLoggedIn(access).then((res) => {
         const cardsList = res.data.calendarCards;
         setCalendarData(cardsList);
         const newMonthList = toGetMonthListShorter(cardsList);
@@ -158,8 +159,8 @@ function App() {
       });
     } else {
       // получение карточек для незарегестрированного пользователя
-      setIsPopupCalendarSigninOpen(true);
-      api.getCalendarCardsLoggedOut(currentCityId).then((res) => {
+      // setIsPopupCalendarSigninOpen(true);
+      api.getCalendarCardsLoggedOut(access, currentCityId).then((res) => {
         const cardsList = res.data.calendarCards;
         setCalendarData(cardsList);
         const newMonthList = toGetMonthListShorter(cardsList);
@@ -168,9 +169,12 @@ function App() {
     }
   }
 
+  // PopupCalendarSignin ===============================
   function handlePopupCalendarSigninLoggedIn(userData) {
-    api.login(userData).then(() => {
-      setCurrentUser({ login: userData.login, password: userData.password });
+    api.login(userData).then((res) => {
+      setCurrentUser({ username: res.data.username, password: res.data.password });
+      localStorage.setItem('access', JSON.stringify(res.access));
+      setIsLoggedIn(true);
       setIsPopupCalendarSigninOpen(false);
     });
   }
@@ -220,9 +224,24 @@ function App() {
     }
   }
 
+  // signin=================================================================================
+  function handelAppInit() {
+    if (isLoggedIn) {
+      setIsPopupCalendarSigninOpen(false);
+    } else {
+      setIsPopupCalendarSigninOpen(true);
+    }
+  }
+
+  React.useEffect(() => {
+    handelAppInit();
+  }, [currentUser]);
+
+  Modal.setAppElement('#root');
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <IsLoggedInContext.Provider value>
+      <IsLoggedInContext.Provider value={isLoggedIn}>
         <div className="page">
           <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
           <Switch>
