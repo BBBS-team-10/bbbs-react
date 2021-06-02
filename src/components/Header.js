@@ -2,38 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, NavLink } from 'react-router-dom';
 
-function Header({ headerClasses, handleMenuButton }) {
+function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
   const history = useHistory();
 
   function handleProfileButton() {
-    handleMenuButton();
+    onCloseBurgerMenu();
     history.push('/profile');
   }
   return (
     <header className={`header page__section ${headerClasses.headerOuted} ${headerClasses.header}`}>
       <nav className="menu">
-        <NavLink to="/" className="menu__logo" onClick={handleMenuButton}>
+        <NavLink to="/" className="menu__logo" onClick={onCloseBurgerMenu}>
           наставники.про
         </NavLink>
         <div className={`menu__lists-wrap ${headerClasses.menuListSWrap}`}>
           <ul className="menu__list">
             <li className="menu__list-item">
-              <NavLink to="/calendar" className="menu__link" onClick={handleMenuButton}>
+              <NavLink to="/calendar" className="menu__link" onClick={onCloseBurgerMenu}>
                 Календарь
               </NavLink>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/place" className="menu__link" onClick={handleMenuButton}>
+              <NavLink to="/place" className="menu__link" onClick={onCloseBurgerMenu}>
                 Куда пойти
               </NavLink>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/questions" className="menu__link" onClick={handleMenuButton}>
+              <NavLink to="/questions" className="menu__link" onClick={onCloseBurgerMenu}>
                 Вопросы
               </NavLink>
             </li>
             <li className="menu__list-item menu__dropdown-item">
-              <NavLink to="/read-watch-main" className="menu__link" onClick={handleMenuButton}>
+              <NavLink to="/read-watch-main" className="menu__link" onClick={onCloseBurgerMenu}>
                 Читать и смотреть
               </NavLink>
               <ul className="menu__dropdown-list">
@@ -41,7 +41,7 @@ function Header({ headerClasses, handleMenuButton }) {
                   <NavLink
                     to="/catalog"
                     className="link menu__dropdown-link"
-                    onClick={handleMenuButton}
+                    onClick={onCloseBurgerMenu}
                   >
                     Справочник
                   </NavLink>
@@ -50,7 +50,7 @@ function Header({ headerClasses, handleMenuButton }) {
                   <NavLink
                     to="/video"
                     className="link menu__dropdown-link"
-                    onClick={handleMenuButton}
+                    onClick={onCloseBurgerMenu}
                   >
                     Видео
                   </NavLink>
@@ -59,7 +59,7 @@ function Header({ headerClasses, handleMenuButton }) {
                   <NavLink
                     to="/articles"
                     className="link menu__dropdown-link"
-                    onClick={handleMenuButton}
+                    onClick={onCloseBurgerMenu}
                   >
                     Статьи
                   </NavLink>
@@ -68,7 +68,7 @@ function Header({ headerClasses, handleMenuButton }) {
                   <NavLink
                     to="/films"
                     className="link menu__dropdown-link"
-                    onClick={handleMenuButton}
+                    onClick={onCloseBurgerMenu}
                   >
                     Фильмы
                   </NavLink>
@@ -77,7 +77,7 @@ function Header({ headerClasses, handleMenuButton }) {
                   <NavLink
                     to="/books"
                     className="link menu__dropdown-link"
-                    onClick={handleMenuButton}
+                    onClick={onCloseBurgerMenu}
                   >
                     Книги
                   </NavLink>
@@ -85,12 +85,12 @@ function Header({ headerClasses, handleMenuButton }) {
               </ul>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/rights" className="menu__link" onClick={handleMenuButton}>
+              <NavLink to="/rights" className="menu__link" onClick={onCloseBurgerMenu}>
                 Права детей
               </NavLink>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/stories" className="menu__link" onClick={handleMenuButton}>
+              <NavLink to="/stories" className="menu__link" onClick={onCloseBurgerMenu}>
                 Истории
               </NavLink>
             </li>
@@ -102,7 +102,7 @@ function Header({ headerClasses, handleMenuButton }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleMenuButton}
+                onClick={onCloseBurgerMenu}
               >
                 facebook
               </NavLink>
@@ -113,7 +113,7 @@ function Header({ headerClasses, handleMenuButton }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleMenuButton}
+                onClick={onCloseBurgerMenu}
               >
                 vkontakte
               </NavLink>
@@ -124,7 +124,7 @@ function Header({ headerClasses, handleMenuButton }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleMenuButton}
+                onClick={onCloseBurgerMenu}
               >
                 instagram
               </NavLink>
@@ -135,7 +135,7 @@ function Header({ headerClasses, handleMenuButton }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={handleMenuButton}
+                onClick={onCloseBurgerMenu}
               >
                 youtube
               </NavLink>
@@ -173,11 +173,15 @@ function Header({ headerClasses, handleMenuButton }) {
                     <NavLink
                       to="/article"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={handleMenuButton}
+                      onClick={onCloseBurgerMenu}
                     >
                       Причины подростковой агрессии
                     </NavLink>
-                    <NavLink to="/article" className="link search__link" onClick={handleMenuButton}>
+                    <NavLink
+                      to="/article"
+                      className="link search__link"
+                      onClick={onCloseBurgerMenu}
+                    >
                       статьи
                     </NavLink>
                   </li>
@@ -185,11 +189,11 @@ function Header({ headerClasses, handleMenuButton }) {
                     <NavLink
                       to="/video"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={handleMenuButton}
+                      onClick={onCloseBurgerMenu}
                     >
                       Агрессивное поведение детей-сирот
                     </NavLink>
-                    <NavLink to="/video" className="link search__link" onClick={handleMenuButton}>
+                    <NavLink to="/video" className="link search__link" onClick={onCloseBurgerMenu}>
                       видео
                     </NavLink>
                   </li>
@@ -197,14 +201,14 @@ function Header({ headerClasses, handleMenuButton }) {
                     <NavLink
                       to="/questions"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={handleMenuButton}
+                      onClick={onCloseBurgerMenu}
                     >
                       Что делать если ваш младший агрессивно себя ведет, решил закрыть пару?
                     </NavLink>
                     <NavLink
                       to="/questions"
                       className="link search__link"
-                      onClick={handleMenuButton}
+                      onClick={onCloseBurgerMenu}
                     >
                       вопросы
                     </NavLink>
@@ -213,11 +217,11 @@ function Header({ headerClasses, handleMenuButton }) {
                     <NavLink
                       to="/books"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={handleMenuButton}
+                      onClick={onCloseBurgerMenu}
                     >
                       Как реагировать на агрессивное поведения ребенка
                     </NavLink>
-                    <NavLink to="/books" className="link search__link" onClick={handleMenuButton}>
+                    <NavLink to="/books" className="link search__link" onClick={onCloseBurgerMenu}>
                       книги
                     </NavLink>
                   </li>
@@ -249,6 +253,7 @@ Header.propTypes = {
     headerOuted: PropTypes.string,
   }),
   handleMenuButton: PropTypes.func,
+  onCloseBurgerMenu: PropTypes.func,
 };
 
 Header.defaultProps = {
@@ -260,6 +265,7 @@ Header.defaultProps = {
     headerOuted: '',
   },
   handleMenuButton: () => {},
+  onCloseBurgerMenu: () => {},
 };
 
 export default Header;

@@ -83,6 +83,15 @@ function App() {
       });
     }
   }
+  function handleCloseBurgerMenu() {
+    setHeaderClasses({
+      ...headerClasses,
+      header: '',
+      menuBurger: '',
+      menuListSWrap: 'menu__lists-wrap_hidden',
+      menuListSocial: 'menu__list_hidden',
+    });
+  }
   // реализация появления меню при обратном скролле
   let scrollPrev = 0;
   function handleScroll() {
@@ -252,7 +261,11 @@ function App() {
   return (
     <CurrentContext.Provider value={{ currentUser, isLoggedIn }}>
       <div className="page">
-        <Header headerClasses={headerClasses} handleMenuButton={handleMenuButton} />
+        <Header
+          headerClasses={headerClasses}
+          handleMenuButton={handleMenuButton}
+          onCloseBurgerMenu={handleCloseBurgerMenu}
+        />
         <Switch>
           <Route exact path="/">
             <Main
