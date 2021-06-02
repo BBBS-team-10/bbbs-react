@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   outline: none;
+  z-index: 200;
 }
 .popup__overlay{
   background-color: rgba(0, 0, 0, .5);
@@ -30,6 +31,7 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   transition: visibility 0.3s, opacity 0.3s linear;
+  z-index: 200;
 
   &__container {
     position: relative;
