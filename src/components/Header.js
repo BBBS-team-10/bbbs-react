@@ -6,6 +6,7 @@ function Header({ headerClasses, handleMenuButton }) {
   const history = useHistory();
 
   function handleProfileButton() {
+    handleMenuButton();
     history.push('/profile');
   }
   return (
@@ -230,7 +231,7 @@ function Header({ headerClasses, handleMenuButton }) {
               type="button"
               aria-label="Личный кабинет"
               title="Личный кабинет"
-              onClick={(handleProfileButton, handleMenuButton)}
+              onClick={handleProfileButton}
             />
           </li>
         </ul>
