@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StoryForm from './StoryForm';
-import PostedStory from './PostedStory';
+import PostedStoryEditing from './PostedStoryEditing';
 
 function Profile({ onDeleteStoryClick, onCityChoiceClick }) {
   return (
-    <section className="personal-area page__section">
+    <section className=" page__section personal-area">
       <div className="personal-area__user-info">
         <button
           type="button"
@@ -31,7 +31,9 @@ function Profile({ onDeleteStoryClick, onCityChoiceClick }) {
           Составьте историю вашей дружбы с младшим. Эта страница доступна только вам.
         </h2>
         <StoryForm />
-        <PostedStory onDeleteClick={onDeleteStoryClick} />
+        <PostedStoryEditing
+          onDeleteClick={onDeleteStoryClick}
+        />
       </div>
     </section>
   );

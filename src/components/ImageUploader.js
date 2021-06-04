@@ -35,9 +35,7 @@ function ImageUploader() {
               <p className="caption personal-area__bottom-caption">Загрузить фото</p>
             )}
             {imageList.map((image) => (
-              // <div key={image.name}>
               <img src={image.data_url} className="personal-area__photo" alt="Фото" />
-              // </div>
             ))}
           </div>
         )}

@@ -1,5 +1,5 @@
 .personal-area {
-  padding-top: 30px;
+  margin: 0 auto;
 }
 
 .personal-area__user-info {
@@ -9,7 +9,8 @@
 }
 
 .personal-area__user-link {
-  text-decoration: none;
+  display: block;
+  //text-decoration: none;
   color: $lightGray;
   margin-left: 30px;
   background: #f3f2f2;
@@ -21,6 +22,7 @@
     margin-left: 0;
   }
 }
+
 
 .personal-area__sign-up {
   padding-top: 30px;
@@ -280,6 +282,10 @@
   background-color: transparent;
   cursor: pointer;
   color: $lightGray;
+}
+
+.personal-area__radio-phrase_type_good_posted {
+  right: -205px;
 }
 
 @include atDesktop1024 {
