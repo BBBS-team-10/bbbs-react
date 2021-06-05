@@ -20,6 +20,7 @@ import PopupCalendarDescription from './PopupCalendarDescription';
 import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
 import PopupCalendarSignin from './PopupCalendarSignin';
+import PopupCalendarError from './PopupCalendarError';
 
 function App() {
   // context
@@ -145,6 +146,7 @@ function App() {
   const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
   const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
   const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false);
+  const [isPopupCalendarErrorOpen, setIsPopupCalendarErrorOpen] = useState(false);
 
   // close all popups================================
   function handlePopupCloseClick() {
@@ -170,32 +172,41 @@ function App() {
     if (isLoggedIn) {
       // получение карточек для зарегестрированного пользователя
       // setIsPopupCalendarSigninOpen(false);
-      api.getCalendarCardsLoggedIn(access).then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      });
+      api
+        .getCalendarCardsLoggedIn(access)
+        .then((res) => {
+          const cardsList = res.data.calendarCards;
+          setCalendarData(cardsList);
+          const newMonthList = toGetMonthListShorter(cardsList);
+          setMonthList(newMonthList);
+        })
+        .catch((err) => console.log(err));
     } else {
       // получение карточек для незарегестрированного пользователя
       // setIsPopupCalendarSigninOpen(true);
-      api.getCalendarCardsLoggedOut(access, currentCityId).then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      });
+      api
+        .getCalendarCardsLoggedOut(access, currentCityId)
+        .then((res) => {
+          const cardsList = res.data.calendarCards;
+          setCalendarData(cardsList);
+          const newMonthList = toGetMonthListShorter(cardsList);
+          setMonthList(newMonthList);
+        })
+        .catch((err) => console.log(err));
     }
   }
 
   // PopupCalendarSignin ===============================
   function handlePopupCalendarSigninLoggedIn(userData) {
-    api.login(userData).then((res) => {
-      setCurrentUser({ username: res.data.username, password: res.data.password });
-      localStorage.setItem('access', JSON.stringify(res.access));
-      setIsLoggedIn(true);
-      setIsPopupCalendarSigninOpen(false);
-    });
+    api
+      .login(userData)
+      .then((res) => {
+        setCurrentUser({ username: res.data.username, password: res.data.password });
+        localStorage.setItem('access', JSON.stringify(res.access));
+        setIsLoggedIn(true);
+        setIsPopupCalendarSigninOpen(false);
+      })
+      .catch((err) => console.log(err));
   }
   function handlePopupCalendarSigninCloseClick() {
     handlePopupCloseClick();
@@ -221,26 +232,74 @@ function App() {
     }
   }
 
+  // попап, который был открыт перед возникновением ошибки
+  const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined);
+
   // подтверждение или отписка на основной странице
   function handleCalendarAppointBtnClick(card) {
+    const access = localStorage.getItem('access');
     if (!card.booked) {
       setClickedCalendarCard(card);
       setIsPopupCalendarConfirmOpen(true);
     } else {
+      api
+        .deleteAppointToEvent(access, card.id)
+        .then(() => {
+          // console.log(res);
+        })
+        .catch(() => {
+          setIsPopupCalendarErrorOpen(true);
+        });
       handleChangeAppoitnCalendar(card, false);
     }
   }
 
   // подтверждение или запись в попапе
   function handleSubmitAppointCalendarClick(card) {
+    if (isPopupCalendarDescriptionOpen) {
+      setPopupCalendarWichWasOpen('isPopupCalendarDescriptionOpen');
+    } else if (isPopupCalendarConfirmOpen) {
+      setPopupCalendarWichWasOpen('isPopupCalendarConfirmOpen');
+    }
+    const access = localStorage.getItem('access');
     if (!card.booked) {
+      api
+        .appointToEvent(access, card.id)
+        .then(() => {
+          // console.log(res);
+        })
+        .catch(() => {
+          handlePopupCloseClick();
+          setIsPopupCalendarErrorOpen(true);
+        });
       handleChangeAppoitnCalendar(card, true);
       handlePopupCloseClick();
       setIsPopupCalendarDoneOpen(true);
     } else {
+      api
+        .deleteAppointToEvent(access, card.id)
+        .then(() => {
+          // console.log(res);
+        })
+        .catch(() => {
+          handlePopupCloseClick();
+          setIsPopupCalendarErrorOpen(true);
+        });
       handleChangeAppoitnCalendar(card, false);
       handlePopupCloseClick();
     }
+  }
+
+  // popupCalendarError
+  function handlePopupCalendarErrorClose() {
+    if (popupCalendarWichWasOpen === 'isPopupCalendarDescriptionOpen') {
+      setIsPopupCalendarErrorOpen(false);
+      setIsPopupCalendarDescriptionOpen(true);
+    } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
+      setIsPopupCalendarErrorOpen(false);
+      setIsPopupCalendarConfirmOpen(true);
+    }
+    setIsPopupCalendarErrorOpen(false);
   }
 
   // signin=================================================================================
@@ -359,6 +418,18 @@ function App() {
             clickedCalendarCard={clickedCalendarCard}
             onCloseClick={handlePopupCloseClick}
           />
+        </Modal>
+
+        <Modal
+          isOpen={isPopupCalendarErrorOpen}
+          onRequestClose={() => {
+            handlePopupCalendarErrorClose();
+          }}
+          shouldCloseOnOverlayClick
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCalendarError onCloseClick={handlePopupCalendarErrorClose} />
         </Modal>
 
         {/* <Modal

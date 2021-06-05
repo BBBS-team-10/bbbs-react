@@ -85,6 +85,12 @@
       max-width: 400px;
       max-height: 547px;
     }
+    &_type_error{
+      background: #F2E5E5;
+      align-items: flex-start;
+      padding: 60px 30px;
+      width: 570px;
+    }
 
     &_type_lk {
       justify-content: space-between;

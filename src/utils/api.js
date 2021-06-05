@@ -70,6 +70,38 @@ class Api {
       .then(this.checkResponse);
   }
 
+  appointToEvent(access, eventId) {
+    mock.onPost(`${this.baseUrl}/afisha/event-participants/`).reply(200, {
+      event: eventId,
+    });
+    return axios
+      .post(`${this.baseUrl}/afisha/event-participants/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+        data: { event: eventId },
+      })
+      .then(this.checkResponse);
+  }
+
+  deleteAppointToEvent(access, eventId) {
+    mock.onDelete(`${this.baseUrl}/afisha/event-participants/`).reply(200, {
+      event: eventId,
+    });
+    return axios
+      .delete(`${this.baseUrl}/afisha/event-participants/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+        data: { event: eventId },
+      })
+      .then(this.checkResponse);
+  }
+
   getMainPageInfo(access) {
     mock
       .onGet('http://127.0.0.1:8000/api/v1/users', {

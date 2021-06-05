@@ -40,19 +40,11 @@ function PopupCalendarDone({ clickedCalendarCard, onCloseClick }) {
 PopupCalendarDone.defaultProps = {
   clickedCalendarCard: {},
   onCloseClick: undefined,
-  // onCloseClick: undefined,
-  // onSubmit: undefined,
-  // isFormValid: true,
-  // handleChange: undefined,
 };
 
 PopupCalendarDone.propTypes = {
   clickedCalendarCard: PropTypes.instanceOf(Object),
   onCloseClick: PropTypes.func,
-  // onCloseClick: PropTypes.func,
-  // onSubmit: PropTypes.func,
-  // isFormValid: PropTypes.bool,
-  // handleChange: PropTypes.func,
 };
 
 export default PopupCalendarDone;
