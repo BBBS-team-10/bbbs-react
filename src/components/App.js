@@ -148,6 +148,12 @@ function App() {
   const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false);
   const [isPopupCalendarErrorOpen, setIsPopupCalendarErrorOpen] = useState(false);
 
+  // popupCalendarErrorText
+  const [popupCalendarErrorText, setPopupCalendarErrorText] = useState('');
+
+  // попап, который был открыт перед возникновением ошибки
+  const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined);
+
   // close all popups================================
   function handlePopupCloseClick() {
     setIsPopupCalendarSigninOpen(false);
@@ -171,7 +177,6 @@ function App() {
     const access = localStorage.getItem('access');
     if (isLoggedIn) {
       // получение карточек для зарегестрированного пользователя
-      // setIsPopupCalendarSigninOpen(false);
       api
         .getCalendarCardsLoggedIn(access)
         .then((res) => {
@@ -183,7 +188,6 @@ function App() {
         .catch((err) => console.log(err));
     } else {
       // получение карточек для незарегестрированного пользователя
-      // setIsPopupCalendarSigninOpen(true);
       api
         .getCalendarCardsLoggedOut(access, currentCityId)
         .then((res) => {
@@ -198,6 +202,7 @@ function App() {
 
   // PopupCalendarSignin ===============================
   function handlePopupCalendarSigninLoggedIn(userData) {
+    setPopupCalendarErrorText('Что-то пошло не так, войти снова');
     api
       .login(userData)
       .then((res) => {
@@ -206,7 +211,11 @@ function App() {
         setIsLoggedIn(true);
         setIsPopupCalendarSigninOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch(() => {
+        handlePopupCloseClick();
+        setPopupCalendarWichWasOpen('isPopupCalendarSigninOpen');
+        setIsPopupCalendarErrorOpen(true);
+      });
   }
   function handlePopupCalendarSigninCloseClick() {
     handlePopupCloseClick();
@@ -232,12 +241,10 @@ function App() {
     }
   }
 
-  // попап, который был открыт перед возникновением ошибки
-  const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined);
-
   // подтверждение или отписка на основной странице
   function handleCalendarAppointBtnClick(card) {
     const access = localStorage.getItem('access');
+    setPopupCalendarErrorText('Что-то пошло не так, попробуйте записаться снова');
     if (!card.booked) {
       setClickedCalendarCard(card);
       setIsPopupCalendarConfirmOpen(true);
@@ -262,6 +269,7 @@ function App() {
       setPopupCalendarWichWasOpen('isPopupCalendarConfirmOpen');
     }
     const access = localStorage.getItem('access');
+    setPopupCalendarErrorText('Что-то пошло не так, попробуйте записаться снова');
     if (!card.booked) {
       api
         .appointToEvent(access, card.id)
@@ -298,6 +306,9 @@ function App() {
     } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
       setIsPopupCalendarErrorOpen(false);
       setIsPopupCalendarConfirmOpen(true);
+    } else if (popupCalendarWichWasOpen === 'isPopupCalendarSigninOpen') {
+      setIsPopupCalendarErrorOpen(false);
+      setIsPopupCalendarSigninOpen(true);
     }
     setIsPopupCalendarErrorOpen(false);
   }
@@ -429,7 +440,10 @@ function App() {
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCalendarError onCloseClick={handlePopupCalendarErrorClose} />
+          <PopupCalendarError
+            onCloseClick={handlePopupCalendarErrorClose}
+            text={popupCalendarErrorText}
+          />
         </Modal>
 
         {/* <Modal
