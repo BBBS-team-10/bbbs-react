@@ -2,7 +2,7 @@
   padding-top: 25px;
   position: relative;
 }
-.calendar__tags{
+.calendar__tags {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -20,7 +20,7 @@
   &_type_long {
     flex-wrap: wrap;
   }
-  &_type_calendar{
+  &_type_calendar {
     flex-wrap: wrap;
   }
 }

@@ -19,9 +19,7 @@ function BlockCalendar({ event }) {
     <article className="calendar main-calendar">
       <div className="calendar__caption">
         <div className="calendar__info">
-          <p className="calendar__type">
-            {showTags(event.tags)}
-          </p>
+          <p className="calendar__type">{showTags(event.tags)}</p>
           <p className="calendar__weekday">Декабрь / понедельник</p>
         </div>
         <div className="calendar__about">
@@ -70,7 +68,7 @@ BlockCalendar.propTypes = {
         id: PropTypes.number,
         name: PropTypes.string,
         slug: PropTypes.string,
-      }),
+      })
     ),
     title: PropTypes.string,
     startAt: PropTypes.string,
