@@ -5,7 +5,7 @@
   align-items: flex-start;
   padding: 20px 0 0;
   width: 100%;
-  min-height: 80px;
+  min-height: 60px;
   background-color: $background;
   max-width: 1920px;
 
@@ -23,9 +23,15 @@
   transform: translateY(-100%);
 }
 
+@include atDesktop1279 {
+  .header {
+    min-height: 50px;
+  }
+}
+
 @include atDesktop1024 {
   .header {
-    min-height: 60px;
+    min-height: 40px;
     // padding-top: 30px;
   }
 }
@@ -33,6 +39,6 @@
 @include atMobile {
   .header {
     // padding-top: 15px;
-    min-height: 50px;
+    min-height: 40px;
   }
 }
