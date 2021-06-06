@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { NavLink, useLocation } from 'react-router-dom';
 
-function PopupCityChoice({ isOpen, onClose, onChangeCurrentCityId }) {
+function PopupCityChoice({ isOpen, onClose, onChangeCurrentCityId, onChangeCurrentCity }) {
   // const location = useLocation();
   // const currentPath = location.pathname;
 
   function handleCityClick(e) {
     onChangeCurrentCityId(e.target.id);
+    onChangeCurrentCity(e.target.textContent);
     onClose();
   }
 
@@ -95,10 +96,12 @@ PopupCityChoice.defaultProps = {
   isOpen: false,
   onClose: undefined,
   onChangeCurrentCityId: undefined,
+  onChangeCurrentCity: undefined,
 };
 
 PopupCityChoice.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
   onChangeCurrentCityId: PropTypes.func,
+  onChangeCurrentCity: PropTypes.func,
 };

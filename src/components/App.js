@@ -32,6 +32,7 @@ function App() {
   const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
   const [currentCityId, setCurrentCityId] = useState(undefined);
+  const [currentCity, setCurrentCity] = useState(undefined);
 
   // city modal open on init=======================================================================
   React.useEffect(() => {
@@ -42,12 +43,21 @@ function App() {
 
   // Profile =====================================================================
   const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]);
+  const [profileCalendarCards, setProfileCalendarCards] = React.useState([]);
   function handleProfileInit() {
     const access = localStorage.getItem('access');
     api
       .getProfileNarratives(access)
       .then((res) => {
         setProfileNarrativesCards(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .getCalendarCardsLoggedIn(access)
+      .then((res) => {
+        const cardsList = res.data.calendarCards;
+        setProfileCalendarCards(cardsList);
       })
       .catch((err) => console.log(err));
   }
@@ -418,6 +428,8 @@ function App() {
               profileNarrativesCards={profileNarrativesCards}
               onAddNarrative={handleAddNarrative}
               onChangeNarrative={handleChangeNarrative}
+              profileCalendarCards={profileCalendarCards}
+              currentCity={currentCity}
             />
           </Route>
           <Route exact path="/calendar">
@@ -464,6 +476,7 @@ function App() {
           isOpen={isCityChoicePopupOpen}
           onClose={closeCityChoicePopup}
           onChangeCurrentCityId={setCurrentCityId}
+          onChangeCurrentCity={setCurrentCity}
         />
         <Modal
           isOpen={isPopupCalendarSigninOpen}

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StoryForm from './StoryForm';
 import PostedStoryEditing from './PostedStoryEditing';
+import ProfileCalendarCard from './ProfileCalendarCard';
 
 function Profile({
   onDeleteStoryClick,
@@ -10,6 +11,8 @@ function Profile({
   profileNarrativesCards,
   onAddNarrative,
   onChangeNarrative,
+  profileCalendarCards,
+  currentCity,
 }) {
   // загрузка данных
   React.useEffect(() => {
@@ -19,6 +22,9 @@ function Profile({
   return (
     <section className=" page__section personal-area">
       <div className="personal-area__user-info">
+        <span className="paragraph personal-area__user-link personal-area__user-link_type_city-text">
+          {currentCity}.
+        </span>
         <button
           type="button"
           className="paragraph personal-area__user-link personal-area__user-link_type_city"
@@ -34,9 +40,22 @@ function Profile({
         </button>
       </div>
       <div className="personal-area__sign-up">
-        <h2 className="section-title personal-area__title personal-area__title_type_sign-up">
-          У вас нет записи на мероприятия
-        </h2>
+        {profileCalendarCards.length > 0 ? (
+          <h2 className="section-title personal-area__title personal-area__title_type_sign-up">
+            Вы записаны на мероприятия:
+          </h2>
+        ) : (
+          <h2 className="section-title personal-area__title personal-area__title_type_sign-up">
+            У вас нет записи на мероприятия
+          </h2>
+        )}
+        {profileCalendarCards.length > 0 && (
+          <div className="personal-area__calendar-wrapper">
+            {profileCalendarCards.map((item) => (
+              <ProfileCalendarCard card={item} />
+            ))}
+          </div>
+        )}
       </div>
       <div className="personal-area__story">
         <h2 className="section-title personal-area__title">
@@ -71,6 +90,8 @@ Profile.defaultProps = {
   profileNarrativesCards: [],
   onAddNarrative: undefined,
   onChangeNarrative: undefined,
+  profileCalendarCards: [],
+  currentCity: '',
 };
 
 Profile.propTypes = {
@@ -80,4 +101,6 @@ Profile.propTypes = {
   profileNarrativesCards: PropTypes.instanceOf(Array),
   onAddNarrative: PropTypes.func,
   onChangeNarrative: PropTypes.func,
+  profileCalendarCards: PropTypes.instanceOf(Array),
+  currentCity: PropTypes.string,
 };
