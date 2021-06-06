@@ -5,7 +5,7 @@ import ImageUploader from './ImageUploader';
 function StoryForm() {
   const {
     register,
-    // onSubmit,
+    handleSubmit,
     reset,
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
@@ -30,15 +30,7 @@ function StoryForm() {
     setBadRateChecked(true);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // onAddingNarrativeCard(data);
-    console.log({
-      place: '',
-      date: '',
-      story: '',
-    });
-  }
+  const onSubmit = (data) => console.log(data);
 
   return (
     <form className="card-container card-container_type_personal-area">
@@ -46,7 +38,11 @@ function StoryForm() {
         <ImageUploader />
       </div>
       <div className="card personal-area__card personal-area__card_type_content">
-        <form className="personal-area__form" onSubmit={handleSubmit} name="add-story-form">
+        <form
+          className="personal-area__form"
+          onSubmit={handleSubmit(onSubmit)}
+          name="add-story-form"
+        >
           <input
             // eslint-disable-next-line
             {...register('place', { required: true, minLength: 2, maxLength: 30 })}
