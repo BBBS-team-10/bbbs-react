@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import ImageUploader from './ImageUploader';
 
-function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
+import imageOfNarrative1 from '../images/personal-area/lk.png';
+
+function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
   const {
     register,
     handleSubmit,
@@ -31,13 +33,26 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
   }
 
   function onSubmit(data) {
-    setMainText(mainText);
-    setPlace(place);
-    console.log(data);
+    let rate = 'good';
+    if (neutralRateChecked) {
+      rate = 'neutral';
+    } else if (badRateChecked) {
+      rate = 'bad';
+    }
+    onChangeNarrative({
+      id: card.id,
+      place: data.place,
+      description: data.story,
+      date: data.date,
+      name: 'Анастасии П.',
+      img: { imageOfNarrative1 },
+      rating: rate,
+    });
+    setEditClicked(false);
   }
 
   return (
-    <form className="card-container card-container_type_personal-area">
+    <div className="card-container card-container_type_personal-area">
       <div className="card personal-area__card personal-area__card_type_add-photo">
         <ImageUploader />
       </div>
@@ -51,8 +66,7 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
             // eslint-disable-next-line
             {...register('place', { required: true, minLength: 2, maxLength: 30 })}
             type="text"
-            value={place}
-            onChange={setPlace}
+            defaultValue={card.place}
             className="personal-area__form-input"
           />
           <input
@@ -67,8 +81,7 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
             // eslint-disable-next-line
             {...register('story', { required: true, minLength: 2 })}
             className="personal-area__form-input personal-area__form-input_type_textarea"
-            value={mainText}
-            onChange={setMainText}
+            defaultValue={card.description}
           />
           <div className="personal-area__rating">
             <div className="personal-area__radio-label">
@@ -152,21 +165,19 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
           </div>
         </form>
       </div>
-    </form>
+    </div>
   );
 }
 export default StoryFormOnEdit;
 
 StoryFormOnEdit.defaultProps = {
-  mainText: undefined,
-  place: undefined,
-  setMainText: undefined,
-  setPlace: undefined,
+  card: {},
+  onChangeNarrative: undefined,
+  setEditClicked: undefined,
 };
 
 StoryFormOnEdit.propTypes = {
-  mainText: PropTypes.string,
-  place: PropTypes.string,
-  setMainText: PropTypes.func,
-  setPlace: PropTypes.func,
+  card: PropTypes.instanceOf(Object),
+  onChangeNarrative: PropTypes.func,
+  setEditClicked: PropTypes.func,
 };

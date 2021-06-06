@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PopupDeleteStory({ isOpen, onClose }) {
+function PopupDeleteStory({ isOpen, onClose, onDeleteProfileStory }) {
   return (
     <div className={`popup personal ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container popup__container_type_lk">
@@ -9,7 +9,7 @@ function PopupDeleteStory({ isOpen, onClose }) {
           Удалить встречу в Парке Горького 5 декабря 2020?
         </h2>
         <div className="popup__buttons">
-          <button className="button popup__delete" type="button" disabled>
+          <button className="button popup__delete" type="button" onClick={onDeleteProfileStory}>
             Удалить
           </button>
           <button className="button popup__delete" type="button" onClick={onClose}>
@@ -26,9 +26,11 @@ export default PopupDeleteStory;
 PopupDeleteStory.defaultProps = {
   isOpen: false,
   onClose: undefined,
+  onDeleteProfileStory: undefined,
 };
 
 PopupDeleteStory.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  onDeleteProfileStory: PropTypes.func,
 };

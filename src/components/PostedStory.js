@@ -12,6 +12,10 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
     setEditClicked(!isEditClicked);
   }
 
+  function handleDeleteClick() {
+    onDeleteClick(card);
+  }
+
   let imgEmoji = './images/personal-area/good.svg';
   let emojiText = 'Было классно!';
   let emojiClassName = 'personal-area__rate personal-area__rate_type_good';
@@ -71,7 +75,7 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
               Редактировать
             </button>
             <button
-              onClick={onDeleteClick}
+              onClick={handleDeleteClick}
               className="caption personal-area__button
         personal-area__button_action_delete-card"
               type="button"

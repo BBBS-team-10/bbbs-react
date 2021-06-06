@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
@@ -59,10 +59,26 @@ function App() {
     // todo должно быть обращение к апи
   }
 
-  const history = useHistory();
+  function handleChangeNarrative(data) {
+    const newArray = [];
+    profileNarrativesCards.forEach((item) => {
+      if (item.id !== data.id) {
+        newArray.push(item);
+      } else {
+        newArray.push(data);
+      }
+    });
+    setProfileNarrativesCards(newArray);
+    // todo должно быть обращение к апи
+  }
 
-  function handleDeleteStoryPopupClick() {
+  const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined);
+
+  // const history = useHistory();
+
+  function handleDeleteStoryPopupClick(card) {
     setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
+    setCheckedToDeleteProfileStory(card);
   }
 
   function handleCityChoicePopupClick() {
@@ -75,6 +91,18 @@ function App() {
 
   function closeCityChoicePopup() {
     setCityChoicePopupOpen(false);
+  }
+
+  function handleDeleteProfileStory() {
+    const newArray = [];
+    profileNarrativesCards.forEach((item) => {
+      if (item.id !== checkedToDeleteProfileStory.id) {
+        newArray.push(item);
+      }
+    });
+    setProfileNarrativesCards(newArray);
+    closeDeleteStoryPopup();
+    // todo должно быть обращение к апи
   }
 
   // header======================================================================================
@@ -240,7 +268,7 @@ function App() {
   }
   function handlePopupCalendarSigninCloseClick() {
     handlePopupCloseClick();
-    history.push('/');
+    // history.push('/');
   }
 
   // PopupCalendarDescription===========================
@@ -389,6 +417,7 @@ function App() {
               onProfileInit={handleProfileInit}
               profileNarrativesCards={profileNarrativesCards}
               onAddNarrative={handleAddNarrative}
+              onChangeNarrative={handleChangeNarrative}
             />
           </Route>
           <Route exact path="/calendar">
@@ -426,7 +455,11 @@ function App() {
           </Route>
         </Switch>
         <Footer />
-        <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
+        <PopupDeleteStory
+          isOpen={isDeleteStoryPopupOpen}
+          onClose={closeDeleteStoryPopup}
+          onDeleteProfileStory={handleDeleteProfileStory}
+        />
         <PopupCityChoice
           isOpen={isCityChoicePopupOpen}
           onClose={closeCityChoicePopup}

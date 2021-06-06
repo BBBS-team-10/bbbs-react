@@ -9,6 +9,7 @@ function Profile({
   onProfileInit,
   profileNarrativesCards,
   onAddNarrative,
+  onChangeNarrative,
 }) {
   // загрузка данных
   React.useEffect(() => {
@@ -46,7 +47,12 @@ function Profile({
           onAddNarrative={onAddNarrative}
         />
         {profileNarrativesCards.map((item) => (
-          <PostedStoryEditing key={item.id} onDeleteClick={onDeleteStoryClick} card={item} />
+          <PostedStoryEditing
+            key={item.id}
+            onDeleteClick={onDeleteStoryClick}
+            card={item}
+            onChangeNarrative={onChangeNarrative}
+          />
         ))}
         {/* <PostedStoryEditing
           onDeleteClick={onDeleteStoryClick}
@@ -64,6 +70,7 @@ Profile.defaultProps = {
   onProfileInit: undefined,
   profileNarrativesCards: [],
   onAddNarrative: undefined,
+  onChangeNarrative: undefined,
 };
 
 Profile.propTypes = {
@@ -72,4 +79,5 @@ Profile.propTypes = {
   onProfileInit: PropTypes.func,
   profileNarrativesCards: PropTypes.instanceOf(Array),
   onAddNarrative: PropTypes.func,
+  onChangeNarrative: PropTypes.func,
 };
