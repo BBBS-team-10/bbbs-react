@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
-// import { CurrentContext } from '../contexts/CurrentContext';
+import { CurrentContext } from '../contexts/CurrentContext';
 
 import whereToGoImg from '../images/where-to-go/img-xl.jpg';
 
@@ -10,6 +10,8 @@ function WhereToGo() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const context = React.useContext(CurrentContext);
 
   return (
     <div className="main">
@@ -82,15 +84,17 @@ function WhereToGo() {
           </ul>
         </div>
 
-        <div className="card place-card">
-          <h2 className="section-title place-card__text">
-            Если вы были в интересном месте и хотите порекомендовать его другим наставникам –
-            заполните форму, и мы добавим вашу рекомендацию.
-            {/* Если вы были в интересном месте и хотите порекомендовать его другим наставникам –
-            <span className="place-card__span-accent">заполните форму</span>, и мы добавим вашу
-            рекомендацию. */}
-          </h2>
-        </div>
+        {context.isLoggedIn && (
+          <div className="card place-card">
+            <h2 className="section-title place-card__text">
+              Если вы были в интересном месте и хотите порекомендовать его другим наставникам –
+              <button type="button" className="place-card__span-accent">
+                заполните форму
+              </button>
+              , и мы добавим вашу рекомендацию.
+            </h2>
+          </div>
+        )}
       </section>
 
       <section className="main-card page__section">
@@ -176,7 +180,7 @@ function WhereToGo() {
             <div className="card__title-wrap">
               <h2 className="section-title card__title">Название места</h2>
               <p className="caption card__title-caption">
-                Длинный адрес места в несколько строк, длинный адрес места.{' '}
+                Длинный адрес места в несколько строк, длинный адрес места.
               </p>
             </div>
             <Link to="/place" className="link card__link">
