@@ -53,10 +53,10 @@ function App() {
   }
 
   function handleAddNarrative(data) {
-    console.log(data);
     const newArray = profileNarrativesCards.slice();
     newArray.push(data);
     setProfileNarrativesCards(newArray);
+    // todo обращение к апи
   }
 
   const history = useHistory();
