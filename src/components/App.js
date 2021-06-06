@@ -52,6 +52,13 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleAddNarrative(data) {
+    console.log(data);
+    const newArray = profileNarrativesCards.slice();
+    newArray.push(data);
+    setProfileNarrativesCards(newArray);
+  }
+
   const history = useHistory();
 
   function handleDeleteStoryPopupClick() {
@@ -70,7 +77,7 @@ function App() {
     setCityChoicePopupOpen(false);
   }
 
-  // header
+  // header======================================================================================
   const [headerClasses, setHeaderClasses] = useState({
     header: '',
     menuBurger: '',
@@ -133,7 +140,7 @@ function App() {
   }, []);
   // header
 
-  // main page
+  // main page=======================================================================================
   const [mainPageData, setMainPageData] = useState({});
   const [mainPageCalendarCard, setMainPageCalendarCard] = useState({});
 
@@ -381,6 +388,7 @@ function App() {
               onCityChoiceClick={handleCityChoicePopupClick}
               onProfileInit={handleProfileInit}
               profileNarrativesCards={profileNarrativesCards}
+              onAddNarrative={handleAddNarrative}
             />
           </Route>
           <Route exact path="/calendar">

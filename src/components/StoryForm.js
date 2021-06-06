@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import ImageUploader from './ImageUploader';
 
-function StoryForm() {
+import imageOfNarrative1 from '../images/personal-area/lk.png';
+
+function StoryForm({ profileNarrativesCards, onAddNarrative }) {
   const {
     register,
     handleSubmit,
@@ -30,10 +33,26 @@ function StoryForm() {
     setBadRateChecked(true);
   }
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    let rate = 'good';
+    if (neutralRateChecked) {
+      rate = 'neutral';
+    } else if (badRateChecked) {
+      rate = 'bad';
+    }
+    onAddNarrative({
+      id: profileNarrativesCards.length + 1,
+      place: data.place,
+      description: data.story,
+      date: data.date,
+      name: 'Анастасии П.',
+      img: { imageOfNarrative1 },
+      rating: rate,
+    });
+  };
 
   return (
-    <form className="card-container card-container_type_personal-area">
+    <div className="card-container card-container_type_personal-area">
       <div className="card personal-area__card personal-area__card_type_add-photo">
         <ImageUploader />
       </div>
@@ -160,7 +179,17 @@ function StoryForm() {
           </div>
         </form>
       </div>
-    </form>
+    </div>
   );
 }
 export default StoryForm;
+
+StoryForm.defaultProps = {
+  profileNarrativesCards: [],
+  onAddNarrative: undefined,
+};
+
+StoryForm.propTypes = {
+  profileNarrativesCards: PropTypes.instanceOf(Array),
+  onAddNarrative: PropTypes.func,
+};

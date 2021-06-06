@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import StoryForm from './StoryForm';
 import PostedStoryEditing from './PostedStoryEditing';
 
-function Profile({ onDeleteStoryClick, onCityChoiceClick, onProfileInit, profileNarrativesCards }) {
+function Profile({
+  onDeleteStoryClick,
+  onCityChoiceClick,
+  onProfileInit,
+  profileNarrativesCards,
+  onAddNarrative,
+}) {
   // загрузка данных
   React.useEffect(() => {
     onProfileInit();
@@ -35,7 +41,10 @@ function Profile({ onDeleteStoryClick, onCityChoiceClick, onProfileInit, profile
         <h2 className="section-title personal-area__title">
           Составьте историю вашей дружбы с младшим. Эта страница доступна только вам.
         </h2>
-        <StoryForm />
+        <StoryForm
+          profileNarrativesCards={profileNarrativesCards}
+          onAddNarrative={onAddNarrative}
+        />
         {profileNarrativesCards.map((item) => (
           <PostedStoryEditing key={item.id} onDeleteClick={onDeleteStoryClick} card={item} />
         ))}
@@ -54,6 +63,7 @@ Profile.defaultProps = {
   onCityChoiceClick: undefined,
   onProfileInit: undefined,
   profileNarrativesCards: [],
+  onAddNarrative: undefined,
 };
 
 Profile.propTypes = {
@@ -61,4 +71,5 @@ Profile.propTypes = {
   onCityChoiceClick: PropTypes.func,
   onProfileInit: PropTypes.func,
   profileNarrativesCards: PropTypes.instanceOf(Array),
+  onAddNarrative: PropTypes.func,
 };
