@@ -1,4 +1,5 @@
 import calendarCardsList from './calendarCardsList';
+import questionsCardsList from './questionsCardsList';
 import MockedMainPageData from './mocks';
 
 const axios = require('axios');
@@ -117,6 +118,20 @@ class Api {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access}`,
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  getQuestionsCards() {
+    mock.onGet(`${this.baseUrl}/questions/`).reply(200, {
+      questionsCards: questionsCardsList,
+    });
+    return axios
+      .get(`${this.baseUrl}/questions/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
         },
       })
       .then(this.checkResponse);

@@ -315,6 +315,16 @@ function App() {
     setIsPopupCalendarErrorOpen(false);
   }
 
+  // Questions =============================================================================
+  const [questionsData, setQuestionsData] = useState([]);
+  function handleQuestionsInit() {
+    api
+      .getQuestionsCards()
+      .then((res) => {
+        setQuestionsData(res.data.questionsCards);
+      })
+      .catch((err) => console.log(err));
+  }
   // signin=================================================================================
   function handelAppInit() {
     if (isLoggedIn) {
@@ -383,7 +393,7 @@ function App() {
             <Helmet>
               <title>Ответы на вопросы</title>
             </Helmet>
-            <Questions />
+            <Questions onQuestionsInit={handleQuestionsInit} questionsData={questionsData} />
           </Route>
 
           <Route exact path="/about">

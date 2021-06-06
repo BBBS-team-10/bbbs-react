@@ -1,15 +1,22 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
-// import { CurrentContext } from '../contexts/CurrentContext';
+import PropTypes from 'prop-types';
+import { CurrentContext } from '../contexts/CurrentContext';
 
-function Questions() {
+import QuestionCard from './QuestionCard';
+
+function Questions({ onQuestionsInit, questionsData }) {
   // перемотка в начало страницы
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // const context = React.useContext(CurrentContext);
+  // загрузка данных
+  React.useEffect(() => {
+    onQuestionsInit();
+  }, []);
+
+  const context = React.useContext(CurrentContext);
 
   return (
     <div className="main">
@@ -112,165 +119,49 @@ function Questions() {
       </section>
 
       <section className="questions page__section">
-        <article className="question">
-          <h2 className="section-title question__title">
-            Я боюсь, что ребёнок ко мне слишком сильно привяжется. Что делать?
-          </h2>
-          <div className="question__wrap">
-            <p className="rubric question__rubric">рубрика</p>
-            <button
-              className="question__show-button"
-              type="button"
-              aria-label="Показать ответ"
-              title="Показать ответ"
-            />
-          </div>
-          <div className="question__answer">
-            <p className="paragraph question__paragraph">
-              Настоящие дружеские отношения строятся на взаимном интересе, доверии и привязанности.
-              Когда наставник для ребенка становится именно другом, а не просто знакомым или
-              волонтером, то подопечный начинает быть искренне заинтересован в общении, начинает
-              ждать встреч, звонить по телефону. Но тут важно, чтобы наставник оставался именно в
-              роли друга, старшего брата или сестры, а не потенциального родителя. Перед включением
-              ребенка в программу кураторы обязательно объясняют ребенку, кто такой наставник и
-              какую роль он может сыграть в его жизни. Конечно, здесь многое зависит от умения
-              самого наставника выстраивать отношения и границы, но, если человек сомневается в
-              своих навыках, то в рамках нашей программы проводятся поддерживающие мероприятия,
-              которые развивают компетенции наставников и их коммуникативные способности, которые
-              помогают в общении с детьми, а также есть всегда возможность обратиться к куратору
-              программы.
-            </p>
-          </div>
-        </article>
-
-        <article className="question">
-          <h2 className="section-title question__title">
-            Возможно ли продлить срок участия в программе, если и я и мой «младший» хотим остаться в
-            программе?
-          </h2>
-          <div className="question__wrap">
-            <p className="rubric question__rubric">рубрика</p>
-            <button
-              className="question__show-button"
-              type="button"
-              aria-label="Показать ответ"
-              title="Показать ответ"
-            />
-          </div>
-          <div className="question__answer">
-            <p className="paragraph question__paragraph">
-              Настоящие дружеские отношения строятся на взаимном интересе, доверии и привязанности.
-              Когда наставник для ребенка становится именно другом, а не просто знакомым или
-              волонтером, то подопечный начинает быть искренне заинтересован в общении, начинает
-              ждать встреч, звонить по телефону. Но тут важно, чтобы наставник оставался именно в
-              роли друга, старшего брата или сестры, а не потенциального родителя.
-            </p>
-            <p className="paragraph question__paragraph">
-              Перед включением ребенка в программу кураторы обязательно объясняют ребенку, кто такой
-              наставник и какую роль он может сыграть в его жизни. Конечно, здесь многое зависит от
-              умения самого наставника выстраивать отношения и границы, но, если человек сомневается
-              в своих навыках, то в рамках нашей программы проводятся поддерживающие мероприятия,
-              которые развивают компетенции наставников и их коммуникативные способности, которые
-              помогают в общении с детьми, а также есть всегда возможность обратиться к куратору
-              программы.
-            </p>
-          </div>
-        </article>
-
-        <article className="question">
-          <h2 className="section-title question__title">
-            Что делать если Ваш младший решил закрыть пару, т.к. слишком занят с учебой и друзьями?
-          </h2>
-          <div className="question__wrap">
-            <p className="rubric question__rubric">рубрика</p>
-            <button
-              className="question__show-button"
-              type="button"
-              aria-label="Показать ответ"
-              title="Показать ответ"
-            />
-          </div>
-          <div className="question__answer">
-            <p className="paragraph question__paragraph">
-              Настоящие дружеские отношения строятся на взаимном интересе, доверии и привязанности.
-              Когда наставник для ребенка становится именно другом, а не просто знакомым или
-              волонтером, то подопечный начинает быть искренне заинтересован в общении, начинает
-              ждать встреч, звонить по телефону. Но тут важно, чтобы наставник оставался именно в
-              роли друга, старшего брата или сестры, а не потенциального родителя. Перед включением
-              ребенка в программу кураторы обязательно объясняют ребенку, кто такой наставник и
-              какую роль он может сыграть в его жизни. Конечно, здесь многое зависит от умения
-              самого наставника выстраивать отношения и границы, но, если человек сомневается в
-              своих навыках, то в рамках нашей программы проводятся поддерживающие мероприятия,
-              которые развивают компетенции наставников и их коммуникативные способности, которые
-              помогают в общении с детьми, а также есть всегда возможность обратиться к куратору
-              программы.
-            </p>
-          </div>
-        </article>
-
-        <article className="question">
-          <h2 className="section-title question__title">
-            Я боюсь, что ребёнок ко мне слишком сильно привяжется. Что делать?
-          </h2>
-          <div className="question__wrap">
-            <p className="rubric question__rubric">рубрика</p>
-            <button
-              className="question__show-button"
-              type="button"
-              aria-label="Показать ответ"
-              title="Показать ответ"
-            />
-          </div>
-          <div className="question__answer">
-            <p className="paragraph question__paragraph">
-              Настоящие дружеские отношения строятся на взаимном интересе, доверии и привязанности.
-              Когда наставник для ребенка становится именно другом, а не просто знакомым или
-              волонтером, то подопечный начинает быть искренне заинтересован в общении, начинает
-              ждать встреч, звонить по телефону. Но тут важно, чтобы наставник оставался именно в
-              роли друга, старшего брата или сестры, а не потенциального родителя. Перед включением
-              ребенка в программу кураторы обязательно объясняют ребенку, кто такой наставник и
-              какую роль он может сыграть в его жизни. Конечно, здесь многое зависит от умения
-              самого наставника выстраивать отношения и границы, но, если человек сомневается в
-              своих навыках, то в рамках нашей программы проводятся поддерживающие мероприятия,
-              которые развивают компетенции наставников и их коммуникативные способности, которые
-              помогают в общении с детьми, а также есть всегда возможность обратиться к куратору
-              программы.
-            </p>
-          </div>
-        </article>
+        {questionsData.map((item) => (
+          <QuestionCard key={item.id} id={item.id} card={item} />
+        ))}
       </section>
 
-      <section className="add-question page__section">
-        <h2 className="section-title add-question__title">
-          Если вы не нашли ответ на свой вопрос — напишите нам, и мы включим его в список
-        </h2>
-        <form className="question-form" name="add-question">
-          <fieldset className="question-form__add-question">
-            <input
-              className="question-form__input"
-              type="text"
-              name="question"
-              value=""
-              placeholder="Введите вопрос"
-              required
-            />
-            <button
-              className="button button_theme_light question-form__button"
-              type="submit"
-              name="submit"
-              disabled
-            >
-              Отправить
-            </button>
-          </fieldset>
-        </form>
-      </section>
+      {context.isLoggedIn && (
+        <section className="add-question page__section">
+          <h2 className="section-title add-question__title">
+            Если вы не нашли ответ на свой вопрос — напишите нам, и мы включим его в список
+          </h2>
+          <form className="question-form" name="add-question">
+            <fieldset className="question-form__add-question">
+              <input
+                className="question-form__input"
+                type="text"
+                name="question"
+                placeholder="Введите вопрос"
+                required
+              />
+              <button
+                className="button button_theme_light question-form__button"
+                type="submit"
+                name="submit"
+                disabled
+              >
+                Отправить
+              </button>
+            </fieldset>
+          </form>
+        </section>
+      )}
     </div>
   );
 }
 
-Questions.defaultProps = {};
+Questions.defaultProps = {
+  onQuestionsInit: undefined,
+  questionsData: [],
+};
 
-Questions.propTypes = {};
+Questions.propTypes = {
+  onQuestionsInit: PropTypes.func,
+  questionsData: PropTypes.instanceOf(Array),
+};
 
 export default Questions;
