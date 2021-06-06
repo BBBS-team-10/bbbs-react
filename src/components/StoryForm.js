@@ -5,11 +5,10 @@ import ImageUploader from './ImageUploader';
 
 import imageOfNarrative1 from '../images/personal-area/lk.png';
 
-function StoryForm({ profileNarrativesCards, onAddNarrative }) {
+function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
   const [goodRateChecked, setGoodRateChecked] = React.useState(false);
@@ -49,6 +48,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative }) {
       img: { imageOfNarrative1 },
       rating: rate,
     });
+    onDeleteClick();
   };
 
   return (
@@ -76,7 +76,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative }) {
             placeholder="Дата&emsp;"
             className="personal-area__form-input"
           />
-          <input
+          <textarea
             type="text"
             // eslint-disable-next-line
             {...register('story', { required: true, minLength: 2 })}
@@ -160,17 +160,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative }) {
             </div>
           </div>
           <div className="personal-area__buttons">
-            <button
-              type="button"
-              className="button personal-area__delete"
-              onClick={() => {
-                reset({
-                  place: '',
-                  date: '',
-                  story: '',
-                });
-              }}
-            >
+            <button type="button" className="button personal-area__delete" onClick={onDeleteClick}>
               Удалить
             </button>
             <button disabled={!isValid} className="button button__add-story" type="submit">
@@ -187,9 +177,11 @@ export default StoryForm;
 StoryForm.defaultProps = {
   profileNarrativesCards: [],
   onAddNarrative: undefined,
+  onDeleteClick: undefined,
 };
 
 StoryForm.propTypes = {
   profileNarrativesCards: PropTypes.instanceOf(Array),
   onAddNarrative: PropTypes.func,
+  onDeleteClick: PropTypes.func,
 };

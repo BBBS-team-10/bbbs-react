@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import StoryForm from './StoryForm';
 import PostedStoryEditing from './PostedStoryEditing';
@@ -18,6 +18,8 @@ function Profile({
   React.useEffect(() => {
     onProfileInit();
   }, []);
+
+  const [showStoryForm, setShowStoryForm] = useState(false);
 
   return (
     <section className=" page__section personal-area">
@@ -61,10 +63,24 @@ function Profile({
         <h2 className="section-title personal-area__title">
           Составьте историю вашей дружбы с младшим. Эта страница доступна только вам.
         </h2>
-        <StoryForm
-          profileNarrativesCards={profileNarrativesCards}
-          onAddNarrative={onAddNarrative}
-        />
+        {!showStoryForm && (
+          <div className="personal-area__add-meeting">
+            <button
+              className="personal-area__add-meeting-button"
+              type="button"
+              aria-label="addStory"
+              onClick={() => setShowStoryForm(true)}
+            />
+            <p className="caption personal-area__meeting-caption">Добавить встречу</p>
+          </div>
+        )}
+        {showStoryForm && (
+          <StoryForm
+            profileNarrativesCards={profileNarrativesCards}
+            onAddNarrative={onAddNarrative}
+            onDeleteClick={() => setShowStoryForm(false)}
+          />
+        )}
         {profileNarrativesCards.map((item) => (
           <PostedStoryEditing
             key={item.id}
