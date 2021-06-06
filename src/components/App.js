@@ -31,7 +31,7 @@ function App() {
 
   const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
-  const [currentCityId] = useState(undefined);
+  const [currentCityId, setCurrentCityId] = useState(undefined);
 
   // city modal open on init=======================================================================
   React.useEffect(() => {
@@ -56,7 +56,7 @@ function App() {
     const newArray = profileNarrativesCards.slice();
     newArray.push(data);
     setProfileNarrativesCards(newArray);
-    // todo обращение к апи
+    // todo должно быть обращение к апи
   }
 
   const history = useHistory();
@@ -427,7 +427,11 @@ function App() {
         </Switch>
         <Footer />
         <PopupDeleteStory isOpen={isDeleteStoryPopupOpen} onClose={closeDeleteStoryPopup} />
-        <PopupCityChoice isOpen={isCityChoicePopupOpen} onClose={closeCityChoicePopup} />
+        <PopupCityChoice
+          isOpen={isCityChoicePopupOpen}
+          onClose={closeCityChoicePopup}
+          onChangeCurrentCityId={setCurrentCityId}
+        />
         <Modal
           isOpen={isPopupCalendarSigninOpen}
           className="popup__modal"
