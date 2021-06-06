@@ -15,6 +15,7 @@ import Calendar from './Calendar';
 import Profile from './Profile';
 import About from './About';
 import WhereToGo from './WhereToGo';
+import Questions from './Questions';
 import PopupCityChoice from './PopupCityChoice';
 import PopupDeleteStory from './PopupDeleteStory';
 import PopupCalendarDescription from './PopupCalendarDescription';
@@ -339,6 +340,9 @@ function App() {
         />
         <Switch>
           <Route exact path="/">
+            <Helmet>
+              <title>Главная</title>
+            </Helmet>
             <Main
               mainPageData={mainPageData}
               mainPageCalendarCard={mainPageCalendarCard}
@@ -347,6 +351,9 @@ function App() {
             />
           </Route>
           <Route exact path="/profile">
+            <Helmet>
+              <title>Профиль</title>
+            </Helmet>
             <Profile
               onDeleteStoryClick={handleDeleteStoryPopupClick}
               onCityChoiceClick={handleCityChoicePopupClick}
@@ -370,6 +377,13 @@ function App() {
               <title>Куда пойти</title>
             </Helmet>
             <WhereToGo />
+          </Route>
+
+          <Route exact path="/questions">
+            <Helmet>
+              <title>Ответы на вопросы</title>
+            </Helmet>
+            <Questions />
           </Route>
 
           <Route exact path="/about">
