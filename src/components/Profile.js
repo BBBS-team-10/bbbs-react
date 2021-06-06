@@ -52,7 +52,7 @@ function Profile({
         {profileCalendarCards.length > 0 && (
           <div className="personal-area__calendar-wrapper">
             {profileCalendarCards.map((item) => (
-              <ProfileCalendarCard card={item} />
+              <ProfileCalendarCard card={item} key={item.id} />
             ))}
           </div>
         )}

@@ -49,6 +49,11 @@ function StoryForm({ profileNarrativesCards, onAddNarrative }) {
       img: { imageOfNarrative1 },
       rating: rate,
     });
+    reset({
+      place: '',
+      date: '',
+      story: '',
+    });
   };
 
   return (

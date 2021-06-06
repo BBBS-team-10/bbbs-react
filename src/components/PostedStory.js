@@ -18,16 +18,22 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
 
   let imgEmoji = './images/personal-area/good.svg';
   let emojiText = 'Было классно!';
-  let emojiClassName = 'personal-area__rate personal-area__rate_type_good';
+  let emojiInputClassName = 'personal-area__rate personal-area__rate_type_good';
+  let emojiLabelClassName =
+    'personal-area__radio-phrase personal-area__radio-phrase_type_good personal-area__radio-phrase_type_good_posted';
 
   if (card.rating === 'neutral') {
     imgEmoji = './images/personal-area/neutral.svg';
     emojiText = 'Нормально';
-    emojiClassName = 'personal-area__rate personal-area__rate_type_neutral';
+    emojiInputClassName = 'personal-area__rate personal-area__rate_type_neutral';
+    emojiLabelClassName =
+      'personal-area__radio-phrase personal-area__radio-phrase_type_neutral personal-area__radio-phrase_type_neutral_posted';
   } else if (card.rating === 'bad') {
     imgEmoji = './images/personal-area/bad.svg';
     emojiText = 'Что-то пошло не так';
-    emojiClassName = 'personal-area__radio-phrase personal-area__radio-phrase_type_bad';
+    emojiInputClassName = 'personal-area__rate personal-area__rate_type_bad';
+    emojiLabelClassName =
+      'personal-area__radio-phrase personal-area__radio-phrase_type_bad personal-area__radio-phrase_type_bad_posted';
   }
   return (
     <form className="card-container card-container_type_personal-area">
@@ -52,14 +58,11 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
                 type="radio"
                 name="rate"
                 // id="good-rate"
-                className={emojiClassName}
+                className={emojiInputClassName}
                 defaultChecked
               />
               <img className="personal-area__rate-icon" alt="rate" src={imgEmoji} />
-              <label
-                htmlFor="good-rate"
-                className="personal-area__radio-phrase personal-area__radio-phrase_type_good personal-area__radio-phrase_type_good_posted"
-              >
+              <label htmlFor="good-rate" className={emojiLabelClassName}>
                 {emojiText}
               </label>
             </div>

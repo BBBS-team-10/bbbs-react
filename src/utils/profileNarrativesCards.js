@@ -19,7 +19,7 @@ const profileNarrativesCards = [
     date: '2021-06-20T06:00:00Z',
     name: 'Анастасии П.',
     img: { imageOfNarrative1 },
-    rating: 'neutral',
+    rating: 'bad',
   },
 ];
 export default profileNarrativesCards;
