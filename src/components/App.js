@@ -13,9 +13,10 @@ import Main from './Main';
 import Footer from './Footer';
 import Calendar from './Calendar';
 import Profile from './Profile';
-import PopupDeleteStory from './PopupDeleteStory';
-import PopupCityChoice from './PopupCityChoice';
 import About from './About';
+import WhereToGo from './WhereToGo';
+import PopupCityChoice from './PopupCityChoice';
+import PopupDeleteStory from './PopupDeleteStory';
 import PopupCalendarDescription from './PopupCalendarDescription';
 import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
@@ -362,6 +363,13 @@ function App() {
               onAppointCalendarClick={handleCalendarAppointBtnClick}
               monthList={monthList}
             />
+          </Route>
+
+          <Route exact path="/place">
+            <Helmet>
+              <title>Куда пойти</title>
+            </Helmet>
+            <WhereToGo />
           </Route>
 
           <Route exact path="/about">

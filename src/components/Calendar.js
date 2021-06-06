@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { CurrentContext } from '../contexts/CurrentContext';
@@ -42,7 +41,6 @@ function Calendar({
     }
   }, [monthList]);
 
-  Modal.setAppElement('#root');
   return (
     <>
       <div className="main">
