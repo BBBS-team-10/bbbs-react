@@ -40,6 +40,18 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  // Profile =====================================================================
+  const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]);
+  function handleProfileInit() {
+    const access = localStorage.getItem('access');
+    api
+      .getProfileNarratives(access)
+      .then((res) => {
+        setProfileNarrativesCards(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
+
   const history = useHistory();
 
   function handleDeleteStoryPopupClick() {
@@ -367,6 +379,8 @@ function App() {
             <Profile
               onDeleteStoryClick={handleDeleteStoryPopupClick}
               onCityChoiceClick={handleCityChoicePopupClick}
+              onProfileInit={handleProfileInit}
+              profileNarrativesCards={profileNarrativesCards}
             />
           </Route>
           <Route exact path="/calendar">

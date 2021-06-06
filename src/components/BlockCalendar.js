@@ -68,7 +68,7 @@ BlockCalendar.propTypes = {
         id: PropTypes.number,
         name: PropTypes.string,
         slug: PropTypes.string,
-      })
+      }),
     ),
     title: PropTypes.string,
     startAt: PropTypes.string,

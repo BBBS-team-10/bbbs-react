@@ -85,7 +85,7 @@ function CalendarCard({ card, id, onOpenCalendarDescriptionPopup, onAppointCalen
 }
 
 CalendarCard.defaultProps = {
-  card: [],
+  card: {},
   id: undefined,
   onOpenCalendarDescriptionPopup: undefined,
   onAppointCalendarCardClick: undefined,

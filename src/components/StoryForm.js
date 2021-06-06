@@ -5,7 +5,7 @@ import ImageUploader from './ImageUploader';
 function StoryForm() {
   const {
     register,
-    handleSubmit,
+    // onSubmit,
     reset,
     formState: { isValid },
   } = useForm({ mode: 'onChange' });
@@ -30,8 +30,14 @@ function StoryForm() {
     setBadRateChecked(true);
   }
 
-  function onSubmit(data) {
-    console.log(data);
+  function handleSubmit(e) {
+    e.preventDefault();
+    // onAddingNarrativeCard(data);
+    console.log({
+      place: '',
+      date: '',
+      story: '',
+    });
   }
 
   return (
@@ -40,11 +46,7 @@ function StoryForm() {
         <ImageUploader />
       </div>
       <div className="card personal-area__card personal-area__card_type_content">
-        <form
-          className="personal-area__form"
-          onSubmit={handleSubmit(onSubmit)}
-          name="add-story-form"
-        >
+        <form className="personal-area__form" onSubmit={handleSubmit} name="add-story-form">
           <input
             // eslint-disable-next-line
             {...register('place', { required: true, minLength: 2, maxLength: 30 })}
@@ -72,9 +74,9 @@ function StoryForm() {
               <input
                 type="radio"
                 // eslint-disable-next-line
-                {...register('rate', { required: true})}
+                {...register('rate', { required: true })}
                 name="rate"
-                id="good-rate"
+                // id="good-rate"
                 className="personal-area__rate personal-area__rate_type_good"
                 onClick={onChangeGood}
               />
@@ -89,16 +91,19 @@ function StoryForm() {
                 className="personal-area__radio-phrase personal-area__radio-phrase_type_good"
               >
                 {goodRateChecked && 'Было классно!'}
-                {(!goodRateChecked && !badRateChecked && !neutralRateChecked) && 'Оцените проведенное время'}
+                {!goodRateChecked &&
+                  !badRateChecked &&
+                  !neutralRateChecked &&
+                  'Оцените проведенное время'}
               </label>
             </div>
             <div className="personal-area__radio-label">
               <input
                 type="radio"
                 // eslint-disable-next-line
-                {...register('rate', { required: true})}
+                {...register('rate', { required: true })}
                 name="rate"
-                id="neutral-rate"
+                // id="neutral-rate"
                 onClick={onChangeNeutral}
                 className="personal-area__rate personal-area__rate_type_neutral"
               />
@@ -119,9 +124,9 @@ function StoryForm() {
               <input
                 type="radio"
                 // eslint-disable-next-line
-                {...register('rate', { required: true})}
+                {...register('rate', { required: true })}
                 name="rate"
-                id="bad-rate"
+                // id="bad-rate"
                 onClick={onChangeBad}
                 className="personal-area__rate personal-area__rate_type_bad"
               />

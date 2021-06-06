@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import PostedStory from './PostedStory';
 import StoryFormOnEdit from './StoryFormOnEdit';
 
-function PostedStoryEditing({ onDeleteClick }) {
+function PostedStoryEditing({ onDeleteClick, card }) {
   const [isEditClicked, setEditClicked] = React.useState(false);
-  const [place, setPlace] = React.useState('Парк Горького');
-  const [mainText, setMainText] = React.useState('Описание в несколько срок. Подробное описание. Опишите вашу встречу, какие чувства вы испытывали, что понравилось не понравилось. Описание в несколько срок. Подробное описание. Подробное описание. Опишите вашу встречу, какие чувства вы испытывали, что понравилось не понравилось. Описание в несколько срок. Подробное описание. Опишите вашу встречу, какие чувства вы испытывали, что понравилось не понравилось. Описание в несколько срок. Подробное описание. Подробное описание.Опишите вашу встречу, какие чувства вы испытывали, что понравилось не понравилось. чувства вы испытывали, что понравилось не понравилось.');
+
   const onEdit = isEditClicked;
 
   if (onEdit) {
     return (
       <StoryFormOnEdit
-        mainText={mainText}
-        setMainText={setMainText}
-        place={place}
-        setPlace={setPlace}
+        card={card}
+        // mainText={mainText}
+        // setMainText={setMainText}
+        // place={place}
+        // setPlace={setPlace}
       />
     );
   }
@@ -24,8 +24,9 @@ function PostedStoryEditing({ onDeleteClick }) {
       onDeleteClick={onDeleteClick}
       isEditClicked={isEditClicked}
       setEditClicked={setEditClicked}
-      mainText={mainText}
-      place={place}
+      card={card}
+      // mainText={card}
+      // place={place}
     />
   );
 }
@@ -34,8 +35,10 @@ export default PostedStoryEditing;
 
 PostedStoryEditing.defaultProps = {
   onDeleteClick: undefined,
+  card: {},
 };
 
 PostedStoryEditing.propTypes = {
   onDeleteClick: PropTypes.func,
+  card: PropTypes.instanceOf(Object),
 };

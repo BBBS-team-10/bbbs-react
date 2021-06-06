@@ -75,9 +75,9 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
               <input
                 type="radio"
                 // eslint-disable-next-line
-                {...register('rate', { required: true})}
+                {...register('rate', { required: true })}
                 name="rate"
-                id="good-rate"
+                // id="good-rate"
                 className="personal-area__rate personal-area__rate_type_good"
                 onClick={onChangeGood}
               />
@@ -92,16 +92,19 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
                 className="personal-area__radio-phrase personal-area__radio-phrase_type_good"
               >
                 {goodRateChecked && 'Было классно!'}
-                {(!goodRateChecked && !badRateChecked && !neutralRateChecked) && 'Оцените проведенное время'}
+                {!goodRateChecked &&
+                  !badRateChecked &&
+                  !neutralRateChecked &&
+                  'Оцените проведенное время'}
               </label>
             </div>
             <div className="personal-area__radio-label">
               <input
                 type="radio"
                 // eslint-disable-next-line
-                {...register('rate', { required: true})}
+                {...register('rate', { required: true })}
                 name="rate"
-                id="neutral-rate"
+                // id="neutral-rate"
                 onClick={onChangeNeutral}
                 className="personal-area__rate personal-area__rate_type_neutral"
               />
@@ -122,9 +125,9 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
               <input
                 type="radio"
                 // eslint-disable-next-line
-                {...register('rate', { required: true})}
+                {...register('rate', { required: true })}
                 name="rate"
-                id="bad-rate"
+                // id="bad-rate"
                 onClick={onChangeBad}
                 className="personal-area__rate personal-area__rate_type_bad"
               />
@@ -143,11 +146,7 @@ function StoryFormOnEdit({ mainText, setMainText, place, setPlace }) {
             </div>
           </div>
           <div className="personal-area__buttons">
-            <button
-              disabled={!isValid}
-              className="button button__add-story"
-              type="submit"
-            >
+            <button disabled={!isValid} className="button button__add-story" type="submit">
               Редактировать
             </button>
           </div>

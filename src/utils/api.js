@@ -1,5 +1,6 @@
 import calendarCardsList from './calendarCardsList';
 import questionsCardsList from './questionsCardsList';
+import profileNarrativesCards from './profileNarrativesCards';
 import MockedMainPageData from './mocks';
 
 const axios = require('axios');
@@ -105,7 +106,7 @@ class Api {
 
   getMainPageInfo(access) {
     mock
-      .onGet('http://127.0.0.1:8000/api/v1/users', {
+      .onGet(`${this.baseUrl}/users/`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access}`,
@@ -114,7 +115,7 @@ class Api {
       .reply(200, MockedMainPageData);
 
     return axios
-      .get(`${this.baseUrl}/users`, {
+      .get(`${this.baseUrl}/users/`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access}`,
@@ -132,6 +133,26 @@ class Api {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  getProfileNarratives(access) {
+    mock
+      .onGet(`${this.baseUrl}/profile/narratives/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      })
+      .reply(200, profileNarrativesCards);
+
+    return axios
+      .get(`${this.baseUrl}/profile/narratives/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
         },
       })
       .then(this.checkResponse);
