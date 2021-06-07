@@ -33,6 +33,7 @@ function App() {
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
   const [currentCityId, setCurrentCityId] = useState(undefined);
   const [currentCity, setCurrentCity] = useState(undefined);
+  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
 
   // city modal open on init=======================================================================
   React.useEffect(() => {
@@ -40,6 +41,13 @@ function App() {
       setCityChoicePopupOpen(true);
     }
   }, [isLoggedIn]);
+
+  // открытие попапа city, если закрыли окно входа
+  React.useEffect(() => {
+    if (!isLoggedIn && !isPopupCalendarSigninOpen) {
+      setCityChoicePopupOpen(true);
+    }
+  }, [isPopupCalendarSigninOpen]);
 
   // Profile =====================================================================
   const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]);
@@ -200,7 +208,6 @@ function App() {
   const [calendarData, setCalendarData] = useState(null);
   const [monthList, setMonthList] = useState([]);
 
-  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
   const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
   const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
   const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
@@ -391,6 +398,25 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  // whereToGo ===============================================================================
+  const [whereToGoCardsData, setWhereToGoCardsData] = useState([]);
+  const [whereToGoTagsData, setWhereToGoTagsData] = useState([]);
+  function handleWhereToGoInit() {
+    api
+      .whereToGoCards()
+      .then((res) => {
+        setWhereToGoCardsData(res.data.whereToGoCards);
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .whereToGoTags()
+      .then((res) => {
+        setWhereToGoTagsData(res.data.whereToGoTags);
+      })
+      .catch((err) => console.log(err));
+  }
+
   // signin=================================================================================
   function handelAppInit() {
     if (isLoggedIn) {
@@ -458,7 +484,11 @@ function App() {
             <Helmet>
               <title>Куда пойти</title>
             </Helmet>
-            <WhereToGo />
+            <WhereToGo
+              onWhereToGoInit={handleWhereToGoInit}
+              whereToGoCardsData={whereToGoCardsData}
+              whereToGoTagsData={whereToGoTagsData}
+            />
           </Route>
 
           <Route exact path="/questions">

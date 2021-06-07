@@ -1,6 +1,8 @@
 import calendarCardsList from './calendarCardsList';
 import questionsCardsList from './questionsCardsList';
 import questionsTagsList from './questionsTagsList';
+import whereToGoCardsList from './whereToGoCardsList';
+import whereToGoTagsList from './whereToGoTagsList';
 import profileNarrativesCards from './profileNarrativesCards';
 import MockedMainPageData from './mocks';
 
@@ -42,6 +44,7 @@ class Api {
       .then(this.checkResponse);
   }
 
+  // calendar =======================================================
   getCalendarCardsLoggedIn(access) {
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
@@ -105,6 +108,7 @@ class Api {
       .then(this.checkResponse);
   }
 
+  // mainPage =============================================================
   getMainPageInfo(access) {
     mock
       .onGet(`${this.baseUrl}/users/`, {
@@ -125,6 +129,7 @@ class Api {
       .then(this.checkResponse);
   }
 
+  // questions ============================================================
   getQuestionsCards() {
     mock.onGet(`${this.baseUrl}/questions/`).reply(200, {
       questionsCards: questionsCardsList,
@@ -153,6 +158,36 @@ class Api {
       .then(this.checkResponse);
   }
 
+  // whereToGo ========================================================
+  whereToGoCards() {
+    mock.onGet(`${this.baseUrl}/places/`).reply(200, {
+      whereToGoCards: whereToGoCardsList,
+    });
+    return axios
+      .get(`${this.baseUrl}/places/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  whereToGoTags() {
+    mock.onGet(`${this.baseUrl}/places/tags/`).reply(200, {
+      whereToGoTags: whereToGoTagsList,
+    });
+    return axios
+      .get(`${this.baseUrl}/places/tags/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  // profile =============================================================
   getProfileNarratives(access) {
     mock
       .onGet(`${this.baseUrl}/profile/narratives/`, {

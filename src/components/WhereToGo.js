@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { CurrentContext } from '../contexts/CurrentContext';
 
 import whereToGoImg from '../images/where-to-go/img-xl.jpg';
 
-function WhereToGo() {
+function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData }) {
   // перемотка в начало страницы
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  React.useEffect(() => {
+    onWhereToGoInit();
+  }, []);
+
   const context = React.useContext(CurrentContext);
+
+  const [tagChecked, setTagChecked] = useState('Все');
+  const [whereToGoCardsFitered, setWhereToGoCardsFitered] = useState([]);
+
+  React.useEffect(() => {
+    console.log(whereToGoCardsFitered);
+  }, [whereToGoCardsFitered]);
+
+  React.useEffect(() => {
+    setWhereToGoCardsFitered(whereToGoCardsData);
+    setTagChecked('Все');
+  }, [whereToGoCardsData]);
+
+  function handleTagClick(e) {
+    setTagChecked(e.target.id);
+    if (e.target.id === 'Все') {
+      setWhereToGoCardsFitered(whereToGoCardsData);
+    } else {
+      const newArray = whereToGoCardsData.filter((item) =>
+        item.tag.toLowerCase().includes(e.target.id.toLowerCase()),
+      );
+      setWhereToGoCardsFitered(newArray);
+    }
+  }
 
   return (
     <div className="main">
@@ -20,67 +48,27 @@ function WhereToGo() {
         <div className="tags">
           <ul className="tags__list">
             <li className="tags__list-item">
-              <button className="button tags__button tags__button_active" type="button">
+              <button
+                className={`button tags__button ${tagChecked === 'Все' && 'tags__button_active'}`}
+                type="button"
+                onClick={handleTagClick}
+                id="Все"
+              >
                 Все
               </button>
             </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Выбор наставников
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Музеи
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Парки
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Театры
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Спорт
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Экскурсии
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Секции
-              </button>
-            </li>
-          </ul>
-          <ul className="tags__list">
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                8–10 лет
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                11–13 лет
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                14–18 лет
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                18+ лет
-              </button>
-            </li>
+            {whereToGoTagsData.map((item) => (
+              <li className="tags__list-item" key={item}>
+                <button
+                  className={`button tags__button ${item === tagChecked && 'tags__button_active'}`}
+                  type="button"
+                  onClick={handleTagClick}
+                  id={item}
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -247,8 +235,16 @@ function WhereToGo() {
   );
 }
 
-WhereToGo.defaultProps = {};
+WhereToGo.defaultProps = {
+  onWhereToGoInit: undefined,
+  whereToGoCardsData: [],
+  whereToGoTagsData: [],
+};
 
-WhereToGo.propTypes = {};
+WhereToGo.propTypes = {
+  onWhereToGoInit: PropTypes.func,
+  whereToGoCardsData: PropTypes.instanceOf(Array),
+  whereToGoTagsData: PropTypes.instanceOf(Array),
+};
 
 export default WhereToGo;
