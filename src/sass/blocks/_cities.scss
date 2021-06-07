@@ -49,6 +49,9 @@
     outline: none;
     background: none;
   }
+  &__link:hover {
+    cursor: pointer;
+  }
 }
 
 @include atDesktop1024 {
