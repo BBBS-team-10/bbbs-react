@@ -33,13 +33,13 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
               </NavLink>
             </li>
             <li className="menu__list-item menu__dropdown-item">
-              <NavLink to="/read-watch-main" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/read-and-watch" className="menu__link" onClick={onCloseBurgerMenu}>
                 Читать и смотреть
               </NavLink>
               <ul className="menu__dropdown-list">
                 <li className="menu__dropdown-list-item">
                   <NavLink
-                    to="/catalog"
+                    to="/dictionary"
                     className="link menu__dropdown-link"
                     onClick={onCloseBurgerMenu}
                   >

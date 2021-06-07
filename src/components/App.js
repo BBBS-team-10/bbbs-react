@@ -23,6 +23,14 @@ import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
 import PopupCalendarSignin from './PopupCalendarSignin';
 import PopupCalendarError from './PopupCalendarError';
+import ReadAndWatch from './ReadAndWatch';
+import Dictionary from './Dictionary';
+import Video from './Video';
+import Articles from './Articles';
+import Films from './Films';
+import Books from './Books';
+import Rights from './Rights';
+import Stories from './Stories';
 
 function App() {
   // context
@@ -470,6 +478,62 @@ function App() {
               questionsData={questionsData}
               questionsTagsData={questionsTagsData}
             />
+          </Route>
+
+          <Route exact path="/read-and-watch">
+            <Helmet>
+              <title>Читать и смотреть</title>
+            </Helmet>
+            <ReadAndWatch />
+          </Route>
+
+          <Route exact path="/dictionary">
+            <Helmet>
+              <title>Справочник</title>
+            </Helmet>
+            <Dictionary />
+          </Route>
+
+          <Route exact path="/video">
+            <Helmet>
+              <title>Видео</title>
+            </Helmet>
+            <Video />
+          </Route>
+
+          <Route exact path="/articles">
+            <Helmet>
+              <title>Статьи</title>
+            </Helmet>
+            <Articles />
+          </Route>
+
+          <Route exact path="/films">
+            <Helmet>
+              <title>Фильмы</title>
+            </Helmet>
+            <Films />
+          </Route>
+
+          <Route exact path="/books">
+            <Helmet>
+              <title>Книги</title>
+            </Helmet>
+            <Books />
+          </Route>
+
+          <Route exact path="/rights">
+            <Helmet>
+              <title>Права детей</title>
+            </Helmet>
+            <Rights />
+          </Route>
+
+          <Route exact path="/stories">
+            <Helmet>
+              <title>Истории</title>
+            </Helmet>
+            <Stories />
           </Route>
 
           <Route exact path="/about">
