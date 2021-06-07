@@ -75,7 +75,7 @@ function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
         ))}
       </section>
 
-      {context.isLoggedIn && (
+      {context.isLoggedIn && tagChecked === 'Все' && (
         <section className="add-question page__section">
           <h2 className="section-title add-question__title">
             Если вы не нашли ответ на свой вопрос — напишите нам, и мы включим его в список
