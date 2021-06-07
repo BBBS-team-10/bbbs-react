@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, useLocation } from 'react-router-dom';
+// import { NavLink, useLocation } from 'react-router-dom';
 
-function PopupCityChoice({ isOpen, onClose }) {
-  const location = useLocation();
-  const currentPath = location.pathname;
+function PopupCityChoice({ isOpen, onClose, onChangeCurrentCityId, onChangeCurrentCity }) {
+  // const location = useLocation();
+  // const currentPath = location.pathname;
+
+  function handleCityClick(e) {
+    onChangeCurrentCityId(e.target.id);
+    onChangeCurrentCity(e.target.textContent);
+    onClose();
+  }
 
   return (
     <div className={`popup popup_type_cities cities ${isOpen ? 'popup_opened' : ''}`}>
@@ -12,71 +18,71 @@ function PopupCityChoice({ isOpen, onClose }) {
         <h2 className="cities__title section-title">Выберите ваш город</h2>
         <ul className="cities__capitals">
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="1">
               Москва
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="2">
               Санкт-Петербург
-            </NavLink>
+            </button>
           </li>
         </ul>
         <ul className="cities__region">
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="3">
               Алексин
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="4">
               Барнаул
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="5">
               Екатеринбург
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="6">
               Зубцов
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="7">
               Калининград
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="8">
               Киреевск
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="9">
               Коломна
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="10">
               Новомосковск
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="11">
               Орехово-Зуево
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="12">
               Тверь
-            </NavLink>
+            </button>
           </li>
           <li className="cities__name">
-            <NavLink to={currentPath} className="cities__link" onClick={onClose}>
+            <button type="button" className="cities__link" onClick={handleCityClick} id="13">
               Тула
-            </NavLink>
+            </button>
           </li>
         </ul>
       </div>
@@ -89,9 +95,13 @@ export default PopupCityChoice;
 PopupCityChoice.defaultProps = {
   isOpen: false,
   onClose: undefined,
+  onChangeCurrentCityId: undefined,
+  onChangeCurrentCity: undefined,
 };
 
 PopupCityChoice.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  onChangeCurrentCityId: PropTypes.func,
+  onChangeCurrentCity: PropTypes.func,
 };

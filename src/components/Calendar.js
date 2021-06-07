@@ -1,61 +1,28 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentContext } from '../contexts/CurrentContext';
 
 import CalendarCard from './CalendarCard';
-import PopupCalendarSignin from './PopupCalendarSignin';
-import PopupCalendarDescription from './PopupCalendarDescription';
-import PopupCalendarConfirm from './PopupCalendarConfirm';
-import PopupCalendarDone from './PopupCalendarDone';
 
 function Calendar({
   onCalendarInit,
   calendarData,
-  onOpenCalendarCardClick,
-  clickedCalendarCard,
-  onPopupCloseClick,
+  onOpenCalendarDescriptionPopup,
   onAppointCalendarClick,
-  onSubmitAppointCalendarClick,
   monthList,
-  isPopupCalendarSigninOpen,
-  onPopupCalendarSigninOpen,
-  onPopupCalendarSigninClose,
-  onPopupCalendarSigninLoogedIn,
-  isPopupCalendarDescriptionOpen,
-  isPopupCalendarConfirmOpen,
-  isPopupCalendarDoneOpen,
 }) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const customModalStyles = {
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, .5)',
-      overflow: 'scroll',
-      display: 'flex',
-    },
-    content: {
-      background: 'none',
-      border: 'none',
-      overflow: 'visible',
-      margin: '0 auto 0',
-      maxWidth: '770px',
-      maxHeight: '100vh',
-      padding: '0',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  };
-
+  const context = React.useContext(CurrentContext);
+  // перемотка в начало страницы
   React.useEffect(() => {
-    if (currentUser.login) {
-      onCalendarInit();
-      onPopupCalendarSigninOpen(false);
-    } else {
-      onPopupCalendarSigninOpen(true);
-    }
-  }, [currentUser]);
+    window.scrollTo(0, 0);
+  }, []);
+
+  // загрузка данных
+  React.useEffect(() => {
+    onCalendarInit();
+  }, [context.currentUser]);
 
   const [cardsListFiltered, setCardsListFiltered] = useState([]);
   const [monthChecked, setMonthChecked] = useState('');
@@ -74,7 +41,6 @@ function Calendar({
     }
   }, [monthList]);
 
-  Modal.setAppElement('#root');
   return (
     <>
       <div className="main">
@@ -107,101 +73,31 @@ function Calendar({
                 key={item.id}
                 id={item.id}
                 card={item}
-                onOpenCalendarCardClick={onOpenCalendarCardClick}
+                onOpenCalendarDescriptionPopup={onOpenCalendarDescriptionPopup}
                 onAppointCalendarCardClick={onAppointCalendarClick}
               />
             ))}
           </>
         </section>
       </div>
-      <Modal isOpen={isPopupCalendarSigninOpen} style={customModalStyles}>
-        <PopupCalendarSignin
-          onCloseClick={onPopupCalendarSigninClose}
-          onSubmit={onPopupCalendarSigninLoogedIn}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isPopupCalendarDescriptionOpen}
-        onRequestClose={() => {
-          onPopupCloseClick();
-        }}
-        shouldCloseOnOverlayClick
-        style={customModalStyles}
-      >
-        <PopupCalendarDescription
-          clickedCalendarCard={clickedCalendarCard}
-          onCloseClick={onPopupCloseClick}
-          onSubmitAppointCalendarClick={onSubmitAppointCalendarClick}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isPopupCalendarConfirmOpen}
-        onRequestClose={() => {
-          onPopupCloseClick();
-        }}
-        shouldCloseOnOverlayClick
-        style={customModalStyles}
-      >
-        <PopupCalendarConfirm
-          clickedCalendarCard={clickedCalendarCard}
-          onSubmitAppointCalendarClick={onSubmitAppointCalendarClick}
-          onCloseClick={onPopupCloseClick}
-        />
-      </Modal>
-
-      <Modal
-        isOpen={isPopupCalendarDoneOpen}
-        onRequestClose={() => {
-          onPopupCloseClick();
-        }}
-        shouldCloseOnOverlayClick
-        style={customModalStyles}
-      >
-        <PopupCalendarDone
-          clickedCalendarCard={clickedCalendarCard}
-          onCloseClick={onPopupCloseClick}
-        />
-      </Modal>
     </>
   );
 }
 
 Calendar.defaultProps = {
-  calendarData: [],
-  monthList: [],
-  isPopupCalendarSigninOpen: false,
-  isPopupCalendarDescriptionOpen: false,
-  onPopupCalendarSigninClose: undefined,
-  onPopupCalendarSigninLoogedIn: undefined,
-  onOpenCalendarCardClick: undefined,
-  clickedCalendarCard: [],
-  onPopupCloseClick: undefined,
-  isPopupCalendarConfirmOpen: false,
-  onAppointCalendarClick: undefined,
-  onSubmitAppointCalendarClick: undefined,
-  isPopupCalendarDoneOpen: false,
   onCalendarInit: undefined,
-  onPopupCalendarSigninOpen: undefined,
+  calendarData: [],
+  onOpenCalendarDescriptionPopup: undefined,
+  onAppointCalendarClick: undefined,
+  monthList: [],
 };
 
 Calendar.propTypes = {
-  calendarData: PropTypes.instanceOf(Array),
-  monthList: PropTypes.instanceOf(Array),
-  isPopupCalendarSigninOpen: PropTypes.bool,
-  isPopupCalendarDescriptionOpen: PropTypes.bool,
-  onPopupCalendarSigninClose: PropTypes.func,
-  onPopupCalendarSigninLoogedIn: PropTypes.func,
-  onOpenCalendarCardClick: PropTypes.func,
-  clickedCalendarCard: PropTypes.instanceOf(Object),
-  onPopupCloseClick: PropTypes.func,
-  isPopupCalendarConfirmOpen: PropTypes.bool,
-  onAppointCalendarClick: PropTypes.func,
-  onSubmitAppointCalendarClick: PropTypes.func,
-  isPopupCalendarDoneOpen: PropTypes.bool,
   onCalendarInit: PropTypes.func,
-  onPopupCalendarSigninOpen: PropTypes.func,
+  calendarData: PropTypes.instanceOf(Array),
+  onOpenCalendarDescriptionPopup: PropTypes.func,
+  onAppointCalendarClick: PropTypes.func,
+  monthList: PropTypes.instanceOf(Array),
 };
 
 export default Calendar;

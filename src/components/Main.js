@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isLoggedInContext from '../contexts/IsLoggedInContext';
+import { CurrentContext } from '../contexts/CurrentContext';
 import BlockAbout from './BlockAbout';
 // import BlockCalendar from './BlockCalendar';
 import BlockStory from './BlockStory';
@@ -16,21 +16,21 @@ import CalendarCard from './CalendarCard';
 function Main({
   mainPageData,
   mainPageCalendarCard,
-  onOpenCalendarCardClick,
+  onOpenCalendarDescriptionPopup,
   onAppointCalendarCardClick,
 }) {
-  const isLoggedIn = React.useContext(isLoggedInContext);
+  const context = React.useContext(CurrentContext);
 
   return (
     <main className="main">
       <BlockLead>
-        {isLoggedIn ? (
+        {context.isLoggedIn ? (
           mainPageCalendarCard.id && (
             <CalendarCard
               key={mainPageCalendarCard.id}
               id={mainPageCalendarCard.id}
               card={mainPageCalendarCard}
-              onOpenCalendarCardClick={onOpenCalendarCardClick}
+              onOpenCalendarDescriptionPopup={onOpenCalendarDescriptionPopup}
               onAppointCalendarCardClick={onAppointCalendarCardClick}
             />
           )
@@ -161,14 +161,14 @@ Main.propTypes = {
     description: PropTypes.string,
     booked: PropTypes.bool,
   }),
-  onOpenCalendarCardClick: PropTypes.func,
+  onOpenCalendarDescriptionPopup: PropTypes.func,
   onAppointCalendarCardClick: PropTypes.func,
 };
 
 Main.defaultProps = {
   mainPageData: {},
   mainPageCalendarCard: {},
-  onOpenCalendarCardClick: () => {},
+  onOpenCalendarDescriptionPopup: () => {},
   onAppointCalendarCardClick: () => {},
 };
 

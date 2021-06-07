@@ -9,6 +9,12 @@
 .place-card__span-accent {
   color: $blue;
   cursor: pointer;
+  background: none;
+  outline: none;
+  border: none;
+}
+.place-card__span-accent:hover {
+  text-decoration: underline;
 }
 
 @include atTablet {

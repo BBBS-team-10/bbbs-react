@@ -1,3 +1,27 @@
+.popup__modal {
+  background: none;
+  border: none;
+  overflow: visible;
+  margin: 50px auto 0;
+  max-width: 770px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  outline: none;
+  z-index: 200;
+}
+.popup__overlay{
+  background-color: rgba(0, 0, 0, .5);
+  overflow: scroll;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+}
+
 .popup {
   visibility: hidden;
   opacity: 0;
@@ -14,7 +38,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    z-index: 2;
+    z-index: 200;
     margin: 75px auto 0;
     padding: 50px 100px;
     border-radius: 30px;
@@ -62,6 +86,12 @@
       justify-content: flex-start;
       max-width: 400px;
       max-height: 547px;
+    }
+    &_type_error{
+      background: #F2E5E5;
+      align-items: flex-start;
+      padding: 60px 30px;
+      width: 570px;
     }
 
     &_type_lk {
@@ -225,16 +255,16 @@
       max-width: 320px;
     }
 
-    &_type_confirmation{
+    &_type_confirmation {
       min-height: 430px;
     }
 
-    &_type_sign-in{
+    &_type_sign-in {
       min-height: 530px;
     }
 
     &_type_calendar {
-      min-height: 530px;
+      min-height: 570px;
     }
 
     &_type_done {
@@ -285,8 +315,9 @@
       max-width: 320px;
     }
 
-    &_type_confirmation{
+    &_type_confirmation {
       position: fixed;
+      top: 0;
       left: 0;
       max-width: 650px;
       width: 100vw;
@@ -297,8 +328,9 @@
       align-items: center;
     }
 
-    &_type_sign-in{
+    &_type_sign-in {
       position: fixed;
+      top: 0;
       left: 0;
       max-width: 650px;
       width: 100vw;
@@ -322,7 +354,7 @@
       align-items: center;
     }
 
-    &_type_calendar{
+    &_type_calendar {
       position: fixed;
       top: 0;
       left: 0;

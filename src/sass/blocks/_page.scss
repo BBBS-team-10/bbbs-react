@@ -40,3 +40,20 @@
     padding: 20px 15px 0;
   }
 }
+
+.overlay {
+  background-color: rgba(0, 0, 0, .5);
+  overflow: scroll;
+  display: flex;
+}
+.content {
+  background: none;
+  border: none;
+  overflow: visible;
+  margin: 0 auto 0;
+  max-width: 770px;
+  max-height: 100vh;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}

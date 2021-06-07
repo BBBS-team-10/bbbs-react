@@ -5,7 +5,7 @@ import ImageUploader from './ImageUploader';
 
 import imageOfNarrative1 from '../images/personal-area/lk.png';
 
-function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
+function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
   const {
     register,
     handleSubmit,
@@ -32,15 +32,15 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
     setBadRateChecked(true);
   }
 
-  const onSubmit = (data) => {
+  function onSubmit(data) {
     let rate = 'good';
     if (neutralRateChecked) {
       rate = 'neutral';
     } else if (badRateChecked) {
       rate = 'bad';
     }
-    onAddNarrative({
-      id: profileNarrativesCards.length + 1,
+    onChangeNarrative({
+      id: card.id,
       place: data.place,
       description: data.story,
       date: data.date,
@@ -48,8 +48,8 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
       img: { imageOfNarrative1 },
       rating: rate,
     });
-    onDeleteClick();
-  };
+    setEditClicked(false);
+  }
 
   return (
     <div className="card-container card-container_type_personal-area">
@@ -66,7 +66,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
             // eslint-disable-next-line
             {...register('place', { required: true, minLength: 2, maxLength: 30 })}
             type="text"
-            placeholder="Место встречи"
+            defaultValue={card.place}
             className="personal-area__form-input"
           />
           <input
@@ -77,12 +77,11 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
             className="personal-area__form-input"
           />
           <textarea
-            type="text"
+            // type="text"
             // eslint-disable-next-line
             {...register('story', { required: true, minLength: 2 })}
             className="personal-area__form-input personal-area__form-input_type_textarea"
-            placeholder="Опишите вашу встречу, какие чувства вы испытывали,
-            что понравилось / не понравилось"
+            defaultValue={card.description}
           />
           <div className="personal-area__rating">
             <div className="personal-area__radio-label">
@@ -160,11 +159,8 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
             </div>
           </div>
           <div className="personal-area__buttons">
-            <button type="button" className="button personal-area__delete" onClick={onDeleteClick}>
-              Удалить
-            </button>
             <button disabled={!isValid} className="button button__add-story" type="submit">
-              Добавить
+              Редактировать
             </button>
           </div>
         </form>
@@ -172,16 +168,16 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
     </div>
   );
 }
-export default StoryForm;
+export default StoryFormOnEdit;
 
-StoryForm.defaultProps = {
-  profileNarrativesCards: [],
-  onAddNarrative: undefined,
-  onDeleteClick: undefined,
+StoryFormOnEdit.defaultProps = {
+  card: {},
+  onChangeNarrative: undefined,
+  setEditClicked: undefined,
 };
 
-StoryForm.propTypes = {
-  profileNarrativesCards: PropTypes.instanceOf(Array),
-  onAddNarrative: PropTypes.func,
-  onDeleteClick: PropTypes.func,
+StoryFormOnEdit.propTypes = {
+  card: PropTypes.instanceOf(Object),
+  onChangeNarrative: PropTypes.func,
+  setEditClicked: PropTypes.func,
 };

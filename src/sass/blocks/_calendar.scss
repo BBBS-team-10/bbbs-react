@@ -34,6 +34,12 @@
   text-align: center;
 }
 
+.calendar__title_type_popup-error{
+  align-self: flex-start;
+  max-width: 320px;
+  color: #FF4E4E;
+}
+
 .calendar__title_type_confirmation {
   text-align: center;
 }
@@ -141,6 +147,10 @@
 .calendar__back {
   max-width: 215px;
   align-self: center;
+}
+
+.calendar__back_type_error{
+  align-self: flex-start;
 }
 
 .calendar__image-done {
