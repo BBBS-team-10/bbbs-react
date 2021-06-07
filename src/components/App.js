@@ -42,13 +42,6 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  // открытие попапа city, если закрыли окно входа
-  React.useEffect(() => {
-    if (!isLoggedIn && !isPopupCalendarSigninOpen) {
-      setCityChoicePopupOpen(true);
-    }
-  }, [isPopupCalendarSigninOpen]);
-
   // Profile =====================================================================
   const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]);
   const [profileCalendarCards, setProfileCalendarCards] = React.useState([]);
@@ -282,9 +275,11 @@ function App() {
         setPopupCalendarWichWasOpen('isPopupCalendarSigninOpen');
         setIsPopupCalendarErrorOpen(true);
       });
+    setCityChoicePopupOpen(true);
   }
   function handlePopupCalendarSigninCloseClick() {
     handlePopupCloseClick();
+    setCityChoicePopupOpen(true);
     // history.push('/');
   }
 
