@@ -374,6 +374,7 @@ function App() {
 
   // Questions =============================================================================
   const [questionsData, setQuestionsData] = useState([]);
+  const [questionsTagsData, setQuestionsTagsData] = useState([]);
   function handleQuestionsInit() {
     api
       .getQuestionsCards()
@@ -381,7 +382,15 @@ function App() {
         setQuestionsData(res.data.questionsCards);
       })
       .catch((err) => console.log(err));
+
+    api
+      .getQuestionsTags()
+      .then((res) => {
+        setQuestionsTagsData(res.data.questionsTags);
+      })
+      .catch((err) => console.log(err));
   }
+
   // signin=================================================================================
   function handelAppInit() {
     if (isLoggedIn) {
@@ -456,7 +465,11 @@ function App() {
             <Helmet>
               <title>Ответы на вопросы</title>
             </Helmet>
-            <Questions onQuestionsInit={handleQuestionsInit} questionsData={questionsData} />
+            <Questions
+              onQuestionsInit={handleQuestionsInit}
+              questionsData={questionsData}
+              questionsTagsData={questionsTagsData}
+            />
           </Route>
 
           <Route exact path="/about">

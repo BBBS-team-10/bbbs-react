@@ -1,5 +1,6 @@
 import calendarCardsList from './calendarCardsList';
 import questionsCardsList from './questionsCardsList';
+import questionsTagsList from './questionsTagsList';
 import profileNarrativesCards from './profileNarrativesCards';
 import MockedMainPageData from './mocks';
 
@@ -130,6 +131,20 @@ class Api {
     });
     return axios
       .get(`${this.baseUrl}/questions/`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  getQuestionsTags() {
+    mock.onGet(`${this.baseUrl}/questions/tags/`).reply(200, {
+      questionsTags: questionsTagsList,
+    });
+    return axios
+      .get(`${this.baseUrl}/questions/tags/`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',

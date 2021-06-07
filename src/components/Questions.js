@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { CurrentContext } from '../contexts/CurrentContext';
 
 import QuestionCard from './QuestionCard';
 
-function Questions({ onQuestionsInit, questionsData }) {
+function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
   // перемотка в начало страницы
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,6 +17,25 @@ function Questions({ onQuestionsInit, questionsData }) {
   }, []);
 
   const context = React.useContext(CurrentContext);
+  const [tagChecked, setTagChecked] = useState('Все');
+  const [questionsFitered, setQuestionsFitered] = useState([]);
+
+  React.useEffect(() => {
+    setQuestionsFitered(questionsData);
+    setTagChecked('Все');
+  }, [questionsData]);
+
+  function handleTagClick(e) {
+    setTagChecked(e.target.id);
+    if (e.target.id === 'Все') {
+      setQuestionsFitered(questionsData);
+    } else {
+      const newArray = questionsData.filter((item) =>
+        item.tag.toLowerCase().includes(e.target.id.toLowerCase()),
+      );
+      setQuestionsFitered(newArray);
+    }
+  }
 
   return (
     <div className="main">
@@ -25,101 +44,33 @@ function Questions({ onQuestionsInit, questionsData }) {
         <div className="tags tags_content_long-list">
           <ul className="tags__list tags__list_type_long">
             <li className="tags__list-item">
-              <button className="button tags__button tags__button_active" type="button">
+              <button
+                className={`button tags__button ${tagChecked === 'Все' && 'tags__button_active'}`}
+                type="button"
+                onClick={handleTagClick}
+                id="Все"
+              >
                 Все
               </button>
             </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Первая встреча
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Вопросы детей
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Воспитатели / опекуны
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Сомнения
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Сложности
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Подарки
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Влияние на ребенка
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Времяпровождение
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Ответственность
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Завершение отношений
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Первая встреча
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Вопросы детей
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Первая встреча
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Вопросы детей
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Воспитатели / опекуны
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Сомнения
-              </button>
-            </li>
-            <li className="tags__list-item">
-              <button className="button tags__button" type="button">
-                Сложности
-              </button>
-            </li>
+            {questionsTagsData.map((item) => (
+              <li className="tags__list-item" key={item}>
+                <button
+                  className={`button tags__button ${item === tagChecked && 'tags__button_active'}`}
+                  type="button"
+                  onClick={handleTagClick}
+                  id={item}
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
 
       <section className="questions page__section">
-        {questionsData.map((item) => (
+        {questionsFitered.map((item) => (
           <QuestionCard key={item.id} id={item.id} card={item} />
         ))}
       </section>
@@ -157,11 +108,13 @@ function Questions({ onQuestionsInit, questionsData }) {
 Questions.defaultProps = {
   onQuestionsInit: undefined,
   questionsData: [],
+  questionsTagsData: [],
 };
 
 Questions.propTypes = {
   onQuestionsInit: PropTypes.func,
   questionsData: PropTypes.instanceOf(Array),
+  questionsTagsData: PropTypes.instanceOf(Array),
 };
 
 export default Questions;
