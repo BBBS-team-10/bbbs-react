@@ -35,10 +35,11 @@
 
 .personal-area__calendar-wrapper{
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   padding-top: 30px;
-  overflow: auto;
+  // overflow: auto;
+  flex-wrap: wrap;
 }
 .personal-area__calendar-card{
   width: 270px;
@@ -47,7 +48,7 @@
   border-radius: 30px;
   padding: 30px;
   box-sizing: border-box;
-  margin: 0 30px 0 0;
+  margin: 0 30px 20px 0;
   flex-shrink: 0;
 }
 .personal-area__calendar-card-date{
@@ -389,7 +390,21 @@
   }
 
   .personal-area__calendar-wrapper{
-    padding-top: 20px;
+    padding: 20px 0 10px;
+    flex-wrap: nowrap;
+    overflow: auto;
+    justify-content: flex-start;
+  }
+  .personal-area__calendar-wrapper::-webkit-scrollbar{
+    width: 0;
+    height: 3px;
+    background: #f3f2f2;
+  }
+  .personal-area__calendar-wrapper::-webkit-scrollbar-thumb{
+    background: #c9c9c9;
+  }
+  .personal-area__calendar-wrapper::-webkit-scrollbar-thumb:hover{
+    background: #a5a5a5;
   }
   .personal-area__calendar-card{
     width: 205px;
